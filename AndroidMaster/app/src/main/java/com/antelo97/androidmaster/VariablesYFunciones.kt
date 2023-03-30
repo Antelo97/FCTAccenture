@@ -12,9 +12,9 @@ fun main() {
     val mySubtract: Int = subtract(10, 5)
     println(mySubtract)
 
-    //variablesNumericas()
-    //variablesAlfanuméricas()
-    //variablesBoolean()
+    variablesNumericas()
+    variablesAlfanuméricas()
+    variablesBoolean()
 }
 
 fun variablesNumericas() {
