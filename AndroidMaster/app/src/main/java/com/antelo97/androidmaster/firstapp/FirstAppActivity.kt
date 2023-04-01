@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.antelo97.androidmaster.R
+import com.antelo97.androidmaster.layouts.FrameLayoutActivity
+import com.antelo97.androidmaster.layouts.LinearLayoutActivity
 
 class FirstAppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +23,7 @@ class FirstAppActivity : AppCompatActivity() {
             val name = etName.text.toString()
 
             if (name.isNotEmpty()) {
-                val intent = Intent(this, ResultActivity::class.java)
+                val intent = Intent(this, ConstraintLayout::class.java)
                 intent.putExtra("EXTRA NAME", name)
                 startActivity(intent)
             }
