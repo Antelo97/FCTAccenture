@@ -8,6 +8,8 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.antelo97.androidmaster.R
+import com.antelo97.androidmaster.layouts.ConstraintLayoutActivity
+import com.antelo97.androidmaster.layouts.ConstraintLayoutActivityV2
 import com.antelo97.androidmaster.layouts.FrameLayoutActivity
 import com.antelo97.androidmaster.layouts.LinearLayoutActivity
 
@@ -23,7 +25,7 @@ class FirstAppActivity : AppCompatActivity() {
             val name = etName.text.toString()
 
             if (name.isNotEmpty()) {
-                val intent = Intent(this, ConstraintLayout::class.java)
+                val intent = Intent(this, ConstraintLayoutActivityV2::class.java)
                 intent.putExtra("EXTRA NAME", name)
                 startActivity(intent)
             }
