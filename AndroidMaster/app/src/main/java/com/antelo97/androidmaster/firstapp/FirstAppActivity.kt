@@ -25,7 +25,7 @@ class FirstAppActivity : AppCompatActivity() {
             val name = etName.text.toString()
 
             if (name.isNotEmpty()) {
-                val intent = Intent(this, ConstraintLayoutActivityV2::class.java)
+                val intent = Intent(this, ResultActivity::class.java)
                 intent.putExtra("EXTRA NAME", name)
                 startActivity(intent)
             }
