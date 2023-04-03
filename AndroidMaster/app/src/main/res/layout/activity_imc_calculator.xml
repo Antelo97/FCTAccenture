@@ -95,7 +95,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Height"
+                android:text="@string/height"
                 android:textAllCaps="true"
                 android:textColor="@color/title_text" />
 
@@ -140,7 +140,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Weight"
+                android:text="@string/weight"
                 android:textAllCaps="true"
                 android:textColor="@color/title_text" />
 
@@ -199,7 +199,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Age"
+                android:text="@string/age"
                 android:textAllCaps="true"
                 android:textColor="@color/title_text" />
 
@@ -242,7 +242,7 @@
         android:id="@+id/btnCalculate"
         android:layout_width="0dp"
         android:layout_height="80dp"
-        android:text="@string/Calculate"
+        android:text="@string/calculate"
         android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
