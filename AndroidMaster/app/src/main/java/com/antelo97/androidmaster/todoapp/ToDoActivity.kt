@@ -55,17 +55,22 @@ class ToDoActivity : AppCompatActivity() {
         val rgCategories: RadioGroup = dialog.findViewById(R.id.rgCategories)
 
         btnAddTask.setOnClickListener {
-            val selectedId: Int = rgCategories.checkedRadioButtonId
-            val selectedRadioButton: RadioButton = rgCategories.findViewById(selectedId)
-            val currentCategory: TaskCategory = when (selectedRadioButton.text) {
-                "Negocios" -> TaskCategory.Business
-                "Personal" -> TaskCategory.Personal
-                else -> TaskCategory.Other
-            }
+            val currentTask: String = etTask.text.toString()
+            if (currentTask.isNotEmpty()) {
+                val selectedId: Int = rgCategories.checkedRadioButtonId
+                val selectedRadioButton: RadioButton = rgCategories.findViewById(selectedId)
+                val currentCategory: TaskCategory = when (selectedRadioButton.text) {
+                    getString(R.string.todo_dialog_category_business) -> TaskCategory.Business
+                    getString(R.string.todo_dialog_category_personal) -> TaskCategory.Personal
+                    else -> TaskCategory.Other
+                }
 
-            tasks.add(Task(etTask.text.toString(), currentCategory))
-            updateTasks()
-            dialog.hide()
+                tasks.add(Task(currentTask, currentCategory))
+                updateTasks()
+                dialog.hide()
+            } else {
+
+            }
         }
 
         dialog.show()
@@ -87,6 +92,12 @@ class ToDoActivity : AppCompatActivity() {
         rvTasks.layoutManager =
             LinearLayoutManager(this)
         rvTasks.adapter = tasksAdapter
+    }
+
+    private fun onItemSelected(position: Int) {
+        tasks[position].isSelected = !tasks[position].isSelected
+
+        updateTasks()
     }
 
     private fun updateTasks() {
