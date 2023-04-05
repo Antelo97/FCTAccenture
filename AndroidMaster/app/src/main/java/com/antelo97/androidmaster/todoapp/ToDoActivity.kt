@@ -15,8 +15,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ToDoActivity : AppCompatActivity() {
     private val categories = listOf(
-        TaskCategory.Personal,
         TaskCategory.Business,
+        TaskCategory.Personal,
         TaskCategory.Other
     )
 
@@ -83,24 +83,33 @@ class ToDoActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        categoriesAdapter = CategoriesAdapter(categories)
+        categoriesAdapter = CategoriesAdapter(categories) { position -> updateCategories(position) }
         rvCategories.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rvCategories.adapter = categoriesAdapter
 
-        tasksAdapter = TasksAdapter(tasks)
+        tasksAdapter = TasksAdapter(tasks) { position -> onItemSelected(position) }
         rvTasks.layoutManager =
             LinearLayoutManager(this)
         rvTasks.adapter = tasksAdapter
     }
 
     private fun onItemSelected(position: Int) {
-        tasks[position].isSelected = !tasks[position].isSelected
+        tasksAdapter.tasks[position].isSelected = !tasksAdapter.tasks[position].isSelected
+        updateTasks()
+    }
 
+    private fun updateCategories(position: Int) {
+        categories[position].isSelected = !categories[position].isSelected
+        categoriesAdapter.notifyItemChanged(position)
         updateTasks()
     }
 
     private fun updateTasks() {
+        val selectedCategories: List<TaskCategory> = categories.filter { it.isSelected }
+        val newTasks: List<Task> = tasks.filter { selectedCategories.contains(it.category) }
+
+        tasksAdapter.tasks = newTasks
         tasksAdapter.notifyDataSetChanged()
     }
 }
