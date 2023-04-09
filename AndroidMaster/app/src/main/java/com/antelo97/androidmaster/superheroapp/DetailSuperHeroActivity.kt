@@ -27,7 +27,7 @@ class DetailSuperHeroActivity : AppCompatActivity() {
 
     private fun getSuperheroInformation(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            
+
         }
     }
 
