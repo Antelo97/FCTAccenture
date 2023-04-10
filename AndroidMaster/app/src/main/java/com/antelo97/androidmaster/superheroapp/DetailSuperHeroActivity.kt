@@ -27,7 +27,7 @@ class DetailSuperHeroActivity : AppCompatActivity() {
 
     private fun getSuperheroInformation(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
-
+            getRetrofit().create(ApiService::class.java).getSuperHeroDetail(id)
         }
     }
 
