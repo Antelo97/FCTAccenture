@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context=".layouts.LinearLayoutActivity">
+    tools:context=".layouts.LinearLayAct">
 
     <View
         android:layout_width="0dp"
@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical"
-        tools:context=".layouts.LinearLayoutActivity">
+        tools:context=".layouts.LinearLayAct">
 
         <View
             android:layout_width="match_parent"
@@ -63,7 +63,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical"
-        tools:context=".layouts.LinearLayoutActivity">
+        tools:context=".layouts.LinearLayAct">
 
         <View
             android:layout_width="match_parent"
@@ -95,7 +95,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            tools:context=".layouts.LinearLayoutActivity">
+            tools:context=".layouts.LinearLayAct">
 
             <View
                 android:layout_width="0dp"

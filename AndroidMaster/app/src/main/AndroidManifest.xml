@@ -42,16 +42,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".layouts.ConstraintLayoutActivityV2"
+            android:name=".layouts.ConstraintLayActV2"
             android:exported="false" />
         <activity
-            android:name=".layouts.ConstraintLayoutActivity"
+            android:name=".layouts.ConstraintLayActV1"
             android:exported="false" />
         <activity
-            android:name=".layouts.LinearLayoutActivity"
+            android:name=".layouts.LinearLayAct"
             android:exported="false" />
         <activity
-            android:name=".layouts.FrameLayoutActivity"
+            android:name=".layouts.FrameLayAct"
             android:exported="false" />
         <activity
             android:name=".firstapp.ResultActivity"
