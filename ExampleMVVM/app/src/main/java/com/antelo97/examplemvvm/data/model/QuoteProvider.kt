@@ -1,9 +1,10 @@
-package com.antelo97.examplemvvm.model
+package com.antelo97.examplemvvm.data.model
 
 class QuoteProvider {
     companion object {
+        var quotes: List<QuoteModel> = emptyList()
 
-        fun random(): QuoteModel {
+        /* fun random(): QuoteModel {
             val position: Int = (0..10).random()
             return quote[position]
         }
@@ -53,6 +54,6 @@ class QuoteProvider {
                 quote = "¿A que esperas?, suscríbete.",
                 author = "AristiDevs"
             )
-        )
+        ) */
     }
 }
