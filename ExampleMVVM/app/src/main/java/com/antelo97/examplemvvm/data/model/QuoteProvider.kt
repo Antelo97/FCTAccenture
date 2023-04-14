@@ -3,6 +3,7 @@ package com.antelo97.examplemvvm.data.model
 import javax.inject.Inject
 import javax.inject.Singleton
 
+// Esta clase deja de ser necesaria al implementar ROOM como BD local
 @Singleton
 class QuoteProvider @Inject constructor() {
 
