@@ -3,6 +3,7 @@ package com.antelo97.examplemvvm.di
 import android.content.Context
 import androidx.room.Room
 import com.antelo97.examplemvvm.data.database.QuoteDatabase
+import com.antelo97.examplemvvm.data.database.dao.QuoteDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,5 +24,5 @@ object RoomModule {
 
     @Singleton
     @Provides
-    fun provideQuoteDao(db: QuoteDatabase) = db.getQuoteDao()
+    fun provideQuoteDao(db: QuoteDatabase): QuoteDao = db.getQuoteDao()
 }
