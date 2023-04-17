@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.antelo97.recyclerviewexample.R
 import com.antelo97.recyclerviewexample.Superhero
 
-class SuperheroAdapter(private val superheroList: List<Superhero>) :
+class SuperheroAdapter(
+    private val superheroList: List<Superhero>,
+    private val onClickListener: (Superhero) -> Unit
+) :
     RecyclerView.Adapter<SuperheroViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuperheroViewHolder {
@@ -19,6 +22,6 @@ class SuperheroAdapter(private val superheroList: List<Superhero>) :
 
     override fun onBindViewHolder(holder: SuperheroViewHolder, position: Int) {
         val item = superheroList[position]
-        holder.render(item)
+        holder.render(item, onClickListener)
     }
 }

@@ -1,24 +1,38 @@
 package com.antelo97.recyclerviewexample.adapter
 
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.antelo97.recyclerviewexample.R
 import com.antelo97.recyclerviewexample.Superhero
+import com.antelo97.recyclerviewexample.databinding.ItemSuperheroBinding
 import com.squareup.picasso.Picasso
 
 class SuperheroViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    val tvSuperheroName = view.findViewById<TextView>(R.id.tvSuperheroName)
-    val tvPublisher = view.findViewById<TextView>(R.id.tvPublisher)
-    val tvRealName = view.findViewById<TextView>(R.id.tvRealName)
-    val ivSuperhero = view.findViewById<ImageView>(R.id.ivSuperhero)
+    private val binding = ItemSuperheroBinding.bind(view)
 
-    fun render(superheroModel: Superhero) {
-        tvSuperheroName.text = superheroModel.superhero
-        tvPublisher.text = superheroModel.publisher
-        tvRealName.text = superheroModel.realName
-        Picasso.get().load(superheroModel.image).into(ivSuperhero)
+    fun render(superheroModel: Superhero, onClickListener: (Superhero) -> Unit) {
+        binding.tvSuperheroName.text = superheroModel.superhero
+        binding.tvPublisher.text = superheroModel.publisher
+        binding.tvRealName.text = superheroModel.realName
+        Picasso.get().load(superheroModel.image).into(binding.ivSuperhero)
+
+        itemView.setOnClickListener { onClickListener(superheroModel) }
+
+        /*binding.ivSuperhero.setOnClickListener {
+            Toast.makeText(
+                binding.ivSuperhero.context,
+                superheroModel.realName,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        itemView.setOnClickListener {
+            Toast.makeText(
+                binding.ivSuperhero.context,
+                superheroModel.superhero,
+                Toast.LENGTH_SHORT
+            ).show()
+        }*/
     }
 }
