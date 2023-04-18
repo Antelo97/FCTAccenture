@@ -1,0 +1,18 @@
+package com.antelo97.harrypotterapp.data.network.api
+
+import com.antelo97.harrypotterapp.data.network.model_response.BookResponse
+import com.antelo97.harrypotterapp.data.network.model_response.CharacterResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import retrofit2.Response
+import javax.inject.Inject
+
+class CharacterService @Inject constructor(private val api: CharacterApiClient) {
+
+    suspend fun getAllCharacters(): List<CharacterResponse> {
+        return withContext(Dispatchers.IO) {
+            val response: Response<List<CharacterResponse>> = api.getAllCharacters()
+            response.body().orEmpty()
+        }
+    }
+}

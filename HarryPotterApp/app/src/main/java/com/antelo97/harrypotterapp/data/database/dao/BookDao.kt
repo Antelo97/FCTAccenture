@@ -9,12 +9,12 @@ import com.antelo97.harrypotterapp.data.database.model_entity.BookEntity
 @Dao
 interface BookDao {
 
-    @Query("SELECT * FROM Books")
+    @Query("SELECT * FROM FavoriteBooks")
     suspend fun getAllBooks(): List<BookEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllBooks(books: List<BookEntity>)
 
-    @Query("DELETE FROM Books")
+    @Query("DELETE FROM FavoriteBooks")
     suspend fun deleteAllBooks()
 }

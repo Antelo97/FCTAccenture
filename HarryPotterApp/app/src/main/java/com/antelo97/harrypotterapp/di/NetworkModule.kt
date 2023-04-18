@@ -1,6 +1,7 @@
 package com.antelo97.harrypotterapp.di
 
 import com.antelo97.harrypotterapp.data.network.api.BookApiClient
+import com.antelo97.harrypotterapp.data.network.api.CharacterApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,8 +16,8 @@ import javax.inject.Singleton
 object NetworkModule {
     @Singleton
     @Provides
-    @Named("firstApiRetrofit")
-    fun provideRetrofitForMainApi(): Retrofit {
+    @Named("firstApi")
+    fun provideRetrofitForFirstApi(): Retrofit {
         return Retrofit
             .Builder()
             .baseUrl("https://legacy--api.herokuapp.com/api/v1/")
@@ -26,8 +27,8 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    @Named("secondApiRetrofit")
-    fun provideRetrofitForSpellApi(): Retrofit {
+    @Named("secondApi")
+    fun provideRetrofitForSecondApi(): Retrofit {
         return Retrofit
             .Builder()
             .baseUrl("https://hp-api.onrender.com/api/")
@@ -37,7 +38,13 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideBookApiClient(@Named("firstApiRetrofit") retrofit: Retrofit): BookApiClient {
+    fun provideBookApiClient(@Named("firstApi") retrofit: Retrofit): BookApiClient {
         return retrofit.create(BookApiClient::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCharacterApiClient(@Named("secondApi") retrofit: Retrofit): CharacterApiClient {
+        return retrofit.create(CharacterApiClient::class.java)
     }
 }

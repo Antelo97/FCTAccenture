@@ -7,9 +7,8 @@ data class Book(
     val title: String,
     val imageUrl: String,
     val author: String,
-    val releaseDate: String
+    val releaseDate: String,
+    val isFavorite: Boolean
 )
 
-fun BookResponse.toDomain() = Book(title, imageUrl, author = artists[0].author.name, releaseDate)
-
-fun BookEntity.toDomain() = Book(title, imageUrl, author, releaseDate)
+fun BookEntity.toDomain() = Book(title, imageUrl, author, releaseDate, isFavorite)
