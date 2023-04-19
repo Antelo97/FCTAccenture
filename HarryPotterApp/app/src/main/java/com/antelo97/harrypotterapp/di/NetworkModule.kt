@@ -14,6 +14,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    // https://legacy--api.herokuapp.com/api/v1
+    // https://hp-api.onrender.com/
+
     @Singleton
     @Provides
     @Named("firstApi")

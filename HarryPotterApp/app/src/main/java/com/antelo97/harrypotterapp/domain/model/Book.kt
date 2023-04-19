@@ -4,6 +4,7 @@ import com.antelo97.harrypotterapp.data.database.model_entity.BookEntity
 import com.antelo97.harrypotterapp.data.network.model_response.BookResponse
 
 data class Book(
+    val idApiBook: Int,
     val title: String,
     val imageUrl: String,
     val author: String,
@@ -11,4 +12,4 @@ data class Book(
     val isFavorite: Boolean
 )
 
-fun BookEntity.toDomain() = Book(title, imageUrl, author, releaseDate, isFavorite)
+fun BookEntity.toDomain() = Book(idApiBook, title, imageUrl, author, releaseDate, isFavorite)

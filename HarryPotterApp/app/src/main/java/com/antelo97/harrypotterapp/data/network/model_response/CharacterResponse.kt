@@ -13,8 +13,8 @@ data class CharacterResponse(
     @SerializedName("ancestry") val ancestry: String,
     @SerializedName("wand") val wand: WandResponse,
     @SerializedName("patronus") val patronus: String,
-    @SerializedName("isHogwartsStudent") val isHogwartsStudent: Boolean,
-    @SerializedName("isHogwartsStaff") val isHogwartsStaff: Boolean,
+    @SerializedName("hogwartsStudent") val isHogwartsStudent: Boolean,
+    @SerializedName("hogwartsStaff") val isHogwartsStaff: Boolean,
     @SerializedName("actor") val actor: String,
     @SerializedName("alive") val isAlive: Boolean,
     @SerializedName("image") val imageUrl: String

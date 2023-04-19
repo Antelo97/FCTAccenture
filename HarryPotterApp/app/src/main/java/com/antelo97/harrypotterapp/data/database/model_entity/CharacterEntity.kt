@@ -1,8 +1,7 @@
 package com.antelo97.harrypotterapp.data.database.model_entity
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
+import com.antelo97.harrypotterapp.data.network.model_response.CharacterResponse
 
 @Entity(tableName = "Characters")
 data class CharacterEntity(
@@ -20,5 +19,38 @@ data class CharacterEntity(
     @ColumnInfo(name = "is_hogwarts_staff") val isHogwartsStaff: Boolean,
     @ColumnInfo(name = "actor") val actor: String,
     @ColumnInfo(name = "is_alive") val isAlive: Boolean,
-    @ColumnInfo(name = "image_url") val imageUrl: String
+    @ColumnInfo(name = "image_url") val imageUrl: String,
+    @ColumnInfo(name = "is_favorite") val isFavorite: Boolean = false,
+
+    @Relation(
+        parentColumn = "id_api_character",
+        entityColumn = "id_foreign_character"
+    )
+    val wand: WandEntity
 )
+
+fun CharacterResponse.toDatabase() = CharacterEntity(
+    idApi,
+    name,
+    species,
+    gender,
+    house,
+    yearOfBirth,
+    isWizard,
+    ancestry,
+    patronus,
+    isHogwartsStudent,
+    isHogwartsStaff,
+    actor,
+    isAlive,
+    imageUrl,
+    wand = WandEntity(
+        idForeignCharacter = idApi,
+        wood = wand.wood,
+        core = wand.core,
+        length = wand.length,
+        character = null
+    )
+)
+
+// Model

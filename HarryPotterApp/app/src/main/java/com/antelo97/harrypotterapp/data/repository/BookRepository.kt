@@ -14,13 +14,13 @@ class BookRepository @Inject constructor(
     private val dao: BookDao
 ) {
 
-    suspend fun getAllBooksFromApi(): List<Book>? {
+    suspend fun getAllBooksFromApi(): List<Book> {
         val response: List<BookResponse> = api.getAllBooks()
 
         return if (response.isNotEmpty()) {
             deleteAllBooks()
             insertAllBooks(response.map { it.toDatabase() })
-            response.map { it.toDomain() }
+            response.map { it.toDatabase().toDomain() }
         } else {
             getAllBooksFromDatabase()
         }

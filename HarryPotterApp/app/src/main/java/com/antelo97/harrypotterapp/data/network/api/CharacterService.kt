@@ -11,8 +11,7 @@ class CharacterService @Inject constructor(private val api: CharacterApiClient) 
 
     suspend fun getAllCharacters(): List<CharacterResponse> {
         return withContext(Dispatchers.IO) {
-            val response: Response<List<CharacterResponse>> = api.getAllCharacters()
-            response.body().orEmpty()
+            api.getAllCharacters().body().orEmpty()
         }
     }
 }
