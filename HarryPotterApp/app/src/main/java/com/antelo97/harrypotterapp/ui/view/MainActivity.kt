@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        bookViewModel.onCreate()
+        //bookViewModel.onCreate()
 
         bookViewModel.book.observe(this, Observer { book ->
             binding.tvTitle.text = book.title

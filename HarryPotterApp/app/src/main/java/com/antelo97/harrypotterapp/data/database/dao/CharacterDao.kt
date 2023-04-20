@@ -1,10 +1,12 @@
 package com.antelo97.harrypotterapp.data.database.dao
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.antelo97.harrypotterapp.data.database.model_entity.CharacterEntity
 
+@Dao
 interface CharacterDao {
 
     @Query("SELECT * FROM Characters")
