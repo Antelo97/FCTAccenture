@@ -38,5 +38,4 @@ class BookRepository @Inject constructor(
     suspend fun deleteAllBooks() {
         dao.deleteAllBooks()
     }
-
 }

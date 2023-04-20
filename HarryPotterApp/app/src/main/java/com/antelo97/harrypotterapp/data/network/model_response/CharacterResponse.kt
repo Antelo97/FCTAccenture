@@ -23,5 +23,5 @@ data class CharacterResponse(
 data class WandResponse(
     @SerializedName("wood") val wood: String,
     @SerializedName("core") val core: String,
-    @SerializedName("length") val length: Int
+    @SerializedName("length") val length: Double
 )

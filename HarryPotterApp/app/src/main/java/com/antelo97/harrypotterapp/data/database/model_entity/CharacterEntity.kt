@@ -1,6 +1,10 @@
 package com.antelo97.harrypotterapp.data.database.model_entity
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.Relation
 import com.antelo97.harrypotterapp.data.network.model_response.CharacterResponse
 
 @Entity(tableName = "Characters")
@@ -21,12 +25,8 @@ data class CharacterEntity(
     @ColumnInfo(name = "is_alive") val isAlive: Boolean,
     @ColumnInfo(name = "image_url") val imageUrl: String,
     @ColumnInfo(name = "is_favorite") val isFavorite: Boolean = false,
-
-    @Relation(
-        parentColumn = "id_api_character",
-        entityColumn = "id_foreign_character"
-    )
-    val wand: WandEntity
+    @ColumnInfo(name = "image_url_house") val imageUrlHouse: String,
+    @Embedded val wand: WandEntity
 )
 
 fun CharacterResponse.toDatabase() = CharacterEntity(
@@ -44,12 +44,18 @@ fun CharacterResponse.toDatabase() = CharacterEntity(
     actor,
     isAlive,
     imageUrl,
+    imageUrlHouse = when (house) {
+        "Gryffindor" -> "https://static.wikia.nocookie.net/harrypotter/images/b/b1/Gryffindor_ClearBG.png"
+        "Hufflepuff" -> "https://static.wikia.nocookie.net/harrypotter/images/0/06/Hufflepuff_ClearBG.png"
+        "Slytherin" -> "https://static.wikia.nocookie.net/harrypotter/images/0/00/Slytherin_ClearBG.png"
+        "Ravenclaw" -> "https://static.wikia.nocookie.net/harrypotter/images/7/71/Ravenclaw_ClearBG.png"
+        else -> ""
+    },
     wand = WandEntity(
         idForeignCharacter = idApi,
         wood = wand.wood,
         core = wand.core,
         length = wand.length,
-        character = null
     )
 )
 

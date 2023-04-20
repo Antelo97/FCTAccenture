@@ -21,5 +21,5 @@ fun BookResponse.toDatabase() = BookEntity(
     title = title,
     imageUrl = imageUrl,
     author = artists[0].author.name,
-    releaseDate = releaseDate
+    releaseDate = releaseDate,
 )

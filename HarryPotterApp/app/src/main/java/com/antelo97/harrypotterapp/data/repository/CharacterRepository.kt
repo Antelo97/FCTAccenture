@@ -4,6 +4,7 @@ import com.antelo97.harrypotterapp.data.database.dao.CharacterDao
 import com.antelo97.harrypotterapp.data.database.model_entity.CharacterEntity
 import com.antelo97.harrypotterapp.data.database.model_entity.toDatabase
 import com.antelo97.harrypotterapp.data.network.api.CharacterService
+import com.antelo97.harrypotterapp.data.network.model_response.CharacterResponse
 import com.antelo97.harrypotterapp.domain.model.toDomain
 import javax.inject.Inject
 
@@ -24,7 +25,7 @@ class CharacterRepository @Inject constructor(
         dao.insertAllCharactersAndWands(characters)
     }
 
-    private suspend fun deleteAllCharacters() {
+    suspend fun deleteAllCharacters() {
         dao.deleteAllCharacters()
     }
 }
