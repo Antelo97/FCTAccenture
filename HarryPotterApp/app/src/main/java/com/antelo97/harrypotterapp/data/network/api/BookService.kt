@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class BookService @Inject constructor(private val api: BookApiClient) {
 
-    suspend fun getAllBooks(): List<BookResponse> {
+    suspend fun getBooks(): List<BookResponse> {
         return withContext(Dispatchers.IO) {
             val response: Response<List<BookResponse>> = api.getAllBooks()
             response.body().orEmpty()

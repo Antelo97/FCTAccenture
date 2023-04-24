@@ -65,6 +65,8 @@ dependencies {
     kapt "androidx.room:room-compiler:2.4.0"
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.8'
+    // BottomNavigationView
+    implementation 'com.google.android.material:material:<version>'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

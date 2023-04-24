@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="@color/hp_negro"
+    app:cardCornerRadius="22dp"
+    app:cardElevation="8dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivBook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            app:cardCornerRadius="16dp"
+            app:cardUseCompatPadding="true">
+
+            <ImageView
+                android:id="@+id/ivBookFavorite"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="#000000"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_favorite"
+                app:tint="@color/white" />
+        </androidx.cardview.widget.CardView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom"
+            android:background="@color/hp_marron_claro">
+
+            <TextView
+                android:id="@+id/tvBookTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/hp_negro"
+                android:textSize="20sp"
+                tools:text="ANTELO97" />
+        </FrameLayout>
+    </FrameLayout>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/toBooks"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Books" />
+    <item
+        android:id="@+id/toCharacters"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Characters" />
+    <item
+        android:id="@+id/toSpells"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Spells" />
+    <item
+        android:id="@+id/toSpecies"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Species" />
+</menu>

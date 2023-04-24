@@ -7,7 +7,13 @@ import javax.inject.Inject
 class GetBooksUC @Inject constructor(private val repository: BookRepository) {
 
     suspend operator fun invoke(): List<Book> {
-        repository.getAllBooksFromApi()
-        return repository.getAllBooksFromDatabase()
+        val query: List<Book> = repository.getBooksFromDatabase()
+
+        return if (query.isEmpty()) {
+            repository.insertBooks()
+            repository.getBooksFromDatabase()
+        } else {
+            query
+        }
     }
 }

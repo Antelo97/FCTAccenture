@@ -7,4 +7,13 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    // HarryPotterApp
+    <color name="hp_rojo_oscuro">#740001</color>
+    <color name="hp_oro">#D3A625</color>
+    <color name="hp_marron_oscuro">#6A3A19</color>
+    <color name="hp_marron_claro">#B48A76</color>
+    <color name="hp_verde_oscuro">#00543D</color>
+    <color name="hp_azul_grisaceo">#5A7D8F</color>
+    <color name="hp_negro">#000000</color>
 </resources>

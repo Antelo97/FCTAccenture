@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.antelo97.harrypotterapp.data.network.model_response.BookResponse
+import com.antelo97.harrypotterapp.domain.model.Book
 
 @Entity(tableName = "Books")
 data class BookEntity(
@@ -22,4 +23,13 @@ fun BookResponse.toDatabase() = BookEntity(
     imageUrl = imageUrl,
     author = artists[0].author.name,
     releaseDate = releaseDate,
+)
+
+fun Book.toDatabase() = BookEntity(
+    idApiBook,
+    title,
+    imageUrl,
+    author,
+    releaseDate,
+    isFavorite
 )

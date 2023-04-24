@@ -10,7 +10,8 @@ data class SpellEntity(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id_api_spell") val idApiSpell: String,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "description") val description: String
+    @ColumnInfo(name = "description") val description: String,
+    @ColumnInfo(name = "is_favorite") val isFavorite: Boolean = false
 )
 
 fun SpellResponse.toDatabase() = SpellEntity(idApi, name, description)

@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.Relation
 import com.antelo97.harrypotterapp.data.network.model_response.CharacterResponse
 
 @Entity(tableName = "Characters")

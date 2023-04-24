@@ -2,6 +2,7 @@ package com.antelo97.harrypotterapp.di
 
 import com.antelo97.harrypotterapp.data.network.api.BookApiClient
 import com.antelo97.harrypotterapp.data.network.api.CharacterApiClient
+import com.antelo97.harrypotterapp.data.network.api.SpeciesApiClient
 import com.antelo97.harrypotterapp.data.network.api.SpellApiClient
 import dagger.Module
 import dagger.Provides
@@ -57,5 +58,11 @@ object NetworkModule {
     @Provides
     fun provideSpellApiClient(@Named("secondApi") retrofit: Retrofit): SpellApiClient {
         return retrofit.create(SpellApiClient::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSpeciesApiClient(@Named("firstApi") retrofit: Retrofit): SpeciesApiClient {
+        return retrofit.create(SpeciesApiClient::class.java)
     }
 }

@@ -14,28 +14,43 @@ class BookRepository @Inject constructor(
     private val dao: BookDao
 ) {
 
-    suspend fun getAllBooksFromApi(): List<Book> {
-        val response: List<BookResponse> = api.getAllBooks()
+    suspend fun getBooksFromApi(): List<Book> {
+        val response: List<BookResponse> = api.getBooks()
 
         return if (response.isNotEmpty()) {
-            deleteAllBooks()
-            insertAllBooks(response.map { it.toDatabase() })
+            deleteBooks()
+            insertBooks()
             response.map { it.toDatabase().toDomain() }
         } else {
-            getAllBooksFromDatabase()
+            getBooksFromDatabase()
         }
     }
 
-    suspend fun getAllBooksFromDatabase(): List<Book> {
-        val query: List<BookEntity> = dao.getAllBooks()
+    suspend fun getBooksFromDatabase(): List<Book> {
+        val query: List<BookEntity> = dao.getBooks()
         return query.map { it.toDomain() }
     }
 
-    suspend fun insertAllBooks(books: List<BookEntity>) {
-        dao.insertAllBooks(books)
+    suspend fun insertBooks() {
+        val books: List<BookEntity> = api.getBooks().map { it.toDatabase() }
+
+        deleteBooks()
+        dao.insertBooks(books)
     }
 
-    suspend fun deleteAllBooks() {
+    suspend fun deleteBooks() {
         dao.deleteAllBooks()
+    }
+
+    suspend fun getBooksByTitle(searchQuery: String): List<Book> {
+        return dao.getBooksByTitle(searchQuery).map { it.toDomain() }
+    }
+
+    suspend fun updateBook(book: Book) {
+        dao.updateBook(book.toDatabase())
+    }
+
+    suspend fun getFavoriteBooks(): List<Book> {
+        return dao.getFavoriteBooks().map { it.toDomain() }
     }
 }

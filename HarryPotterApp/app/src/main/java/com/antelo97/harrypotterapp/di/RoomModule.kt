@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.antelo97.harrypotterapp.data.database.HarryPotterDatabase
 import com.antelo97.harrypotterapp.data.database.dao.BookDao
 import com.antelo97.harrypotterapp.data.database.dao.CharacterDao
+import com.antelo97.harrypotterapp.data.database.dao.SpeciesDao
 import com.antelo97.harrypotterapp.data.database.dao.SpellDao
 import dagger.Module
 import dagger.Provides
@@ -35,4 +36,8 @@ object RoomModule {
     @Singleton
     @Provides
     fun provideSpellDao(db: HarryPotterDatabase): SpellDao = db.getSpellDao()
+
+    @Singleton
+    @Provides
+    fun provideSpeciesDao(db: HarryPotterDatabase): SpeciesDao = db.getSpeciesDao()
 }

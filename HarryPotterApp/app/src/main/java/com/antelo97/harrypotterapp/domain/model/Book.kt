@@ -7,8 +7,8 @@ data class Book(
     var title: String,
     val imageUrl: String,
     val author: String,
-    val releaseDate: String,
-    val isFavorite: Boolean
+    var releaseDate: String,
+    var isFavorite: Boolean
 )
 
 fun BookEntity.toDomain() = Book(idApiBook, title, imageUrl, author, releaseDate, isFavorite)
