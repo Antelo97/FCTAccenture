@@ -31,4 +31,8 @@ class SpellRepository @Inject constructor(
     suspend fun getSpellsByName(searchQuery: String): List<Spell> {
         return dao.getSpellsByName(searchQuery).map { it.toDomain() }
     }
+
+    suspend fun getFavoriteSpells(): List<Spell> {
+        return dao.getFavoriteSpells().map { it.toDomain() }
+    }
 }

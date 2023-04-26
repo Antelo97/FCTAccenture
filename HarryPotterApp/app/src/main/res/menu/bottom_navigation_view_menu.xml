@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/toBooks"
+        android:fontFamily="@font/apple_butter"
+        android:icon="@drawable/ic_books"
+        android:title="@string/books"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/toCharacters"
+        android:fontFamily="@font/apple_butter"
+        android:icon="@drawable/ic_characters"
+        android:title="@string/characters"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/toSpells"
+        android:fontFamily="@font/apple_butter"
+        android:icon="@drawable/ic_spells"
+        android:title="@string/spells"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/toSpecies"
+        android:fontFamily="@font/apple_butter"
+        android:icon="@drawable/ic_species"
+        android:title="@string/species"
+        app:showAsAction="ifRoom" />
+</menu>

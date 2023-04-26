@@ -21,4 +21,7 @@ interface SpellDao {
 
     @Query("SELECT * FROM Spells WHERE name LIKE '%' || :searchQuery || '%'")
     suspend fun getSpellsByName(searchQuery: String): List<SpellEntity>
+
+    @Query("SELECT * FROM Spells WHERE is_favorite = 1")
+    suspend fun getFavoriteSpells(): List<SpellEntity>
 }

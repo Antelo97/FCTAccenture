@@ -3,8 +3,8 @@ package com.antelo97.harrypotterapp.ui.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.antelo97.harrypotterapp.R
 import com.antelo97.harrypotterapp.domain.model.Book
+import com.antelo97.harrypotterapp.domain.model.Spell
 import com.antelo97.harrypotterapp.domain.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,17 +21,32 @@ class MainViewModel @Inject constructor(
     private val getSpellsByNameUC: GetSpellsByNameUC,
     private val getSpeciesByNameUC: GetSpeciesByNameUC,
     private val updateBookUC: UpdateBookUC,
-    private val getFavoriteBooksUC: GetFavoriteBooksUC
+    private val getFavoriteBooksUC: GetFavoriteBooksUC,
+    private val getFavoriteSpells: GetFavoriteSpellsUC
 ) : ViewModel() {
 
-    val isLoadingBooks: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    // MainActivity
+    val isLoadingMain: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+
+    // BooksFragment
     val foundBooks: MutableLiveData<List<Book>> = MutableLiveData<List<Book>>()
+    val isLoadingBooks: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val favoriteList: MutableList<MutableLiveData<Int>> = mutableListOf()
+    val mbtnAllBooks: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+
+    // CharactersFragment
+
+    // SpellsFragment
+    val foundSpells: MutableLiveData<List<Spell>> = MutableLiveData<List<Spell>>()
+    val isLoadingSpells: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val mbtnAllSpells: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+
+    // SpeciesFragment
 
     fun onCreate() {
+        /*isLoadingBooks.postValue(true)
         viewModelScope.launch {
             loadAllData()
-
             foundBooks.value?.let { books ->
                 for (i in books.indices) {
                     favoriteList.add(MutableLiveData())
@@ -39,6 +54,7 @@ class MainViewModel @Inject constructor(
                 }
             }
         }
+        isLoadingBooks.postValue(false)*/
     }
 
     private suspend fun loadBooks() {
@@ -50,26 +66,36 @@ class MainViewModel @Inject constructor(
     }
 
     private suspend fun loadSpells() {
-        getSpellsUC()
+        foundSpells.postValue(getSpellsUC())
     }
 
     private suspend fun loadSpecies() {
         getSpeciesUC()
     }
 
-    private suspend fun loadAllData() {
+    suspend fun loadAllData() {
+        isLoadingMain.postValue(true)
         loadBooks()
         loadCharacters()
         loadSpells()
         loadSpecies()
+        isLoadingMain.postValue(false)
     }
 
     fun searchBooksByTitle(bookTitle: String) {
-        isLoadingBooks.postValue(true)
+        isLoadingMain.postValue(true)
         viewModelScope.launch {
             foundBooks.postValue(getBooksByTitleUC(bookTitle))
-            isLoadingBooks.postValue(false)
         }
+        isLoadingMain.postValue(false)
+    }
+
+    fun searchSpellsByName(spellName: String) {
+        isLoadingSpells.postValue(true)
+        viewModelScope.launch {
+            foundSpells.postValue(getSpellsByNameUC(spellName))
+        }
+        isLoadingSpells.postValue(true)
     }
 
     suspend fun updateFavoriteBook(book: Book, position: Int) {
@@ -91,5 +117,25 @@ class MainViewModel @Inject constructor(
 
     suspend fun showFavoriteBooks() {
         foundBooks.postValue(getFavoriteBooksUC())
+    }
+
+    suspend fun showFavoriteSpells() {
+        foundSpells.postValue(getFavoriteSpells())
+    }
+
+    suspend fun showAllBooks() {
+        foundBooks.postValue(getBooksUC())
+    }
+
+    suspend fun showAllSpells() {
+        foundSpells.postValue(getSpellsUC())
+    }
+
+    fun updateAllMBtnBook(state: Boolean) {
+        mbtnAllBooks.postValue(!state)
+    }
+
+    fun updateAllMBtnSpell(state: Boolean) {
+        mbtnAllSpells.postValue(!state)
     }
 }

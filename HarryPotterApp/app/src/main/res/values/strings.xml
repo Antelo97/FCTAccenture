@@ -7,4 +7,6 @@
     <string name="characters">Characters</string>
     <string name="spells">Spells</string>
     <string name="species">Species</string>
+    <string name="fav">FAV</string>
+    <string name="all">ALL</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.antelo97.harrypotterapp.ui.view.fragment
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -19,11 +19,6 @@ import com.antelo97.harrypotterapp.databinding.FragmentBooksBinding
 import com.antelo97.harrypotterapp.ui.view.fragment.adapter.BooksAdapter
 import com.antelo97.harrypotterapp.ui.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -36,24 +31,25 @@ class BooksFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by activityViewModels()
 
-    private var param1: String? = null
-    private var param2: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bindingBooksFragment = FragmentBooksBinding.inflate(layoutInflater)
+        //bindingBooksFragment = FragmentBooksBinding.inflate(layoutInflater)
 
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-
+        // Observers
         mainViewModel.foundBooks.observe(this, Observer { foundBooks ->
             booksAdapter.updateList(foundBooks)
         })
 
         mainViewModel.isLoadingBooks.observe(this, Observer { isLoadingBooks ->
             bindingBooksFragment.pbBooks.isVisible = isLoadingBooks
+        })
+
+        mainViewModel.mbtnAllBooks.observe(this, Observer { mbtnAllBook ->
+            bindingBooksFragment.mbtnAllBooks.isEnabled = mbtnAllBook
+
+            // Asigna la lista de colores al backgroundTint del botón
+            bindingBooksFragment.mbtnAllBooks.backgroundTintList = getColorStateListBooks()
+            Log.d("A", "HOLAAAA")
         })
     }
 
@@ -78,10 +74,21 @@ class BooksFragment : Fragment() {
             override fun onQueryTextChange(newText: String?) = false
         })
 
-        bindingBooksFragment.fabFav.setOnClickListener {
+        bindingBooksFragment.mbtnFavBooks.setOnClickListener {
             mainViewModel.viewModelScope.launch {
+                if (!bindingBooksFragment.mbtnAllBooks.isEnabled) {
+                    mainViewModel.updateAllMBtnBook(bindingBooksFragment.mbtnAllBooks.isEnabled)
+                }
                 mainViewModel.showFavoriteBooks()
-                Log.d("TAG", "Este es un mensaje de depuración");
+            }
+        }
+
+        bindingBooksFragment.mbtnAllBooks.isEnabled = mainViewModel.mbtnAllBooks.value ?: true
+        bindingBooksFragment.mbtnAllBooks.backgroundTintList = getColorStateListBooks()
+        bindingBooksFragment.mbtnAllBooks.setOnClickListener {
+            mainViewModel.viewModelScope.launch {
+                mainViewModel.updateAllMBtnBook(it.isEnabled)
+                mainViewModel.showAllBooks()
             }
         }
 
@@ -91,23 +98,25 @@ class BooksFragment : Fragment() {
         bindingBooksFragment.rvBooks.adapter = booksAdapter
     }
 
+    private fun getColorStateListBooks(): ColorStateList {
+        return ColorStateList(
+            arrayOf(
+                intArrayOf(android.R.attr.state_enabled),
+                intArrayOf(-android.R.attr.state_enabled)
+            ),
+            intArrayOf(
+                ContextCompat.getColor(requireContext(), R.color.hp_gold),
+                ContextCompat.getColor(requireContext(), R.color.hp_black_opacity_50)
+            )
+        )
+    }
+
     companion object {
         /**
          * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BooksFragment.
+         * this fragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BooksFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = BooksFragment()
     }
 }

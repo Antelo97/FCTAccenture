@@ -1,0 +1,5 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/bg_oval_rad_grad_yellow" android:state_selected="true" />
+    <item android:drawable="@color/hp_transparent" />
+</selector>
+

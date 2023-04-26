@@ -12,8 +12,7 @@ import com.antelo97.harrypotterapp.ui.viewmodel.MainViewModel
 class BooksAdapter(
     private val mainViewModel: MainViewModel,
     var foundBooks: List<Book> = emptyList()
-) :
-    RecyclerView.Adapter<BooksViewHolder>() {
+) : RecyclerView.Adapter<BooksViewHolder>() {
 
     fun updateList(foundBooks: List<Book>) {
         this.foundBooks = foundBooks
