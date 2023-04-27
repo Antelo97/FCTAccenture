@@ -91,29 +91,32 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Definición de atributos
-        bindingMainActivity.pbLoadingMain.isVisible = mainViewModel.isLoadingMain.value ?: true
-        bindingMainActivity.viewLoadingMain.isVisible = mainViewModel.isLoadingMain.value ?: true
-        bindingMainActivity.bottomNavigationView.menu.getItem(0).isEnabled =
-            !(mainViewModel.isLoadingMain.value ?: true)
-        bindingMainActivity.bottomNavigationView.menu.getItem(1).isEnabled =
-            !(mainViewModel.isLoadingMain.value ?: true)
-        bindingMainActivity.bottomNavigationView.menu.getItem(2).isEnabled =
-            !(mainViewModel.isLoadingMain.value ?: true)
-        bindingMainActivity.bottomNavigationView.menu.getItem(3).isEnabled =
-            !(mainViewModel.isLoadingMain.value ?: true)
-        bindingMainActivity.bottomNavigationView.menu.getItem(0).isVisible =
-            !(mainViewModel.isLoadingMain.value ?: true)
-        bindingMainActivity.bottomNavigationView.menu.getItem(1).isVisible =
-            !(mainViewModel.isLoadingMain.value ?: true)
-        bindingMainActivity.bottomNavigationView.menu.getItem(2).isVisible =
-            !(mainViewModel.isLoadingMain.value ?: true)
-        bindingMainActivity.bottomNavigationView.menu.getItem(3).isVisible =
-            !(mainViewModel.isLoadingMain.value ?: true)
+
 
         // Cargamos en la BD local toda la información de la API
         mainViewModel.viewModelScope.launch {
+            bindingMainActivity.pbLoadingMain.isVisible = mainViewModel.isLoadingMain.value ?: true
+            bindingMainActivity.viewLoadingMain.isVisible =
+                mainViewModel.isLoadingMain.value ?: true
+            bindingMainActivity.bottomNavigationView.menu.getItem(0).isEnabled =
+                !(mainViewModel.isLoadingMain.value ?: true)
+            bindingMainActivity.bottomNavigationView.menu.getItem(1).isEnabled =
+                !(mainViewModel.isLoadingMain.value ?: true)
+            bindingMainActivity.bottomNavigationView.menu.getItem(2).isEnabled =
+                !(mainViewModel.isLoadingMain.value ?: true)
+            bindingMainActivity.bottomNavigationView.menu.getItem(3).isEnabled =
+                !(mainViewModel.isLoadingMain.value ?: true)
+            bindingMainActivity.bottomNavigationView.menu.getItem(0).isVisible =
+                !(mainViewModel.isLoadingMain.value ?: true)
+            bindingMainActivity.bottomNavigationView.menu.getItem(1).isVisible =
+                !(mainViewModel.isLoadingMain.value ?: true)
+            bindingMainActivity.bottomNavigationView.menu.getItem(2).isVisible =
+                !(mainViewModel.isLoadingMain.value ?: true)
+            bindingMainActivity.bottomNavigationView.menu.getItem(3).isVisible =
+                !(mainViewModel.isLoadingMain.value ?: true)
+
             mainViewModel.loadAllData()
-            bindingMainActivity.bottomNavigationView.selectedItemId = R.id.toBooks
+            bindingMainActivity.bottomNavigationView.selectedItemId = R.id.toNothing
         }
     }
 }

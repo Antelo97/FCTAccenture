@@ -32,4 +32,8 @@
         android:title="@string/species"
         android:visible="false"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/toNothing"
+        android:enabled="false"
+        android:visible="false" />
 </menu>
