@@ -21,7 +21,7 @@ class SpellsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpellsViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
-        val view: View = layoutInflater.inflate(R.layout.item_spell, null)
+        val view: View = layoutInflater.inflate(R.layout.item_spell, parent, false)
         return SpellsViewHolder(view, mainViewModel)
     }
 
@@ -30,5 +30,4 @@ class SpellsAdapter(
     override fun onBindViewHolder(viewHolder: SpellsViewHolder, position: Int) {
         viewHolder.render(foundSpells[position], position)
     }
-
 }

@@ -2,13 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentItemBook"
     style="@style/frame_layout_item"
     android:layout_width="match_parent"
-    android:layout_height="225dp">
+    android:layout_height="425dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:backgroundTint="@color/hp_black"
         app:cardCornerRadius="22dp"
         app:cardElevation="8dp">
 
@@ -16,7 +18,7 @@
             android:id="@+id/ivBook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop" />
+            android:scaleType="fitXY" />
 
         <ImageView
             android:id="@+id/ivBookFavorite"
@@ -25,6 +27,7 @@
             android:layout_height="30dp" />
 
         <LinearLayout
+            android:id="@+id/llInfoBook"
             style="@style/linear_layout_info_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -37,41 +40,24 @@
 
                 <TextView
                     android:id="@+id/tvBookTitle"
+                    style="@style/text_view_names"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/apple_butter"
-                    android:gravity="center"
-                    android:textColor="@color/hp_black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
                     tools:text="ANTELO97" />
 
                 <TextView
                     android:id="@+id/tvBookDetails"
+                    style="@style/text_view_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="2dp"
-                    android:layout_marginStart="5dp"
-                    android:fontFamily="@font/apple_butter"
-                    android:gravity="start"
-                    android:textColor="@color/hp_black"
-                    android:textSize="20sp"
-                    android:textStyle="italic"
-                    android:visibility="gone"
                     tools:text="ANTELO97" />
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/ivBookDetail"
+                style="@style/image_view_details_item"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="bottom"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginBottom="6dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/ic_more_info"
-                app:tint="@color/hp_black" />
+                android:layout_height="30dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

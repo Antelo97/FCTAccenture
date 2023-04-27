@@ -10,7 +10,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antelo97.harrypotterapp.R
@@ -29,26 +28,26 @@ class SpellsFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         // Observers
-        mainViewModel.foundSpells.observe(this, Observer { foundSpells ->
+        mainViewModel.foundSpells.observe(this) { foundSpells ->
             spellsAdapter.updateList(foundSpells)
-        })
+        }
 
-        mainViewModel.isLoadingSpells.observe(this, Observer { isLoadingSpells ->
+        mainViewModel.isLoadingSpells.observe(this) { isLoadingSpells ->
             bindingSpellsFragment.pbSpells.isVisible = isLoadingSpells
-        })
+        }
 
-        mainViewModel.mbtnAllSpells.observe(this, Observer { mbtnAllSpell ->
+        mainViewModel.mbtnAllSpells.observe(this) { mbtnAllSpell ->
             bindingSpellsFragment.mbtnAllSpells.isEnabled = mbtnAllSpell
 
             // Asigna la lista de colores al backgroundTint del botón
             bindingSpellsFragment.mbtnAllSpells.backgroundTintList = getColorStateListSpells()
-        })
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         bindingSpellsFragment = FragmentSpellsBinding.inflate(inflater, container, false)
         initUI()
@@ -67,6 +66,9 @@ class SpellsFragment : Fragment() {
         })
 
         bindingSpellsFragment.mbtnFavSpells.setOnClickListener {
+            /*bindingSpellsFragment.rvSpells.scrollToPosition(
+                (mainViewModel.foundSpells.value?.size?.minus(1)) ?: 0
+            )*/
             mainViewModel.viewModelScope.launch {
                 if (!bindingSpellsFragment.mbtnAllSpells.isEnabled) {
                     mainViewModel.updateAllMBtnSpell(false)

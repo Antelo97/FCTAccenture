@@ -2,6 +2,8 @@ package com.antelo97.harrypotterapp.ui.view.fragment.viewholder
 
 import android.annotation.SuppressLint
 import android.view.View
+import android.widget.ImageView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
@@ -49,12 +51,25 @@ class BooksViewHolder(
         })*/
 
         binding.ivBookDetail.setOnClickListener {
+            //binding.ivBook.scaleType = ImageView.ScaleType.FIT_XY
             if (!binding.tvBookDetails.isVisible) {
                 binding.tvBookDetails.isVisible = true
                 binding.ivBookDetail.setImageResource(R.drawable.ic_less_info2)
+                binding.llInfoBook.setBackgroundColor(
+                    ContextCompat.getColor(
+                        view.context,
+                        R.color.hp_light_brown
+                    )
+                )
             } else {
                 binding.tvBookDetails.visibility = View.GONE
                 binding.ivBookDetail.setImageResource(R.drawable.ic_more_info)
+                binding.llInfoBook.setBackgroundColor(
+                    ContextCompat.getColor(
+                        view.context,
+                        R.color.hp_light_brown_opacity_80
+                    )
+                )
             }
         }
 

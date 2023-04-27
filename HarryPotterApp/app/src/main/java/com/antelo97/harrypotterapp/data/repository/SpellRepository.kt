@@ -4,6 +4,7 @@ import com.antelo97.harrypotterapp.data.database.dao.SpellDao
 import com.antelo97.harrypotterapp.data.database.model_entity.SpellEntity
 import com.antelo97.harrypotterapp.data.database.model_entity.toDatabase
 import com.antelo97.harrypotterapp.data.network.api.SpellService
+import com.antelo97.harrypotterapp.domain.model.Book
 import com.antelo97.harrypotterapp.domain.model.Spell
 import com.antelo97.harrypotterapp.domain.model.toDomain
 import javax.inject.Inject
@@ -30,6 +31,10 @@ class SpellRepository @Inject constructor(
 
     suspend fun getSpellsByName(searchQuery: String): List<Spell> {
         return dao.getSpellsByName(searchQuery).map { it.toDomain() }
+    }
+
+    suspend fun updateSpell(spell: Spell) {
+        dao.updateSpell(spell.toDatabase())
     }
 
     suspend fun getFavoriteSpells(): List<Spell> {

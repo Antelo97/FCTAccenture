@@ -17,8 +17,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    // https://legacy--api.herokuapp.com/api/v1
-    // https://hp-api.onrender.com/
+    // https://legacy--api.herokuapp.com/api/v1 --> Books & Species
+    // https://hp-api.onrender.com/ --> Characters & Spells
 
     @Singleton
     @Provides

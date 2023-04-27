@@ -1,9 +1,6 @@
 package com.antelo97.harrypotterapp.data.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.antelo97.harrypotterapp.data.database.model_entity.BookEntity
 import com.antelo97.harrypotterapp.data.database.model_entity.SpeciesEntity
 

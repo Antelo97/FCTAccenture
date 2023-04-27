@@ -21,6 +21,7 @@ class MainViewModel @Inject constructor(
     private val getSpellsByNameUC: GetSpellsByNameUC,
     private val getSpeciesByNameUC: GetSpeciesByNameUC,
     private val updateBookUC: UpdateBookUC,
+    private val updateSpellUC: UpdateSpellUC,
     private val getFavoriteBooksUC: GetFavoriteBooksUC,
     private val getFavoriteSpells: GetFavoriteSpellsUC
 ) : ViewModel() {
@@ -95,7 +96,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             foundSpells.postValue(getSpellsByNameUC(spellName))
         }
-        isLoadingSpells.postValue(true)
+        isLoadingSpells.postValue(false)
     }
 
     suspend fun updateFavoriteBook(book: Book, position: Int) {
@@ -112,6 +113,22 @@ class MainViewModel @Inject constructor(
             })
             updateBookUC(book)
             //favoriteList[position].postValue(R.color.hp_oro)
+        }
+    }
+
+    suspend fun updateFavoriteSpell(spell: Spell, position: Int) {
+
+        if (!spell.isFavorite) {
+            foundSpells.postValue(foundSpells.value?.apply {
+                get(position).isFavorite = true
+            })
+            updateSpellUC(spell)
+            //favoriteList[position].postValue(R.color.hp_negro)
+        } else {
+            foundSpells.postValue(foundSpells.value?.apply {
+                get(position).isFavorite = false
+            })
+            updateSpellUC(spell)
         }
     }
 

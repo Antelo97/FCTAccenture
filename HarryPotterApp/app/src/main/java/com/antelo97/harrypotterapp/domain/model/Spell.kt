@@ -6,7 +6,8 @@ data class Spell(
     val idApiSpell: String,
     var name: String,
     val description: String,
-    val isFavorite: Boolean
+    val imageUrl: String,
+    var isFavorite: Boolean
 )
 
-fun SpellEntity.toDomain() = Spell(idApiSpell, name, description, isFavorite)
+fun SpellEntity.toDomain() = Spell(idApiSpell, name, description, imageUrl, isFavorite)
