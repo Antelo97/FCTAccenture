@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- HarryPotterApp -->
+    <color name="hp_black">#000000</color>
+    <color name="hp_black_opacity_75">#BF000000</color>
+    <color name="hp_black_opacity_50">#80000000</color>
+    <color name="hp_white">#FFFFFFFF</color>
+    <color name="hp_transparent">#0041ABFF</color>
+    <color name="hp_gold">#D3A625</color>
+    <color name="hp_gold_opacity_50">#80D3A625</color>
+    <color name="hp_dark_brown">#6A3A19</color>
+    <color name="hp_light_brown">#B48A76</color>
+    <color name="hp_light_brown_opacity_80">#CCB48A76</color>
+    <color name="hp_light_brown_opacity_50">#80B48A76</color>
+    <color name="hp_ic_details">#41ABFF</color>
+
+    <color name="hp_dark_red">#740001</color>
+    <color name="hp_dark_green">#00543D</color>
+    <color name="hp_greyish_blue">#5A7D8F</color>
+</resources>
