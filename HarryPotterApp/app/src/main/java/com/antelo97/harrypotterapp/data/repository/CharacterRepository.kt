@@ -4,6 +4,7 @@ import com.antelo97.harrypotterapp.data.database.dao.CharacterDao
 import com.antelo97.harrypotterapp.data.database.model_entity.CharacterEntity
 import com.antelo97.harrypotterapp.data.database.model_entity.toDatabase
 import com.antelo97.harrypotterapp.data.network.api.CharacterService
+import com.antelo97.harrypotterapp.domain.model.Species
 import com.antelo97.harrypotterapp.domain.model.toDomain
 import javax.inject.Inject
 
@@ -30,5 +31,9 @@ class CharacterRepository @Inject constructor(
 
     suspend fun getCharactersByName(searchQuery: String): List<com.antelo97.harrypotterapp.domain.model.Character> {
         return dao.getCharactersByName(searchQuery).map { it.toDomain() }
+    }
+
+    suspend fun updateCharacter(character: com.antelo97.harrypotterapp.domain.model.Character) {
+        dao.updateCharacters(character.toDatabase())
     }
 }

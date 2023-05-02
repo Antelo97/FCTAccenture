@@ -17,7 +17,8 @@ data class Character(
     val actor: String,
     val isAlive: Boolean,
     val imageUrl: String,
-    val isFavorite: Boolean,
+    var isFavorite: Boolean,
+    val imageUrlHouse: String,
     val wand: Wand,
 )
 
@@ -37,5 +38,14 @@ fun CharacterEntity.toDomain() = Character(
     isAlive,
     imageUrl,
     isFavorite,
-    wand.toDomain()
+    imageUrlHouse,
+    wand.toDomain(),
+
+    /*wand = Wand(
+        wand.idRoomWand,
+        wand.idForeignCharacter,
+        wand.wood,
+        wand.core,
+        wand.length
+    )*/
 )

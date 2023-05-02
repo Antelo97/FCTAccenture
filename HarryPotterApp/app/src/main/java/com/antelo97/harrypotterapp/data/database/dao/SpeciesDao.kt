@@ -18,4 +18,7 @@ interface SpeciesDao {
 
     @Query("SELECT * FROM Species WHERE name LIKE '%' || :searchQuery || '%'")
     suspend fun getSpeciesByName(searchQuery: String): List<SpeciesEntity>
+
+    @Update
+    suspend fun updateSpecies(species: SpeciesEntity)
 }

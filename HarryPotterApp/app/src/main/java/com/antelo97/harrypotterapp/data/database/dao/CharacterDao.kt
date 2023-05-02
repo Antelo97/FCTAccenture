@@ -1,11 +1,9 @@
 package com.antelo97.harrypotterapp.data.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.antelo97.harrypotterapp.data.database.model_entity.BookEntity
 import com.antelo97.harrypotterapp.data.database.model_entity.CharacterEntity
+import com.antelo97.harrypotterapp.data.database.model_entity.SpeciesEntity
 
 @Dao
 interface CharacterDao {
@@ -21,4 +19,7 @@ interface CharacterDao {
 
     @Query("SELECT * FROM Characters WHERE name LIKE '%' || :searchQuery || '%'")
     suspend fun getCharactersByName(searchQuery: String): List<CharacterEntity>
+
+    @Update
+    suspend fun updateCharacters(characters: CharacterEntity)
 }

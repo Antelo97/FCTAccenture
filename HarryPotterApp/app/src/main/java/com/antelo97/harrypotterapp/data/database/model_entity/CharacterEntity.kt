@@ -42,7 +42,10 @@ fun CharacterResponse.toDatabase() = CharacterEntity(
     isHogwartsStaff,
     actor,
     isAlive,
-    imageUrl,
+    imageUrl = when (imageUrl) {
+        "" -> "https://objetivoligar.com/wp-content/uploads/2017/03/blank-profile-picture-973460_1280.jpg"
+        else -> imageUrl
+    },
     imageUrlHouse = when (house) {
         "Gryffindor" -> "https://static.wikia.nocookie.net/harrypotter/images/b/b1/Gryffindor_ClearBG.png"
         "Hufflepuff" -> "https://static.wikia.nocookie.net/harrypotter/images/0/06/Hufflepuff_ClearBG.png"
@@ -58,4 +61,22 @@ fun CharacterResponse.toDatabase() = CharacterEntity(
     )
 )
 
-// Model
+fun com.antelo97.harrypotterapp.domain.model.Character.toDatabase() = CharacterEntity(
+    idApiCharacter,
+    name,
+    species,
+    gender,
+    house,
+    yearOfBirth,
+    isWizard,
+    ancestry,
+    patronus,
+    isHogwartsStudent,
+    isHogwartsStaff,
+    actor,
+    isAlive,
+    imageUrl,
+    isFavorite,
+    imageUrlHouse,
+    wand = WandEntity(wand.idRoomWand, wand.idForeignCharacter, wand.wood, wand.core, wand.length)
+)
