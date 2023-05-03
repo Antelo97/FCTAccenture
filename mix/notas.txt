@@ -1,0 +1,37 @@
+- Git
+C:\Users\oscar.antelo.nieto\AppData\Local\Programs\Git
+
+- Repositorio Accenture
+https://github.com/Antelo97/FCTAccenture.git
+https://github.com/Antelo97/FCTAccenture
+https://github.com/Antelo97
+
+- Android Studio
+C:\Program Files\Android\Android Studio
+
+- Projecto Android Studio
+C:\Users\oscar.antelo.nieto\AndroidStudioProjects\AndroidMaster\app\src\androidTest\java\com\antelo97
+
+- Bitbucket
+https://bitbucket.org/account/workspaces
+
+- Tutorial
+https://www.atlassian.com/es/git/tutorials/using-branches/git-merge
+
+- SuperHero API
+https://superheroapi.com/
+
+- Visor JSON
+https://jsoneditoronline.org/#left=local.beqesu
+
+- Reserva
+
+- APIs
+https://github.com/public-apis/public-apis
+
+
+En el ViewModel necesitarías un MutableLiveData<List<X>> y dentro de la función searchByName() deberías
+llamar al caso de uso que tengas para filtrar y hacer un postValue del MutableLiveData con la respuesta
+de ese caso de uso (obviamente la respuesta que te de el caso de uso tiene que ser un List<X>)
+
+

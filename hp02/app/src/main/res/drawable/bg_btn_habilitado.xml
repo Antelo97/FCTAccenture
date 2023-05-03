@@ -1,9 +1,0 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-
-    <solid android:color="@color/hp_gold" />
-
-    <!-- Define el backgroundTint para el botón -->
-    <item android:backgroundTint="@color/hp_gold" />
-
-</shape>

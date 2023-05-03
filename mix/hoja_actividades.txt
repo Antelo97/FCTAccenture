@@ -1,0 +1,81 @@
+27/03: Primera toma de contacto con las oficinas y personal de la empresa, incluyendo alumnos de prácticas
+procedentes de otros centros educativos. Sesión introductoria de bienvenida vía Teams con una de las figuras
+responsables del área de RRHH y configuración de los equipos informáticos individuales.
+
+28/03: Primer día completo de trabajo. Reunión vía Teams con todos los alumnos de prácticas y tutores
+involucrados en el mismo proyecto, dónde se nos explicaron las pautas básicas de trabajo y el plan a seguir
+durante nuestra estancia en la empresa. Realización de los cursos de capacitación ética propios de la empresa.
+
+29/03; Finalización de la capacitación ética para dar ya inicio a los cursos de formación técnica, comenzando 
+con un curso básico de 70min sobre Git, GitHub y Gitflow. Descarga e instalación de Git y utilización del terminal Git bash para la gestión de repositorios en GitHub a través de comandos. Descarga e instalación de Android Studio.
+
+30/03: Inicio de un curso básico en Android Studio con Kotlin de 9hrs de duración. Comprensión de la estructura y funcionalidades básicas de Android Studio y asimilación de conceptos básicos de sintaxis en Kotlin como la gestión de valores y variables, la creación de funciones, la comprensión de la nulabilidad, el uso de estructuras.
+if-else/when y la creación de arrays y listas.
+
+31/03: Descarga e instalación de Sourcetree, sw similar a GitHub Desktop que permite la gestión de repositorios
+a través de una interfaz gráfica de usuario (GUI). Continuación con el curso: creación de Activitys en Android Studio para la gestión de pantallas, con una clase para la gestión de los componentes visuales (.xml) y otra para la lógica de la aplicación (.kt). Desarrollo de una primera app básica.
+
+03/04: Continuación con el curso: creación de un menú con botones para acceder a las distintas funcionalidades y navegar entre pantallas. Desarrollo de una aplicación completa que calcule el IMC a partir de unos parámetros
+de entrada, gestionados mediante interfaz gráfica, y muestre los resultados en una segunda pantalla cuando el
+usuario lo solicite
+
+04/04: Continuación con el curso: comienzo del despliegue de una aplicación de To Do para la gestión de tareas
+personales. Desarrollo de la interfaz gráfica y parte de la lógica; implementación de RecyclerViews para el mostrado de ítems y un Dialog para la creación de tareas. Hincapié en el uso de buenas prácticas para la optimización del código, como la definición de estilos, colores y string en los archivos de recursos
+
+05/04: Terminación de la primera parte del curso y de la App de To Do: implementación de un filtro para obtener
+las tareas en función de las categorías seleccionadas. Inicio de la segunda parte del curso: implementación
+de un binding como forma alternativa de acceder a las vistas (.xml) desde sus Activities (.kt). Conceptos básicos sobre APIs e inserción de las dependencias de Retrofit, que será la herramienta empleada para llamar a la API
+
+11/04: Inicio de la segunda parte del curso de Android Studio con Kotlin. Desarrollo de una aplicación que integra un buscador de superhéroes y extrae datos de una API: generar binding(s) para gestionar el acceso a las vistas de los .xml de manera más rápida, realización de peticiones a una API a través de la librería Retrofit, utilización de editores JSON para el formateo de la respuesta de la API, ejecución de código en hilos secundarios para la optimización de la app, creación de data class(es) para el almacenamiento de los datos extraídos de la API y mostrado de estos en las vistas de la app, cargar imágenes desde una URL a través de la librería PIcasso...
+
+12/04: Continuación con el curso. Desarrollo de una pantalla de ajustes con persistencia de datos e incorporación
+de funcionalidades como el modo oscuro/claro: persistencia de datos para preservar la configuración de ajustes
+a través de DataStore, que funciona como una especie de BD a nivel local que almacena información a través de
+pares clave-valor. Adaptación del diseño a los estándares establecidos en Material Designs, inclusión de
+imágenes vectoriales, uso de funciones de extensión con delegados, empleo de corrutinas para aligerar la carga de 
+trabajo del hilo principal, uso del operador Elvis para el control de nulos...
+
+13/04: Realización de los nuevos cursos de ética (2) subidos a la plataforma myLearning. Inicio de la formación
+de nivel intermedio en Android Studio con Kotlin. Visualización de los dos primeros y puesta en práctica de los
+conceptos abarcados: Despliegue de una arquitectura MVVM con LIVE DATA, implementación de dependencias y 
+ViewBinding; incorporación al proyecto de la meta-arquitectura Clean Architecture, implementación de Retrofit 2
+para la extración de datos de una API web y uso de corrutinas para la optimización de la gestión de recursos
+a nivel de CPU
+
+14/04: Culminación de la nueva formación ética y visualización de los dos últimos vídeos del curso intermedio
+de Android Studio con Kotlin. Puesta en práctica de la inyección de dependencias con Dagger Hilt y despliegue
+de Room; un ORM que simplifica la integración de una BD en nuestra App, permitiéndonos almacenar a nivel local
+toda la información que necesitemos de la API web, utilización de mappers y funciones de extensión para la conversión de modelos de datos...
+
+17/04: Visualización de un vídeo de refuerzo sobre RecyclerView; concepto de Data Class, Adapter, ViewHolder, funciones lambda y empleo de Toast. Conexión de un dispositivo móvil a Android Studio mediante USB para prescindir del emulador y ahorrar recursos. Inicio de la App individual en Android Studio. Elección de APIs (Harry Potter),
+planteamiento del proyecto y despligue de la estructura base siguiendo los principios de la arquitectura MVVM
+y Clean Architecture. Implementación de todas las dependencias que se irán utilizando a lo largo del proyecto: 
+ViewModel, LiveData, Activity, Retrofit, Corrutinas, Dagger Hilt, Room, Picasso...
+
+18/04: Continuación con la App de HarryPotter: implementación del primer modelo de datos completo (Book) para la extracción de datos desde la API,
+inserción en BD local con Room y gestión de dichos datos a nivel de la propia aplicación (UI: View/ViewModel). Utilización de funciones de extensión
+para la conversión entre modelos
+
+19/04: Asistencia a un evento en las oficinas de la empresa, que se estructuró en dos partes: 
+1. Charla de concienciación sobre la importancia de saber venderse de cara a las empresas y tener un perfil profesional bien trabajado en redes sociales, poniendo especial foco en Linkedin
+2. Prompt A Thon: competición en grupos de 5 personas, y entre todos los alumnos de prácticas de la empresa, donde el objetivo era generar una pila de imágenes que representasen un entorno profesional (oficicinas, logos...) y evocasen los valores de Accenture, a través del uso de IAs de generación de
+imágenes tales como DALLE, Stable Difussion, Crayon, DreamStudio... La idea era partir de un prompt básico e ir refinandolo progresivamente para
+obtener mejores resultados, hasta conseguir obtener un patrón que fuese capaz de generar imágenes de calidad que se ajustasen al objetivo
+
+20/04: Continuación con la App de HarryPotter: implementación de los modelos de datos completos para Character, Wand y Spell: llamadas a la API,
+inserción en BD con Room y consultas a la BD para hacer uso de la info. a nivel de aplicación.
+Configuración, a nivel de BD, de la relación entre Character y Wand y uso de funciones de extensión para la conversión entre modelos
+
+21/04: Continuación con la App de HarryPotter: implementación del modelo de datos completo para Species: llamada a la API, inserción en BD con Room y
+consultas a la BD para hacer uso de la info. a nivel de aplicación. Utilización de funciones de extensión para la conversión entre modelos. 
+Comienzo con la primera pantalla de la interfaz: inserción de un bottomNavigationBar para gestionar la navegación entre distintos Fragments dentro
+de una misma Activity
+
+
+
+
+
+
+
+
+

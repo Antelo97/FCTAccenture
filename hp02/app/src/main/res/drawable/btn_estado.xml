@@ -1,4 +1,0 @@
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_enabled="true" android:backgroundTint="@color/hp_gold" />
-    <item android:state_enabled="false" android:backgroundTint="@color/hp_gold_opacity_50" />
-</selector>
