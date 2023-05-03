@@ -34,4 +34,5 @@ En el ViewModel necesitarías un MutableLiveData<List<X>> y dentro de la funció
 llamar al caso de uso que tengas para filtrar y hacer un postValue del MutableLiveData con la respuesta
 de ese caso de uso (obviamente la respuesta que te de el caso de uso tiene que ser un List<X>)
 
-
+Regenerar Tokee GitHub
+https://www.youtube.com/watch?v=Nl4qwzXydQ0
