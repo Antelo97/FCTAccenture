@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "499044294600",
+    "project_id": "mynotes-antelo97",
+    "storage_bucket": "mynotes-antelo97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499044294600:android:39612a9b6e7ed5e268aafd",
+        "android_client_info": {
+          "package_name": "com.example.mynotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499044294600-uhe60afrc01ts12mqc8p21ru24o1jq3r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsGKZQm6s3q0gMrCoPOrNy8CoN9GLdiNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "499044294600-uhe60afrc01ts12mqc8p21ru24o1jq3r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "499044294600-ivem2clc7cicv950sqrqdd9l1jvmrgtr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mynotes"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
