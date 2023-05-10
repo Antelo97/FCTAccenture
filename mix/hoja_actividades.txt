@@ -71,6 +71,29 @@ consultas a la BD para hacer uso de la info. a nivel de aplicación. Utilizació
 Comienzo con la primera pantalla de la interfaz: inserción de un bottomNavigationBar para gestionar la navegación entre distintos Fragments dentro
 de una misma Activity
 
+24/04:
+
+25/04:
+
+26/04:
+
+27/04:
+
+28/04:
+
+02/05:
+
+03/05:
+
+04/05:
+
+05/05:
+
+08/05:
+
+09/05:
+
+
 
 
 

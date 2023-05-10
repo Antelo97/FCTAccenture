@@ -54,6 +54,7 @@ class PersonPair<fn, ln> {
 void test() async {
   final p = Person('Foo', 'Bar');
   final ppair = PersonPair('Foo', 'Bar');
+  final ppair2 = PersonPair(1, 'Bar');
 }
 
 class MyApp extends StatelessWidget {
