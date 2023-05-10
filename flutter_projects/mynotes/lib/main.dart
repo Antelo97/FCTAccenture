@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mynotes/views/login_view.dart';
 
 import 'firebase_options.dart';
+//Antelo
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
