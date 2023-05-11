@@ -4,6 +4,8 @@ import 'dart:developer' as devTools show log;
 
 import 'package:mynotes/constants/routes.dart';
 
+import '../utilities/show_error_dialog.dart';
+
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
 
@@ -54,7 +56,6 @@ class _RegisterViewState extends State<RegisterView> {
                 const InputDecoration(hintText: 'Enter your password here'),
           ),
           TextButton(
-            child: const Text('Register'),
             onPressed: () async {
               try {
                 final email = _email.text;
@@ -65,14 +66,34 @@ class _RegisterViewState extends State<RegisterView> {
                 devTools.log(userCredential.toString());
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'weak-password') {
-                  devTools.log('Weak password');
+                  await showErrorDialog(
+                    context,
+                    'Weak password',
+                  );
                 } else if (e.code == 'email-already-in-use') {
-                  devTools.log('Email is already in use');
+                  await showErrorDialog(
+                    context,
+                    'Email is already in use',
+                  );
                 } else if (e.code == 'invalid-email') {
-                  devTools.log('Invalid email');
+                  await showErrorDialog(
+                    context,
+                    'Invalid email',
+                  );
+                } else {
+                  await showErrorDialog(
+                    context,
+                    'Error: ${e.code}',
+                  );
                 }
+              } catch (e) {
+                await showErrorDialog(
+                  context,
+                  e.toString(),
+                );
               }
             },
+            child: const Text('Register'),
           ),
           TextButton(
             onPressed: () {
