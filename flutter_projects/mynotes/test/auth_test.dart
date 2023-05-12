@@ -58,23 +58,27 @@ void main() {
       );
 
       expect(provider.currentUser, user);
-      expect(user.isEmailVerified, true);
+      expect(user.isEmailVerified, false);
     });
 
     test('Logged in user should be able to get verified', () {
       provider.sendEmailVerification();
       final user = provider.currentUser;
       expect(user, isNotNull);
-      expect(user!.isEmailVerified, false);
+      expect(user!.isEmailVerified, true);
     });
 
     test('Should be able to log out and log in again', () async {
       await provider.logOut();
       //expect(provider.currentUser, null);
-      await provider.logIn(email: 'email', password: 'password');
+      await provider.logIn(
+        email: 'email',
+        password: 'password',
+      );
+
+      final user = provider.currentUser;
+      expect(user, isNotNull);
     });
-    final user = provider.currentUser;
-    expect(user, isNotNull);
   });
 }
 
