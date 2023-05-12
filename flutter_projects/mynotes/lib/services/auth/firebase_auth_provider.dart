@@ -1,8 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:mynotes/services/auth/auth_exceptions.dart';
 import 'package:mynotes/services/auth/auth_provider.dart';
 import 'package:mynotes/services/auth/auth_user.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuth, FirebaseAuthException;
+
+import '../../firebase_options.dart';
 
 class FirebaseAuthProvider implements AuthProvider {
   @override
@@ -47,9 +50,13 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<void> logOut() {
-    // TODO: implement logOut
-    throw UnimplementedError();
+  Future<void> logOut() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseAuth.instance.signOut();
+    } else {
+      throw UserNotLoggedInAuthException();
+    }
   }
 
   @override
@@ -70,9 +77,15 @@ class FirebaseAuthProvider implements AuthProvider {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
+        throw UserNotFoundAuthException();
       } else if (e.code == 'wrong-password' || e.code == 'too-many-requests') {
-      } else {}
-    } catch (_) {}
+        throw WrongPasswordAuthException();
+      } else {
+        throw GenericAuthException();
+      }
+    } catch (_) {
+      throw GenericAuthException();
+    }
   }
 
   @override
@@ -83,5 +96,12 @@ class FirebaseAuthProvider implements AuthProvider {
     } else {
       throw UserNotLoggedInAuthException();
     }
+  }
+
+  @override
+  Future<void> initialize() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
 }
