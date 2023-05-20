@@ -71,27 +71,53 @@ consultas a la BD para hacer uso de la info. a nivel de aplicación. Utilizació
 Comienzo con la primera pantalla de la interfaz: inserción de un bottomNavigationBar para gestionar la navegación entre distintos Fragments dentro
 de una misma Activity
 
-24/04:
+24/04: Continuación con la App de HarryPotter: diseño y desarrollo del primer fragment vinculado a la consulta
+de libros (Books): despliegue del layout, inserción del buscador (SearchView), filtros (A-Z, Z-A), funcionalidad
+de favoritos y botones para el desplazamiento instantáneo hacia el inicio/fin del listado de ítems (RecyclerView).
+Implementación del RecyclerView con imagen y detalles de los Books haciendo uso de la información de la API
+almacenada localmente en Room. Inclusión de toda la lógica de negocio en el ViewModel, respetando los ppos MVVM.
 
-25/04:
+25/04: Continuación con la App de HarryPotter: diseño y desarrollo del segundo fragment vinculado a la consulta
+de personajes (Characters): despliegue del layout, inserción del buscador (SearchView), filtros (A-Z, Z-A), funcionalidad de favoritos y botones para el desplazamiento instantáneo hacia el inicio/fin del listado de ítems (RecyclerView). Implementación del RecyclerView con imagen y detalles de los Characters haciendo uso de la información de la API almacenada localmente en Room. Inclusión de toda la lógica de negocio en el ViewModel, respetando los principios de arquitectura MVVM.
 
-26/04:
+26/04: Continuación con la App de HarryPotter: diseño y desarrollo del tercer fragment vinculado a la consulta
+de Hechizos (Spells): despliegue del layout, inserción del buscador (SearchView), filtros (A-Z, Z-A), funcionalidad de favoritos y botones para el desplazamiento instantáneo hacia el inicio/fin del listado de ítems (RecyclerView). Implementación del RecyclerView con imagen y detalles de los Spells haciendo uso de la información de la API almacenada localmente en Room. Inclusión de toda la lógica de negocio en el ViewModel, respetando los principios de arquitectura MVVM.
 
-27/04:
+27/04: Continuación con la App de HarryPotter: diseño y desarrollo del cuarto fragment vinculado a la consulta
+de Especies (Species): despliegue del layout, inserción del buscador (SearchView), filtros (A-Z, Z-A), funcionalidad de favoritos y botones para el desplazamiento instantáneo hacia el inicio/fin del listado de ítems (RecyclerView). Implementación del RecyclerView con imagen y detalles de las Species haciendo uso de la información de la API almacenada localmente en Room. Inclusión de toda la lógica de negocio en el ViewModel, respetando los principios de arquitectura MVVM.
 
-28/04:
+28/04: Continuación con la App de HarryPotter: implementación del registro y login con Firebase y refinado de la aplicación, tanto a nivel de estética de interfaz como de código. Implementación de cuadros de diálogo y Toasts para la transmisión de feedback al usuarios, en caso de errores durante el registro o login, refactorización del código para solidificar la estructura del proyecto, simplificación del código, dotación de una mayor uniformidad al mismo, control de errores e inclusión de barras de progreso para notificar la carga de procesos, como p.e al abrir
+la aplicación o realizar búsquedas personalizadas, migración de la lógica al ViewModel...
 
-02/05:
+02/05: Preparación de la presentación de la aplicación: refinamiento final y correción de errores menores. Limpieza definitiva de código y planteamiento del esquema a seguir durante la presentación para abarcar las funcionalidades básicas de la apps y los aspectos de programación más reseñables. Tras finalizar la presentación, comienzo con la
+formación en Flutter: visualización del vídeo introductorio
 
-03/05:
+03/05: Continuación con la formación en Flutter, visualización de los capítulos 1, 2, 3 y 4: introducción a las cuentas de desarrollador, tanto en Android como iOS, con las perspectiva de publicar aplicaciones en la Play Store y App Store, respectivamente; Setup del entorno de desarrollo, descarga e instalación de Visual Studio Code como editor de código, instalación del Framework de Flutter y su SDK, configuración de las variables de entorno...; introducción elemental al lenguaje de programación Dart, tipos de datos, estructuras de control (if, else), bucles,
+listas, maps y colecciones
 
-04/05:
+04/05: Continuación con la formación en Flutter, visualización de los capítulos 5, 6, 7 y 8: control de la nulabilidad en Dart, uso del operador Elvis, concepto de enumeraciones, clases y objetos. Introducción de aspectos más avanzados como los tipos Future, las funciones asíncronas o el uso de la palabra clave 'await', estrechamente ligados al tratamiento de datos como las llamadas a BD o APIs. Explicación de como crear y configurar un proyecto en Flutter y de su estructura básica de archivos, así como de sus diferencias con otros IDE como Android Studio para el desarrollo móvil (IDE especializado vs Framework multiplataforma)
 
-05/05:
+05/05: Continuación con la formación en Flutter, visualización de los capítulos 10, 11, 12 y 13: configuración de proyectos orientados a la plataforma de Android + comprensión del funcionamiento de Flutter para la generación de dichas aplicaciones (compilación a partir del Gradle y generación de un archivo .apk la ejecución nativa en un dispositivo Android), uso del software scrcpy, introducción a Firebase como herramienta nuclear para la implementación del login y parte del backend (inserción de dependencias), implementación de una pantalla básica de registro de la vista del login
 
-08/05:
+08/05: Continuación con la formación en Flutter, visualización de los capítulos 14, 15, 16, 17: separación de la pantalla de registro con la de login, repaso sobre conceptos básicos de Git (software) y GitHub (repositorio remoto): uso de comandos a partir de la terminal integrada de VSCode para la gestión de las versiones de nuestros proyectos y su publicación en nuestro repositorio remoto de GitHub para salvaguardar los avances; implementación de una pantalla para la verificación de email y configurar el enlace para permitir la navegación entre las pantallas de login y registro
 
-09/05:
+09/05: Continuación con la formación en Flutter, visualización de los capítulos 18, 19, 20, 21: implementar la vista de notas y agregar en ella la funcionalidad para el logout del usuario, habilitar la navegación entre las vistas de login y notas, y refinar todo lo referente al enrutado, creando un archivo independiente donde se incluyan las distintas rutas. Manejo de excepciones en la vista de login: comprensión de las mismas y creacción de excepciones propias para el tratamiento específico de las mismas a través de sus códigos de 'error'
+
+10/05: Continuación con la formación en Flutter, visualización de los capítulos 22, 23, 24, 25: manejo de excepciones en la vista de registro incorporando la misma filosofía que en el login, gestionar la lógica de navigación entre vistas a través de la inclusión de botones que conecten unas pantallas con otras. Comprobación de la verificación del email del usuario antes de su envío a la vista de notas. Separación de la lógica del registro, login y autenticación de la interfaz de usuario (UI) a través de la creacción de un 'Auth Service' que funcione como una capa independiente que englobe toda la lógica y comunicación con el proveedor de autenticación (Firebase en este caso). Creación de una interfaz a modo de clase padre de la que hereden los distintos proveedores.
+
+11/05: Continuación con la formación en Flutter, visualización de los capítulos 26, 27 y 28: comprensión de la utilidad de los distintos tipos de tets para verificar la correcta funcionalidad de nuestra aplicación. Realización de tests unitario para probar el correcto funcionamiento de nuestro 'Auth Service'. Implementación de los métodos CRUD para el tratamiento de datos a nivel local (SQLite): inserción, lectura, actualización y borrado de notas, encapsulando la lógica en una capa de abstracción llamada 'Notes Service'. Incorporación del conceptos de Stream para el tratamiento de flujos de datos (p.e: nuestro listado de notas en actualización constante)
+
+12/05: Continuación con la formación en Flutter, visualización de los capítulos 29, 30, 31, 32, 33: configurar la vista de notas para que muestre todas las notas pertenecientes al usuario en cuestión, implementación de las funcionalidades para el agregado y borrado de notas a través de la comunicación con nuestro métodos CRUD que están en contacto directo con nuestro almacenamiento local en SQLite, realizando contra la BD todas las operaciones que el usuario demanda, incluida la actualización del listado actual de notas a través de un Stream
+
+15/05: Continuación con la formación en Flutter, visualización de los capítulos 34, 35, 36, 37: implementación de la funcionalidad para actualizar notas a través de nuestro servicio CRUD. Agregar la seguridad necesarias al 
+'Notes Service' para que cada usuario solamente tenga acceso a sus propias notas e introducción al almacenamiento en la nube a través de CloudFirestore, implementación de dependencias y remodelado del sistema de almacenamiento
+de de los datos, pasando de un modelo SQL (SQLite) a un modelo no relacional (Cloud Firestore), basado en colecciones de documentos
+
+16/05: Continuación con la formación en Flutter, visualización de los capitulos 38, 40, 41, 42:
+
+18/05: Continuación con la formación en Flutter, visualización de los capítulos 43, 44, 45, 46:
+
+19/05: Continuación con la formación en Flutter, visualización de los capítulos blablabl + API calls:
 
 
 
