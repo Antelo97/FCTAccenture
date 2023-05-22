@@ -1,0 +1,17 @@
+https://legacy--api.herokuapp.com/api/v1 --> Books & Species
+https://hp-api.onrender.com/ --> Characters & Spells
+
+https://javiercbk.github.io/json_to_dart/ (JSON to Dart)
+https://app.quicktype.io/ (JSON to Dart)
+
+https://flutterawesome.com/ (recursos varios)
+
+https://api.flutter.dev/flutter/widgets/GestureDetector-class.html (GestureDetector)
+
+https://jsoneditoronline.org/#left=local.beqesu (Visor JSON)
+
+https://medium.com/google-developer-experts/working-with-rest-apis-flutter-f3c8c673f1dc (info API Calls)
+
+
+COMANDOS:
+- flutter pub add http (API calls)
