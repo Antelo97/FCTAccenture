@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:harry_potter_app/data/network/api/BookService.dart';
-import 'package:harry_potter_app/data/network/model_response/BookResponse.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,17 +24,17 @@ class MyWidget extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<MyWidget> {
-  late List<BookResponse>? _booksReponse = [];
+  //late List<BookResponse>? _booksReponse = [];
 
-  void _getData() async {
-    _booksReponse = (await BookService().getBooks())!;
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-  }
+  // void _getData() async {
+  //   _booksReponse = (await BookService().getBooks())!;
+  //   Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  // }
 
   @override
   void initState() {
     super.initState();
-    _getData();
+    //_getData();
   }
 
   @override
@@ -44,8 +42,8 @@ class _MyWidgetState extends State<MyWidget> {
     return Scaffold(
       appBar: AppBar(title: const Text('API Calls')),
       body: Column(children: [
-        if (_booksReponse != null && _booksReponse!.isNotEmpty)
-          Text(_booksReponse![0].title)
+        // if (_booksReponse != null && _booksReponse!.isNotEmpty)
+        //   Text(_booksReponse![0].title)
       ]),
     );
   }

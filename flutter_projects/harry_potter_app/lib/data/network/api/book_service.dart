@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:harry_potter_app/constants.dart';
-import 'package:harry_potter_app/data/network/model_response/BookResponse.dart';
+import 'package:harry_potter_app/data/network/model_response/book_response.dart';
 import 'package:http/http.dart' as http;
 
 class BookService {
