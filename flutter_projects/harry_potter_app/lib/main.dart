@@ -35,7 +35,6 @@ class _MyWidgetState extends State<MyWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _getData();
   }
