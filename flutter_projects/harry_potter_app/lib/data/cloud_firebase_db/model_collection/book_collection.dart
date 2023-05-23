@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:harry_potter_app/data/cloud_db/cloud_constants.dart';
+import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
+import 'package:harry_potter_app/data/network/model_response/book_response.dart';
 
 @immutable
 class BookCollection {
@@ -28,4 +29,12 @@ class BookCollection {
         imageUrl = snapshot.data()[imageUrlFieldName] as String,
         author = snapshot.data()[authorFieldName] as String,
         releaseDate = snapshot.data()[releaseDateFieldName] as String;
+
+  BookCollection.fromResponse(BookResponse book)
+      : idDocument = '',
+        idApiBook = book.idApi,
+        title = book.title,
+        imageUrl = book.imageUrl,
+        author = book.artists[0].author.name,
+        releaseDate = book.releaseDate;
 }

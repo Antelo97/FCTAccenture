@@ -11,7 +11,7 @@ class BookResponse {
   String title;
   String imageUrl;
   List<ArtistResponse> artists;
-  DateTime releaseDate;
+  String releaseDate;
 
   BookResponse({
     required this.idApi,
@@ -27,7 +27,7 @@ class BookResponse {
         imageUrl: json["image_url"],
         artists: List<ArtistResponse>.from(
             json["artists"].map((x) => ArtistResponse.fromJson(x))),
-        releaseDate: DateTime.parse(json["release_date"]),
+        releaseDate: json["release_date"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -35,7 +35,7 @@ class BookResponse {
         "title": title,
         "image_url": imageUrl,
         "artists": List<dynamic>.from(artists.map((x) => x.toJson())),
-        "release_date": releaseDate.toIso8601String(),
+        "release_date": releaseDate,
       };
 }
 

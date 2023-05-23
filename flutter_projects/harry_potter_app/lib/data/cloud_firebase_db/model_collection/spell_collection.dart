@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:harry_potter_app/data/cloud_db/cloud_constants.dart';
+import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 
 @immutable
 class SpellCollection {
