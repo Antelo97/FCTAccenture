@@ -19,6 +19,13 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
+  Future<void> initialize() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
+
+  @override
   Future<AuthUser> createUser({
     required String email,
     required String password,
@@ -50,13 +57,6 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<void> initialize() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  }
-
-  @override
   Future<AuthUser> signIn({
     required String email,
     required String password,
@@ -85,8 +85,6 @@ class FirebaseAuthProvider implements AuthProvider {
       throw GenericAuthException();
     }
   }
-
-  //
 
   @override
   Future<void> signOut() async {

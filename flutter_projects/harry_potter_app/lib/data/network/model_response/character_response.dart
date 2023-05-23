@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 
 List<CharacterResponse> characterResponseFromJson(String str) =>
@@ -102,80 +104,14 @@ final ancestryValues = EnumValues({
   "squib": Ancestry.SQUIB
 });
 
-enum EyeColour {
-  GREEN,
-  BROWN,
-  BLUE,
-  GREY,
-  EMPTY,
-  BLACK,
-  RED,
-  YELLOW,
-  HAZEL,
-  PALE_SILVERY,
-  AMBER,
-  ORANGE,
-  WHITE,
-  DARK,
-  YELLOWISH
+enum Gender {
+  MALE,
+  FEMALE,
 }
 
-final eyeColourValues = EnumValues({
-  "amber": EyeColour.AMBER,
-  "black": EyeColour.BLACK,
-  "blue": EyeColour.BLUE,
-  "brown": EyeColour.BROWN,
-  "dark": EyeColour.DARK,
-  "": EyeColour.EMPTY,
-  "green": EyeColour.GREEN,
-  "grey": EyeColour.GREY,
-  "hazel": EyeColour.HAZEL,
-  "orange": EyeColour.ORANGE,
-  "pale, silvery": EyeColour.PALE_SILVERY,
-  "red": EyeColour.RED,
-  "white": EyeColour.WHITE,
-  "yellow": EyeColour.YELLOW,
-  "yellowish": EyeColour.YELLOWISH
-});
-
-enum Gender { MALE, FEMALE }
-
-final genderValues = EnumValues({"female": Gender.FEMALE, "male": Gender.MALE});
-
-enum HairColour {
-  BLACK,
-  BROWN,
-  RED,
-  BLONDE,
-  BALD,
-  GREY,
-  EMPTY,
-  BLOND,
-  SILVER,
-  SANDY,
-  WHITE,
-  GINGER,
-  DARK,
-  TAWNY,
-  DULL
-}
-
-final hairColourValues = EnumValues({
-  "bald": HairColour.BALD,
-  "black": HairColour.BLACK,
-  "blond": HairColour.BLOND,
-  "blonde": HairColour.BLONDE,
-  "brown": HairColour.BROWN,
-  "dark": HairColour.DARK,
-  "dull": HairColour.DULL,
-  "": HairColour.EMPTY,
-  "ginger": HairColour.GINGER,
-  "grey": HairColour.GREY,
-  "red": HairColour.RED,
-  "sandy": HairColour.SANDY,
-  "silver": HairColour.SILVER,
-  "tawny": HairColour.TAWNY,
-  "white": HairColour.WHITE
+final genderValues = EnumValues({
+  "female": Gender.FEMALE,
+  "male": Gender.MALE,
 });
 
 enum House { GRYFFINDOR, SLYTHERIN, HUFFLEPUFF, RAVENCLAW, EMPTY }
