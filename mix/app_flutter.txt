@@ -14,4 +14,30 @@ https://medium.com/google-developer-experts/working-with-rest-apis-flutter-f3c8c
 
 
 COMANDOS:
+- flutter clean
+- flutter pub get
+* Dependencias:
 - flutter pub add http (API calls)
+- flutter pub add firebase_core
+- flutter pub add firebase_auth
+- flutter pub add cloud_firestore
+- flutter pub add firebase_analytics
+- flutter pub add bloc
+- flutter pub add flutter_bloc
+* Configuración Proyecto (caps 10 y 11):
+1. Instalar Firebase CLI
+2. Configuración de variables de entorno para que 'flutterfire' se reconozca en cualquier ubicación:
+- firebase login
+- flutterfire configure --> <create a new project> (o puedes crear manualmente desde Firebase Console en Google)
+(cuando la integración se complete, se tiene que generar un .dart llamado 'firebase_options')
+- build.gradle (app): minSdKVersion 19 + multiDexEnabled true
+- build.gradle (app): implementation "com.android.support:multidex:1.0.3"
+
+
+
+
+
+
+
+
+

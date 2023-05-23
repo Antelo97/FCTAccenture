@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mynotes/services/cloud/cloud_storage_constans.dart';
 import 'package:mynotes/services/cloud/cloud_storage_exceptions.dart';
 
-import '../crud/crud_exceptions.dart';
 import 'cloud_note.dart';
 
 class FirebaseCloudStorage {
