@@ -59,4 +59,30 @@ class CharacterCollection {
         actor = snapshot.data()[actorFieldName] as String,
         isAlive = snapshot.data()[isAliveFieldName] as bool,
         imageUrl = snapshot.data()[imageUrlFieldName] as String;
+
+  CharacterCollection.fromResponse(CharacterResponse character)
+      : idDocument = '',
+        idApiCharacter = character.idApi,
+        name = character.name,
+        species = character.species,
+        gender = character.gender,
+        house = character.house,
+        yearOfBirth = character.yearOfBirth,
+        isWizard = character.isWizard,
+        ancestry = character.ancestry,
+        wand = character.wand,
+        patronus = character.patronus,
+        isHogwartsStudent = character.isHogwartsStudent,
+        isHogwartsStaff = character.isHogwartsStaff,
+        actor = character.actor,
+        isAlive = character.isAlive,
+        imageUrl = getImageUrl(character.imageUrl);
+}
+
+String getImageUrl(String imageUrl) {
+  if (imageUrl == "") {
+    return "https://objetivoligar.com/wp-content/uploads/2017/03/blank-profile-picture-973460_1280.jpg";
+  } else {
+    return imageUrl;
+  }
 }

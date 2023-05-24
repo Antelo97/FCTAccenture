@@ -78,11 +78,6 @@ class BookDao {
     } catch (e) {
       // CouldNotUpdateNoteException();
     }
-
-    List<BookCollection> sortBooksByTitle(List<BookCollection> books) {
-      books.sort((a, b) => a.title.compareTo(b.title));
-      return books;
-    }
   }
 
   List<BookCollection> sortBooksByTitleAsc(List<BookCollection> books) {
