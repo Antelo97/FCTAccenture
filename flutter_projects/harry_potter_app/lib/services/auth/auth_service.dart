@@ -11,7 +11,8 @@ class AuthService implements AuthProvider {
   factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
 
   @override
-  Future<UserCollection?> get currentUser => provider.currentUser;
+  Future<UserCollection?> get currentUserFromCloudFirestore =>
+      provider.currentUserFromCloudFirestore;
 
   @override
   Future<void> initialize() => provider.initialize();

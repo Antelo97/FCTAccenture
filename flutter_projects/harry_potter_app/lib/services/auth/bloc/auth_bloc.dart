@@ -79,7 +79,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEventInitialize>(
       (event, emit) async {
         await provider.initialize();
-        final user = await provider.currentUser;
+        final user = await provider.currentUserFromCloudFirestore;
         if (user == null) {
           emit(
             const AuthStateLoggedOut(

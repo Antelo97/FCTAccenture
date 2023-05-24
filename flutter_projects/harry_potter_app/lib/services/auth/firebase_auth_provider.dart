@@ -12,7 +12,7 @@ class FirebaseAuthProvider implements AuthProvider {
   UserDao dao = UserDao();
 
   @override
-  Future<UserCollection?> get currentUser async {
+  Future<UserCollection?> get currentUserFromCloudFirestore async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       return await dao.getUserFromCloudFirebase(user.uid);
@@ -34,11 +34,13 @@ class FirebaseAuthProvider implements AuthProvider {
     required String password,
   }) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      final user = await currentUser;
+      dao.insertUser(userCredential.user!);
+      final user = await currentUserFromCloudFirestore;
       if (user != null) {
         return user;
       } else {
@@ -70,7 +72,7 @@ class FirebaseAuthProvider implements AuthProvider {
         email: email,
         password: password,
       );
-      final user = await currentUser;
+      final user = await currentUserFromCloudFirestore;
       if (user != null) {
         return user;
       } else {
