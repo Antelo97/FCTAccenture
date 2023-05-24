@@ -1,3 +1,12 @@
+// User Collection
+const idFirestoreFieldName = 'id_firestore';
+const emailFieldName = 'email';
+const isEmailVeriFiedFieldName = 'is_email_verified';
+const favoriteBooksFieldName = 'favorite_books';
+const favoriteCharactersFieldName = 'favorite_characters';
+const favoriteSpellsFieldName = 'favorite_spells';
+const favoriteSpeciesFieldName = 'favorite_species';
+
 // Book Collection
 const idApiBookFieldName = 'id_api_book';
 const titleFieldName = 'title';
