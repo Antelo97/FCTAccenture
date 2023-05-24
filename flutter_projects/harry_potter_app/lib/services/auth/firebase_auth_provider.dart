@@ -1,18 +1,21 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuth, FirebaseAuthException;
+import 'package:harry_potter_app/data/cloud_firebase_db/dao/user_dao.dart';
+import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/user_collection.dart';
 import 'package:harry_potter_app/firebase_options.dart';
 
 import 'auth_exceptions.dart';
 import 'auth_provider.dart';
-import 'auth_user.dart';
 
 class FirebaseAuthProvider implements AuthProvider {
+  UserDao dao = UserDao();
+
   @override
-  AuthUser? get currentUser {
+  Future<UserCollection?> get currentUser async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      return AuthUser.fromFirebase(user);
+      return await dao.getUserFromCloudFirebase(user.uid);
     } else {
       return null;
     }
@@ -26,7 +29,7 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<AuthUser> createUser({
+  Future<UserCollection> createUser({
     required String email,
     required String password,
   }) async {
@@ -35,7 +38,7 @@ class FirebaseAuthProvider implements AuthProvider {
         email: email,
         password: password,
       );
-      final user = currentUser;
+      final user = await currentUser;
       if (user != null) {
         return user;
       } else {
@@ -57,7 +60,7 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<AuthUser> signIn({
+  Future<UserCollection> signIn({
     required String email,
     required String password,
   }) async {
@@ -67,7 +70,7 @@ class FirebaseAuthProvider implements AuthProvider {
         email: email,
         password: password,
       );
-      final user = currentUser;
+      final user = await currentUser;
       if (user != null) {
         return user;
       } else {

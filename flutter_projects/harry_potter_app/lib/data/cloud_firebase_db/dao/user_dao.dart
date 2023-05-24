@@ -10,29 +10,23 @@ class UserDao {
   UserDao._sharedInstance(); // Private constructor
   factory UserDao() => _shared;
 
-  Future<UserCollection> getUserFromCloudFirebase(String idDocument) async {
-    final docSnapshot = await usersCollection.doc(idDocument).get();
-    final querySnapshot =
-        docSnapshot as QueryDocumentSnapshot<Map<String, dynamic>>;
-    return UserCollection.fromSnapshot(querySnapshot);
+  Future<UserCollection> getUserFromCloudFirebase(String idFirebase) async {
+    return await usersCollection
+        .where(idFirestoreFieldName, isEqualTo: idFirebase)
+        .get()
+        .then((snapshot) =>
+            snapshot.docs.map((doc) => UserCollection.fromSnapshot(doc)).first);
   }
 
   Future<UserCollection> insertUser(User user) async {
-    final userCollection = UserCollection(
-      idDocument: '',
-      idFirebase: user.uid,
-      email: user.email!,
-      isEmailVerified: user.emailVerified,
-    );
-
     final userRef = await usersCollection.add({
-      idFirestoreFieldName: userCollection.idFirebase,
-      emailFieldName: userCollection.email,
-      isEmailVeriFiedFieldName: userCollection.isEmailVerified,
-      favoriteBooksFieldName: userCollection.favoriteBooks,
-      favoriteCharactersFieldName: userCollection.favoriteCharacters,
-      favoriteSpellsFieldName: userCollection.favoriteSpells,
-      favoriteSpeciesFieldName: userCollection.favoriteSpecies,
+      idFirestoreFieldName: user.uid,
+      emailFieldName: user.email,
+      isEmailVeriFiedFieldName: user.emailVerified,
+      favoriteBooksFieldName: [],
+      favoriteCharactersFieldName: [],
+      favoriteSpellsFieldName: [],
+      favoriteSpeciesFieldName: [],
     });
 
     return getUserFromCloudFirebase(userRef.id);
