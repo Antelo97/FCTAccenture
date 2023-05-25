@@ -1,0 +1,376 @@
+@startuml 
+set namespaceSeparator ::
+
+class "mynotes::enums::menu_actions.dart::MenuAction" {
+  +int index
+  {static} +List<MenuAction> values
+  {static} +MenuAction logout
+}
+
+"mynotes::enums::menu_actions.dart::MenuAction" o-- "mynotes::enums::menu_actions.dart::MenuAction"
+"dart::core::Enum" <|-- "mynotes::enums::menu_actions.dart::MenuAction"
+
+class "mynotes::firebase_options.dart::DefaultFirebaseOptions" {
+  {static} +FirebaseOptions android
+  {static} +FirebaseOptions ios
+  {static} +FirebaseOptions currentPlatform
+}
+
+"mynotes::firebase_options.dart::DefaultFirebaseOptions" o-- "firebase_core_platform_interface::firebase_core_platform_interface.dart::FirebaseOptions"
+
+class "mynotes::helpers::loading::loading_sceen.dart::LoadingScreen" {
+  {static} -LoadingScreen _shared
+  +LoadingScreenController? controller
+  +void show()
+  +void hide()
+  +LoadingScreenController showOverlay()
+}
+
+"mynotes::helpers::loading::loading_sceen.dart::LoadingScreen" o-- "mynotes::helpers::loading::loading_sceen.dart::LoadingScreen"
+"mynotes::helpers::loading::loading_sceen.dart::LoadingScreen" o-- "mynotes::helpers::loading::loading_screen_controller.dart::LoadingScreenController"
+
+class "mynotes::helpers::loading::loading_screen_controller.dart::LoadingScreenController" {
+  +bool Function() close
+  +bool Function(String) update
+}
+
+"mynotes::helpers::loading::loading_screen_controller.dart::LoadingScreenController" o-- "mynotes::helpers::loading::loading_screen_controller.dart::bool Function()"
+"mynotes::helpers::loading::loading_screen_controller.dart::LoadingScreenController" o-- "mynotes::helpers::loading::loading_screen_controller.dart::bool Function(String)"
+
+class "mynotes::main.dart::HomePage" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mynotes::main.dart::HomePage"
+
+class "mynotes::services::auth::auth_exceptions.dart::UserNotFoundAuthException" {
+}
+
+"dart::core::Exception" <|-- "mynotes::services::auth::auth_exceptions.dart::UserNotFoundAuthException"
+
+class "mynotes::services::auth::auth_exceptions.dart::WrongPasswordAuthException" {
+}
+
+"dart::core::Exception" <|-- "mynotes::services::auth::auth_exceptions.dart::WrongPasswordAuthException"
+
+class "mynotes::services::auth::auth_exceptions.dart::WeakPasswordAuthException" {
+}
+
+"dart::core::Exception" <|-- "mynotes::services::auth::auth_exceptions.dart::WeakPasswordAuthException"
+
+class "mynotes::services::auth::auth_exceptions.dart::EmailAlreadyInUseAuthException" {
+}
+
+"dart::core::Exception" <|-- "mynotes::services::auth::auth_exceptions.dart::EmailAlreadyInUseAuthException"
+
+class "mynotes::services::auth::auth_exceptions.dart::InvalidEmailAuthException" {
+}
+
+"dart::core::Exception" <|-- "mynotes::services::auth::auth_exceptions.dart::InvalidEmailAuthException"
+
+class "mynotes::services::auth::auth_exceptions.dart::GenericAuthException" {
+}
+
+"dart::core::Exception" <|-- "mynotes::services::auth::auth_exceptions.dart::GenericAuthException"
+
+class "mynotes::services::auth::auth_exceptions.dart::UserNotLoggedInAuthException" {
+}
+
+"dart::core::Exception" <|-- "mynotes::services::auth::auth_exceptions.dart::UserNotLoggedInAuthException"
+
+abstract class "mynotes::services::auth::auth_provider.dart::AuthProvider" {
+  +AuthUser? currentUser
+  +Future<void> initialize()
+  +Future<AuthUser> logIn()
+  +Future<AuthUser> createUser()
+  +Future<void> logOut()
+  +Future<void> sendEmailVerification()
+  +Future<void> sendPasswordReset()
+}
+
+"mynotes::services::auth::auth_provider.dart::AuthProvider" o-- "mynotes::services::auth::auth_user.dart::AuthUser"
+
+class "mynotes::services::auth::auth_service.dart::AuthService" {
+  +AuthProvider provider
+  +AuthUser? currentUser
+  +Future<AuthUser> createUser()
+  +Future<AuthUser> logIn()
+  +Future<void> logOut()
+  +Future<void> sendEmailVerification()
+  +Future<void> initialize()
+  +Future<void> sendPasswordReset()
+}
+
+"mynotes::services::auth::auth_service.dart::AuthService" o-- "mynotes::services::auth::auth_provider.dart::AuthProvider"      
+"mynotes::services::auth::auth_service.dart::AuthService" o-- "mynotes::services::auth::auth_user.dart::AuthUser"
+"mynotes::services::auth::auth_provider.dart::AuthProvider" <|-- "mynotes::services::auth::auth_service.dart::AuthService"     
+
+class "mynotes::services::auth::auth_user.dart::AuthUser" {
+  +String id
+  +String email
+  +bool isEmailVerified
+}
+
+class "mynotes::services::auth::bloc::auth_bloc.dart::AuthBloc" {
+}
+
+"bloc::src::bloc.dart::Bloc" <|-- "mynotes::services::auth::bloc::auth_bloc.dart::AuthBloc"
+
+abstract class "mynotes::services::auth::bloc::auth_event.dart::AuthEvent" {
+}
+
+class "mynotes::services::auth::bloc::auth_event.dart::AuthEventInitialize" {
+}
+
+"mynotes::services::auth::bloc::auth_event.dart::AuthEvent" <|-- "mynotes::services::auth::bloc::auth_event.dart::AuthEventInitialize"
+
+class "mynotes::services::auth::bloc::auth_event.dart::AuthEventSendEmailVerification" {
+}
+
+"mynotes::services::auth::bloc::auth_event.dart::AuthEvent" <|-- "mynotes::services::auth::bloc::auth_event.dart::AuthEventSendEmailVerification"
+
+class "mynotes::services::auth::bloc::auth_event.dart::AuthEventLogIn" {
+  +String email
+  +String password
+}
+
+"mynotes::services::auth::bloc::auth_event.dart::AuthEvent" <|-- "mynotes::services::auth::bloc::auth_event.dart::AuthEventLogIn"
+
+class "mynotes::services::auth::bloc::auth_event.dart::AuthEventRegister" {
+  +String email
+  +String password
+}
+
+"mynotes::services::auth::bloc::auth_event.dart::AuthEvent" <|-- "mynotes::services::auth::bloc::auth_event.dart::AuthEventRegister"
+
+class "mynotes::services::auth::bloc::auth_event.dart::AuthEventShouldRegister" {
+}
+
+"mynotes::services::auth::bloc::auth_event.dart::AuthEvent" <|-- "mynotes::services::auth::bloc::auth_event.dart::AuthEventShouldRegister"
+
+class "mynotes::services::auth::bloc::auth_event.dart::AuthEventForgotPassword" {
+  +String? email
+}
+
+"mynotes::services::auth::bloc::auth_event.dart::AuthEvent" <|-- "mynotes::services::auth::bloc::auth_event.dart::AuthEventForgotPassword"
+
+class "mynotes::services::auth::bloc::auth_event.dart::AuthEventLogOut" {
+}
+
+"mynotes::services::auth::bloc::auth_event.dart::AuthEvent" <|-- "mynotes::services::auth::bloc::auth_event.dart::AuthEventLogOut"
+
+abstract class "mynotes::services::auth::bloc::auth_state.dart::AuthState" {
+  +bool isLoading
+  +String? loadingText
+}
+
+class "mynotes::services::auth::bloc::auth_state.dart::AuthStateUninitialized" {
+}
+
+"mynotes::services::auth::bloc::auth_state.dart::AuthState" <|-- "mynotes::services::auth::bloc::auth_state.dart::AuthStateUninitialized"
+
+class "mynotes::services::auth::bloc::auth_state.dart::AuthStateRegistering" {
+  +Exception? exception
+}
+
+"mynotes::services::auth::bloc::auth_state.dart::AuthState" <|-- "mynotes::services::auth::bloc::auth_state.dart::AuthStateRegistering"
+
+class "mynotes::services::auth::bloc::auth_state.dart::AuthStateForgotPassword" {
+  +Exception? exception
+  +bool hasSentEmail
+}
+
+"mynotes::services::auth::bloc::auth_state.dart::AuthState" <|-- "mynotes::services::auth::bloc::auth_state.dart::AuthStateForgotPassword"
+
+class "mynotes::services::auth::bloc::auth_state.dart::AuthStateLoggedIn" {
+  +AuthUser user
+}
+
+"mynotes::services::auth::bloc::auth_state.dart::AuthStateLoggedIn" o-- "mynotes::services::auth::auth_user.dart::AuthUser"    
+"mynotes::services::auth::bloc::auth_state.dart::AuthState" <|-- "mynotes::services::auth::bloc::auth_state.dart::AuthStateLoggedIn"
+
+class "mynotes::services::auth::bloc::auth_state.dart::AuthStateNeedsVerification" {
+}
+
+"mynotes::services::auth::bloc::auth_state.dart::AuthState" <|-- "mynotes::services::auth::bloc::auth_state.dart::AuthStateNeedsVerification"
+
+class "mynotes::services::auth::bloc::auth_state.dart::AuthStateLoggedOut" {
+  +Exception? exception
+  +List<Object?> props
+}
+
+"mynotes::services::auth::bloc::auth_state.dart::AuthState" <|-- "mynotes::services::auth::bloc::auth_state.dart::AuthStateLoggedOut"
+"equatable::src::equatable_mixin.dart::EquatableMixin" <|-- "mynotes::services::auth::bloc::auth_state.dart::AuthStateLoggedOut"
+
+class "mynotes::services::auth::firebase_auth_provider.dart::FirebaseAuthProvider" {
+  +AuthUser? currentUser
+  +Future<AuthUser> createUser()
+  +Future<void> logOut()
+  +Future<AuthUser> logIn()
+  +Future<void> sendEmailVerification()
+  +Future<void> initialize()
+  +Future<void> sendPasswordReset()
+}
+
+"mynotes::services::auth::firebase_auth_provider.dart::FirebaseAuthProvider" o-- "mynotes::services::auth::auth_user.dart::AuthUser"
+"mynotes::services::auth::auth_provider.dart::AuthProvider" <|-- "mynotes::services::auth::firebase_auth_provider.dart::FirebaseAuthProvider"
+
+class "mynotes::services::cloud::cloud_note.dart::CloudNote" {
+  +String documentId
+  +String ownerUserId
+  +String text
+}
+
+class "mynotes::services::cloud::cloud_storage_exceptions.dart::CloudStorageException" {
+}
+
+"dart::core::Exception" <|-- "mynotes::services::cloud::cloud_storage_exceptions.dart::CloudStorageException"
+
+class "mynotes::services::cloud::cloud_storage_exceptions.dart::CouldNotCreateNoteException" {
+}
+
+"mynotes::services::cloud::cloud_storage_exceptions.dart::CloudStorageException" <|-- "mynotes::services::cloud::cloud_storage_exceptions.dart::CouldNotCreateNoteException"
+
+class "mynotes::services::cloud::cloud_storage_exceptions.dart::CouldNotGetAllNotesException" {
+}
+
+"mynotes::services::cloud::cloud_storage_exceptions.dart::CloudStorageException" <|-- "mynotes::services::cloud::cloud_storage_exceptions.dart::CouldNotGetAllNotesException"
+
+class "mynotes::services::cloud::cloud_storage_exceptions.dart::CouldNotUpdateNoteException" {
+}
+
+"mynotes::services::cloud::cloud_storage_exceptions.dart::CloudStorageException" <|-- "mynotes::services::cloud::cloud_storage_exceptions.dart::CouldNotUpdateNoteException"
+
+class "mynotes::services::cloud::cloud_storage_exceptions.dart::CouldNotDeleteNoteException" {
+}
+
+"mynotes::services::cloud::cloud_storage_exceptions.dart::CloudStorageException" <|-- "mynotes::services::cloud::cloud_storage_exceptions.dart::CouldNotDeleteNoteException"
+
+class "mynotes::services::cloud::firebase_cloud_storage.dart::FirebaseCloudStorage" {
+  +CollectionReference<Map<String, dynamic>> notes
+  {static} -FirebaseCloudStorage _shared
+  +Future<void> deleteNote()
+  +Future<void> updateNotes()
+  +Stream<Iterable<CloudNote>> allNotes()
+  +Future<Iterable<CloudNote>> getNotes()
+  +Future<CloudNote> createNewNote()
+}
+
+"mynotes::services::cloud::firebase_cloud_storage.dart::FirebaseCloudStorage" o-- "cloud_firestore::cloud_firestore.dart::CollectionReference<Map<String, dynamic>>"
+"mynotes::services::cloud::firebase_cloud_storage.dart::FirebaseCloudStorage" o-- "mynotes::services::cloud::firebase_cloud_storage.dart::FirebaseCloudStorage"
+
+class "mynotes::views::forgot_password_view.dart::ForgotPasswordView" {
+  +State<ForgotPasswordView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mynotes::views::forgot_password_view.dart::ForgotPasswordView"   
+
+class "mynotes::views::forgot_password_view.dart::_ForgotPasswordViewState" {
+  -TextEditingController _controller
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"mynotes::views::forgot_password_view.dart::_ForgotPasswordViewState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "mynotes::views::forgot_password_view.dart::_ForgotPasswordViewState"      
+
+class "mynotes::views::login_view.dart::LoginView" {
+  +State<LoginView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mynotes::views::login_view.dart::LoginView"
+
+class "mynotes::views::login_view.dart::_LoginViewState" {
+  -TextEditingController _email
+  -TextEditingController _password
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"mynotes::views::login_view.dart::_LoginViewState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"      
+"flutter::src::widgets::framework.dart::State" <|-- "mynotes::views::login_view.dart::_LoginViewState"
+
+class "mynotes::views::notes::create_update_note_view.dart::CreateUpdateNoteView" {
+  +State<CreateUpdateNoteView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mynotes::views::notes::create_update_note_view.dart::CreateUpdateNoteView"
+
+class "mynotes::views::notes::create_update_note_view.dart::_CreateUpdateNoteViewState" {
+  -CloudNote? _note
+  -FirebaseCloudStorage _notesService
+  -TextEditingController _textController
+  +void initState()
+  -void _textControllerListener()
+  -void _setupTextControllerListener()
+  +Future<CloudNote> createOrGetExistingNote()
+  -void _deleteNoteIfTextIsEmpty()
+  -void _safeNoteIfTextNotEmpty()
+  +void dispose()
+  +Widget build()
+}
+
+"mynotes::views::notes::create_update_note_view.dart::_CreateUpdateNoteViewState" o-- "mynotes::services::cloud::cloud_note.dart::CloudNote"
+"mynotes::views::notes::create_update_note_view.dart::_CreateUpdateNoteViewState" o-- "mynotes::services::cloud::firebase_cloud_storage.dart::FirebaseCloudStorage"
+"mynotes::views::notes::create_update_note_view.dart::_CreateUpdateNoteViewState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "mynotes::views::notes::create_update_note_view.dart::_CreateUpdateNoteViewState"
+
+class "mynotes::views::notes::notes_list_view.dart::NotesListView" {
+  +Iterable<CloudNote> notes
+  +void Function(CloudNote) onDeleteNote
+  +void Function(CloudNote) onTap
+  +Widget build()
+}
+
+"mynotes::views::notes::notes_list_view.dart::NotesListView" o-- "mynotes::views::notes::notes_list_view.dart::void Function(CloudNote)"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mynotes::views::notes::notes_list_view.dart::NotesListView"     
+
+class "mynotes::views::notes::notes_view.dart::NotesView" {
+  +State<NotesView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mynotes::views::notes::notes_view.dart::NotesView"
+
+class "mynotes::views::notes::notes_view.dart::_NotesViewState" {
+  -FirebaseCloudStorage _notesService
+  +String userId
+  +void initState()
+  +Widget build()
+}
+
+"mynotes::views::notes::notes_view.dart::_NotesViewState" o-- "mynotes::services::cloud::firebase_cloud_storage.dart::FirebaseCloudStorage"
+"flutter::src::widgets::framework.dart::State" <|-- "mynotes::views::notes::notes_view.dart::_NotesViewState"
+
+class "mynotes::views::register_view.dart::RegisterView" {
+  +State<RegisterView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mynotes::views::register_view.dart::RegisterView"
+
+class "mynotes::views::register_view.dart::_RegisterViewState" {
+  -TextEditingController _email
+  -TextEditingController _password
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"mynotes::views::register_view.dart::_RegisterViewState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "mynotes::views::register_view.dart::_RegisterViewState"
+
+class "mynotes::views::verify_email_view.dart::VerifyEmailView" {
+  +State<VerifyEmailView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mynotes::views::verify_email_view.dart::VerifyEmailView"
+
+class "mynotes::views::verify_email_view.dart::_VerifyEmailViewState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "mynotes::views::verify_email_view.dart::_VerifyEmailViewState"
+
+
+@enduml
