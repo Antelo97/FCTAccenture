@@ -78,6 +78,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
     on<AuthEventInitialize>(
       (event, emit) async {
+        print('printEvent');
         await provider.initialize();
         final user = await provider.currentUserFromCloudFirestore;
         if (user == null) {
