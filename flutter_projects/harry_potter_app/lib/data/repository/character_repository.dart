@@ -3,14 +3,15 @@ import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/character_collection.dart';
 import 'package:harry_potter_app/data/network/api/character_service.dart';
 
-class CharacterDao {
+class CharacterRepository {
   final api = CharacterService();
   final charactersCollection =
       FirebaseFirestore.instance.collection('characters');
 
-  static final CharacterDao _shared = CharacterDao._sharedInstance();
-  CharacterDao._sharedInstance(); // Private constructor
-  factory CharacterDao() => _shared;
+  static final CharacterRepository _shared =
+      CharacterRepository._sharedInstance();
+  CharacterRepository._sharedInstance(); // Private constructor
+  factory CharacterRepository() => _shared;
 
   Future<List<CharacterCollection>> getCharactersFromApi() async {
     final characters = await api.getCharacters();
@@ -28,7 +29,7 @@ class CharacterDao {
 
   Future<List<CharacterCollection>> getCharactersFromCloudFirebase() async {
     return await charactersCollection.get().then((snapshot) => snapshot.docs
-        .map((doc) => CharacterCollection.fromSnapshot(doc))
+        .map((doc) => CharacterCollection.fromDocument(doc))
         .toList());
   }
 
@@ -64,7 +65,7 @@ class CharacterDao {
             isLessThanOrEqualTo: '${searchQuery.toLowerCase()}\uf8ff')
         .get()
         .then((snapshot) => snapshot.docs
-            .map((doc) => CharacterCollection.fromSnapshot(doc))
+            .map((doc) => CharacterCollection.fromDocument(doc))
             .toList());
   }
 

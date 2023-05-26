@@ -3,13 +3,13 @@ import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/spell_collection.dart';
 import 'package:harry_potter_app/data/network/api/spell_service.dart';
 
-class SpellDao {
+class SpellRepository {
   final api = SpellService();
   final spellsCollection = FirebaseFirestore.instance.collection('spells');
 
-  static final SpellDao _shared = SpellDao._sharedInstance();
-  SpellDao._sharedInstance(); // Private constructor
-  factory SpellDao() => _shared;
+  static final SpellRepository _shared = SpellRepository._sharedInstance();
+  SpellRepository._sharedInstance(); // Private constructor
+  factory SpellRepository() => _shared;
 
   Future<List<SpellCollection>> getSpellsFromApi() async {
     final spells = await api.getSpells();
@@ -25,7 +25,7 @@ class SpellDao {
 
   Future<List<SpellCollection>> getSpellsFromCloudFirebase() async {
     return await spellsCollection.get().then((snapshot) =>
-        snapshot.docs.map((doc) => SpellCollection.fromSnapshot(doc)).toList());
+        snapshot.docs.map((doc) => SpellCollection.fromDocument(doc)).toList());
   }
 
   Future<void> insertSpells() async {
@@ -58,7 +58,7 @@ class SpellDao {
             isLessThanOrEqualTo: '${searchQuery.toLowerCase()}\uf8ff')
         .get()
         .then((snapshot) => snapshot.docs
-            .map((doc) => SpellCollection.fromSnapshot(doc))
+            .map((doc) => SpellCollection.fromDocument(doc))
             .toList());
   }
 

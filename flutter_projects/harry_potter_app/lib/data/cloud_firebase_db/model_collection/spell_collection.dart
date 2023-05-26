@@ -19,13 +19,13 @@ class SpellCollection {
     required this.imageUrl,
   });
 
-  SpellCollection.fromSnapshot(
-      QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-      : idDocument = snapshot.id,
-        idApiSpell = snapshot.data()[idApiSpellFieldName] as String,
-        name = snapshot.data()[nameFieldName] as String,
-        description = snapshot.data()[descriptionFieldName] as String,
-        imageUrl = snapshot.data()[imageUrlFieldName] as String;
+  SpellCollection.fromDocument(
+      QueryDocumentSnapshot<Map<String, dynamic>> document)
+      : idDocument = document.id,
+        idApiSpell = document.data()[idApiSpellFieldName] as String,
+        name = document.data()[nameFieldName] as String,
+        description = document.data()[descriptionFieldName] as String,
+        imageUrl = document.data()[imageUrlFieldName] as String;
 
   SpellCollection.fromResponse(SpellResponse spell)
       : idDocument = '',

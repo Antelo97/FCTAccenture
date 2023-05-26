@@ -21,14 +21,14 @@ class BookCollection {
     required this.releaseDate,
   });
 
-  BookCollection.fromSnapshot(
-      QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-      : idDocument = snapshot.id,
-        idApiBook = snapshot.data()[idApiBookFieldName] as int,
-        title = snapshot.data()[titleFieldName] as String,
-        imageUrl = snapshot.data()[imageUrlFieldName] as String,
-        author = snapshot.data()[authorFieldName] as String,
-        releaseDate = snapshot.data()[releaseDateFieldName] as String;
+  BookCollection.fromDocument(
+      QueryDocumentSnapshot<Map<String, dynamic>> document)
+      : idDocument = document.id,
+        idApiBook = document.data()[idApiBookFieldName] as int,
+        title = document.data()[titleFieldName] as String,
+        imageUrl = document.data()[imageUrlFieldName] as String,
+        author = document.data()[authorFieldName] as String,
+        releaseDate = document.data()[releaseDateFieldName] as String;
 
   BookCollection.fromResponse(BookResponse book)
       : idDocument = '',

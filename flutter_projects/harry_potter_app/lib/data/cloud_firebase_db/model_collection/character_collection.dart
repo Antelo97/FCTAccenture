@@ -41,24 +41,24 @@ class CharacterCollection {
     required this.imageUrl,
   });
 
-  CharacterCollection.fromSnapshot(
-      QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-      : idDocument = snapshot.id,
-        idApiCharacter = snapshot.data()[idApiCharacterFieldName] as String,
-        name = snapshot.data()[nameFieldName] as String,
-        species = snapshot.data()[speciesFieldName] as Species,
-        gender = snapshot.data()[genderFieldName] as Gender,
-        house = snapshot.data()[houseFieldName] as House,
-        yearOfBirth = snapshot.data()[yearOfBirthFieldName] as int?,
-        isWizard = snapshot.data()[isWizardFieldName] as bool,
-        ancestry = snapshot.data()[ancestryFieldName] as Ancestry,
-        wand = snapshot.data()[wandFieldName] as Wand,
-        patronus = snapshot.data()[patronusFieldName] as Patronus,
-        isHogwartsStudent = snapshot.data()[isHogwartsStudentFieldName] as bool,
-        isHogwartsStaff = snapshot.data()[isHogwartsStaffFieldName] as bool,
-        actor = snapshot.data()[actorFieldName] as String,
-        isAlive = snapshot.data()[isAliveFieldName] as bool,
-        imageUrl = snapshot.data()[imageUrlFieldName] as String;
+  CharacterCollection.fromDocument(
+      QueryDocumentSnapshot<Map<String, dynamic>> document)
+      : idDocument = document.id,
+        idApiCharacter = document.data()[idApiCharacterFieldName] as String,
+        name = document.data()[nameFieldName] as String,
+        species = document.data()[speciesFieldName] as Species,
+        gender = document.data()[genderFieldName] as Gender,
+        house = document.data()[houseFieldName] as House,
+        yearOfBirth = document.data()[yearOfBirthFieldName] as int?,
+        isWizard = document.data()[isWizardFieldName] as bool,
+        ancestry = document.data()[ancestryFieldName] as Ancestry,
+        wand = document.data()[wandFieldName] as Wand,
+        patronus = document.data()[patronusFieldName] as Patronus,
+        isHogwartsStudent = document.data()[isHogwartsStudentFieldName] as bool,
+        isHogwartsStaff = document.data()[isHogwartsStaffFieldName] as bool,
+        actor = document.data()[actorFieldName] as String,
+        isAlive = document.data()[isAliveFieldName] as bool,
+        imageUrl = document.data()[imageUrlFieldName] as String;
 
   CharacterCollection.fromResponse(CharacterResponse character)
       : idDocument = '',

@@ -3,13 +3,13 @@ import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/book_collection.dart';
 import 'package:harry_potter_app/data/network/api/book_service.dart';
 
-class BookDao {
+class BookRepository {
   final api = BookService();
   final booksCollection = FirebaseFirestore.instance.collection('books');
 
-  static final BookDao _shared = BookDao._sharedInstance();
-  BookDao._sharedInstance(); // Private constructor
-  factory BookDao() => _shared;
+  static final BookRepository _shared = BookRepository._sharedInstance();
+  BookRepository._sharedInstance(); // Private constructor
+  factory BookRepository() => _shared;
 
   Future<List<BookCollection>> getBooksFromApi() async {
     final books = await api.getBooks();
@@ -25,7 +25,7 @@ class BookDao {
 
   Future<List<BookCollection>> getBooksFromCloudFirebase() async {
     return await booksCollection.get().then((snapshot) =>
-        snapshot.docs.map((doc) => BookCollection.fromSnapshot(doc)).toList());
+        snapshot.docs.map((doc) => BookCollection.fromDocument(doc)).toList());
 
     // return booksCollection.snapshots().map((event) =>
     //     event.docs.map((doc) => BookCollection.fromSnapshot(doc)).toList());
@@ -62,7 +62,7 @@ class BookDao {
             isLessThanOrEqualTo: '${searchQuery.toLowerCase()}\uf8ff')
         .get()
         .then((snapshot) => snapshot.docs
-            .map((doc) => BookCollection.fromSnapshot(doc))
+            .map((doc) => BookCollection.fromDocument(doc))
             .toList());
   }
 

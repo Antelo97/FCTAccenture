@@ -3,13 +3,13 @@ import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/species_collection.dart';
 import 'package:harry_potter_app/data/network/api/species_service.dart';
 
-class SpeciesDao {
+class SpeciesRepository {
   final api = SpeciesService();
   final speciesCollection = FirebaseFirestore.instance.collection('species');
 
-  static final SpeciesDao _shared = SpeciesDao._sharedInstance();
-  SpeciesDao._sharedInstance(); // Private constructor
-  factory SpeciesDao() => _shared;
+  static final SpeciesRepository _shared = SpeciesRepository._sharedInstance();
+  SpeciesRepository._sharedInstance(); // Private constructor
+  factory SpeciesRepository() => _shared;
 
   Future<List<SpeciesCollection>> getSpeciesFromApi() async {
     final species = await api.getSpecies();
@@ -25,7 +25,7 @@ class SpeciesDao {
 
   Future<List<SpeciesCollection>> getSpeciesFromCloudFirebase() async {
     return await speciesCollection.get().then((snapshot) => snapshot.docs
-        .map((doc) => SpeciesCollection.fromSnapshot(doc))
+        .map((doc) => SpeciesCollection.fromDocument(doc))
         .toList());
   }
 
@@ -60,7 +60,7 @@ class SpeciesDao {
             isLessThanOrEqualTo: '${searchQuery.toLowerCase()}\uf8ff')
         .get()
         .then((snapshot) => snapshot.docs
-            .map((doc) => SpeciesCollection.fromSnapshot(doc))
+            .map((doc) => SpeciesCollection.fromDocument(doc))
             .toList());
   }
 

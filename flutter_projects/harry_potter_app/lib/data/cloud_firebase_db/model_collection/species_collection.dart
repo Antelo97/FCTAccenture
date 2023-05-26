@@ -19,13 +19,13 @@ class SpeciesCollection {
       required this.native,
       required this.imageUrl});
 
-  SpeciesCollection.fromSnapshot(
-      QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-      : idDocument = snapshot.id,
-        idApiSpecies = snapshot.data()[idApiSpeciesFieldName] as int,
-        name = snapshot.data()[nameFieldName] as String,
-        native = snapshot.data()[nativeFieldName] as String?,
-        imageUrl = snapshot.data()[imageUrlFieldName] as String;
+  SpeciesCollection.fromDocument(
+      QueryDocumentSnapshot<Map<String, dynamic>> document)
+      : idDocument = document.id,
+        idApiSpecies = document.data()[idApiSpeciesFieldName] as int,
+        name = document.data()[nameFieldName] as String,
+        native = document.data()[nativeFieldName] as String?,
+        imageUrl = document.data()[imageUrlFieldName] as String;
 
   SpeciesCollection.fromResponse(SpeciesResponse species)
       : idDocument = '',

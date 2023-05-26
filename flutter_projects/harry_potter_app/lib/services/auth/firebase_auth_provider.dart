@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuth, FirebaseAuthException;
-import 'package:harry_potter_app/data/cloud_firebase_db/dao/user_dao.dart';
+import 'package:harry_potter_app/data/repository/user_repository.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/user_collection.dart';
 import 'package:harry_potter_app/firebase_options.dart';
 
@@ -9,7 +9,7 @@ import 'auth_exceptions.dart';
 import 'auth_provider.dart';
 
 class FirebaseAuthProvider implements AuthProvider {
-  late UserDao dao;
+  late UserRepository dao;
 
   @override
   Future<UserCollection?> get currentUserFromCloudFirestore async {
@@ -26,7 +26,7 @@ class FirebaseAuthProvider implements AuthProvider {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    dao = UserDao();
+    dao = UserRepository();
   }
 
   @override

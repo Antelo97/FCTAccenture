@@ -1,24 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' show User;
-import 'package:flutter/foundation.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/book_collection.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/character_collection.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/species_collection.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/spell_collection.dart';
 
-@immutable
 class UserCollection {
-  final String idDocument;
+  String idDocument = '';
   final String idFirestore;
   final String email;
   final bool isEmailVerified;
-  final List<BookCollection> favoriteBooks = [];
-  final List<CharacterCollection> favoriteCharacters = [];
-  final List<SpellCollection> favoriteSpells = [];
-  final List<SpeciesCollection> favoriteSpecies = [];
+  List<BookCollection> favoriteBooks = [];
+  List<CharacterCollection> favoriteCharacters = [];
+  List<SpellCollection> favoriteSpells = [];
+  List<SpeciesCollection> favoriteSpecies = [];
   UserCollection({
-    required this.idDocument,
     required this.idFirestore,
     required this.email,
     required this.isEmailVerified,
@@ -32,8 +29,7 @@ class UserCollection {
   //     );
 
   UserCollection.fromFirebase(User user)
-      : idDocument = '',
-        idFirestore = user.uid,
+      : idFirestore = user.uid,
         email = user.email!,
         isEmailVerified = user.emailVerified;
 
@@ -42,5 +38,13 @@ class UserCollection {
       : idDocument = snapshot.id,
         idFirestore = snapshot.data()[idFirestoreFieldName] as String,
         email = snapshot.data()[emailFieldName] as String,
-        isEmailVerified = snapshot.data()[isEmailVeriFiedFieldName] as bool;
+        isEmailVerified = snapshot.data()[isEmailVeriFiedFieldName] as bool,
+        favoriteBooks =
+            snapshot.data()[favoriteBooksFieldName] as List<BookCollection>,
+        favoriteCharacters = snapshot.data()[favoriteCharactersFieldName]
+            as List<CharacterCollection>,
+        favoriteSpells =
+            snapshot.data()[favoriteSpellsFieldName] as List<SpellCollection>,
+        favoriteSpecies = snapshot.data()[favoriteSpeciesFieldName]
+            as List<SpeciesCollection>;
 }
