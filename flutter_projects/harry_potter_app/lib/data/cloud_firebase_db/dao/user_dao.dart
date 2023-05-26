@@ -10,7 +10,7 @@ class UserDao {
   UserDao._sharedInstance(); // Private constructor
   factory UserDao() => _shared;
 
-  Future<UserCollection> getUserFromCloudFirebase(String idFirebase) async {
+  Future<UserCollection?> getUserFromCloudFirebase(String idFirebase) async {
     return await usersCollection
         .where(idFirestoreFieldName, isEqualTo: idFirebase)
         .get()
@@ -29,7 +29,11 @@ class UserDao {
       favoriteSpeciesFieldName: [],
     });
 
-    return getUserFromCloudFirebase(userRef.id);
+    // user.uid --> atributo del usuario interno de Firestore, lo almaceno en la colección en el campo id_firestore
+    // userRef.id --> es la referencia que tiene l documento dentro de la colección en Firebase
+    final insertedUser = await getUserFromCloudFirebase(user.uid);
+
+    return insertedUser!;
   }
 
   Future<void> deleteUser(String idDocument) async {

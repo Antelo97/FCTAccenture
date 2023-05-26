@@ -1,4 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/user_collection.dart';
+import 'package:harry_potter_app/services/auth/auth_exceptions.dart';
 import 'package:harry_potter_app/services/auth/auth_provider.dart';
 
 import 'auth_event.dart';
@@ -61,14 +64,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (event, emit) async {
         final email = event.email;
         final password = event.password;
+        print('step0');
+
         try {
+          print('step1');
           await provider.createUser(
             email: email,
             password: password,
           );
+          print('step2');
           await provider.sendEmailVerification();
           emit(const AuthStateNeedsVerification(isLoading: false));
         } on Exception catch (e) {
+          print('excp1');
           emit(AuthStateRegistering(
             exception: e,
             isLoading: false,
@@ -78,9 +86,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
     on<AuthEventInitialize>(
       (event, emit) async {
-        print('printEvent');
         await provider.initialize();
-        final user = await provider.currentUserFromCloudFirestore;
+        final user = FirebaseAuth.instance.currentUser;
         if (user == null) {
           emit(
             const AuthStateLoggedOut(
@@ -88,11 +95,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               isLoading: false,
             ),
           );
-        } else if (!user.isEmailVerified) {
+        } else if (!user.emailVerified) {
           emit(const AuthStateNeedsVerification(isLoading: false));
         } else {
+          final userLogged = await provider.currentUserFromCloudFirestore;
           emit(AuthStateLoggedIn(
-            user: user,
+            user: userLogged!,
             isLoading: false,
           ));
         }

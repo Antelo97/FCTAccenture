@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:harry_potter_app/constants.dart';
+import 'package:harry_potter_app/data/network/api_constants.dart';
 import 'package:harry_potter_app/data/network/model_response/species_response.dart';
 import 'package:http/http.dart' as http;
 

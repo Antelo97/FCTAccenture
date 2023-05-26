@@ -9,7 +9,7 @@ import 'auth_exceptions.dart';
 import 'auth_provider.dart';
 
 class FirebaseAuthProvider implements AuthProvider {
-  UserDao dao = UserDao();
+  late UserDao dao;
 
   @override
   Future<UserCollection?> get currentUserFromCloudFirestore async {
@@ -26,7 +26,7 @@ class FirebaseAuthProvider implements AuthProvider {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    print('asdf');
+    dao = UserDao();
   }
 
   @override
@@ -40,10 +40,14 @@ class FirebaseAuthProvider implements AuthProvider {
         email: email,
         password: password,
       );
-      dao.insertUser(userCredential.user!);
-      final user = await currentUserFromCloudFirestore;
+
+      final user = userCredential.user;
+
       if (user != null) {
-        return user;
+        print('OKE');
+        final userCollection = await dao.insertUser(user);
+        print('OKE1');
+        return userCollection;
       } else {
         throw UserNotLoggedInAuthException();
       }
@@ -69,13 +73,19 @@ class FirebaseAuthProvider implements AuthProvider {
   }) async {
     try {
       // await Future.delayed(const Duration(seconds: 3));
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final userCredentials =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      final user = await currentUserFromCloudFirestore;
+      final user = userCredentials.user;
       if (user != null) {
-        return user;
+        final userCollection = await dao.getUserFromCloudFirebase(user.uid);
+        if (user.emailVerified && userCollection == null) {
+          return await dao.insertUser(user);
+        } else {
+          return UserCollection.fromFirebase(user);
+        }
       } else {
         throw UserNotLoggedInAuthException();
       }
@@ -105,9 +115,12 @@ class FirebaseAuthProvider implements AuthProvider {
   @override
   Future<void> sendEmailVerification() async {
     final user = FirebaseAuth.instance.currentUser;
+    print('-email1');
     if (user != null) {
+      print('-email2');
       await user.sendEmailVerification();
     } else {
+      print('-email3');
       throw UserNotLoggedInAuthException();
     }
   }
