@@ -8,7 +8,14 @@ import 'package:harry_potter_app/firebase_options.dart';
 import 'auth_exceptions.dart';
 import 'auth_provider.dart';
 
+// Decido trabajar con el AuthUserRepository en esta clase para integrar en el AuthProvider el acceso a
+// Cloud Firestore, de forma cuando se cree un usuario en Firestore, este se agregue automáticamente
+// en Cloud Firestore sin tener que hacer una doble llamada a nivel de Bloc (una para crear el usuario
+// en Firestore con el Provider y otra para insetarlo en Cloud Firestore con el AuthUserRepository)
+
 class FirebaseAuthProvider implements AuthProvider {
+  // Tiene que ser late porque el BlocProvider recibe como parámetro el AuthProvider
+  // antes de inicializarse Firebase
   late AuthUserRepository authUserRepository;
 
   @override
@@ -31,6 +38,7 @@ class FirebaseAuthProvider implements AuthProvider {
 
   @override
   Future<AuthUser> createUser({
+    required String username,
     required String email,
     required String password,
   }) async {
@@ -44,8 +52,8 @@ class FirebaseAuthProvider implements AuthProvider {
       final user = userCredential.user;
 
       if (user != null) {
-        final userCollection = await authUserRepository.insertUser(user);
-        return userCollection;
+        final authUser = AuthUser.fromFirebase(user, username);
+        return await authUserRepository.insertUser(authUser);
       } else {
         throw UserNotLoggedInAuthException();
       }
@@ -70,21 +78,17 @@ class FirebaseAuthProvider implements AuthProvider {
     required String password,
   }) async {
     try {
-      // await Future.delayed(const Duration(seconds: 3));
       final userCredentials =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+
       final user = userCredentials.user;
+
       if (user != null) {
-        final userCollection =
-            await authUserRepository.getUserFromCloudFirebase(user.uid);
-        if (user.emailVerified && userCollection == null) {
-          return await authUserRepository.insertUser(user);
-        } else {
-          return AuthUser.fromFirebase(user);
-        }
+        final authUser = await currentUserFromCloudFirestore;
+        return authUser!;
       } else {
         throw UserNotLoggedInAuthException();
       }

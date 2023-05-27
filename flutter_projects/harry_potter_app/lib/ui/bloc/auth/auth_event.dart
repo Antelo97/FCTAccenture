@@ -5,35 +5,46 @@ abstract class AuthEvent {
   const AuthEvent();
 }
 
-class AuthEventInitialize extends AuthEvent {
-  const AuthEventInitialize();
+class AuthEventInitializeFirebase extends AuthEvent {
+  // Cuando el constructor de la clase padre no recibe argumentos, se puede omitir la llamada a super
+  const AuthEventInitializeFirebase() : super();
 }
 
-class AuthEventSendEmailVerification extends AuthEvent {
-  const AuthEventSendEmailVerification();
+class AuthEventGoToSignUp extends AuthEvent {
+  const AuthEventGoToSignUp();
+}
+
+class AuthEventSignUp extends AuthEvent {
+  final String username;
+  final String email;
+  final String password;
+
+  const AuthEventSignUp({
+    required this.username,
+    required this.email,
+    required this.password,
+  });
+}
+
+class AuthEventSendVerificationEmail extends AuthEvent {
+  const AuthEventSendVerificationEmail();
 }
 
 class AuthEventSignIn extends AuthEvent {
   final String email;
   final String password;
-  const AuthEventSignIn(this.email, this.password);
+
+  const AuthEventSignIn({
+    required this.email,
+    required this.password,
+  });
 }
 
-class AuthEventRegister extends AuthEvent {
-  final String email;
-  final String password;
-  const AuthEventRegister(this.email, this.password);
-}
-
-class AuthEventShouldRegister extends AuthEvent {
-  const AuthEventShouldRegister();
+class AuthEventSignOut extends AuthEvent {
+  const AuthEventSignOut();
 }
 
 class AuthEventForgotPassword extends AuthEvent {
   final String? email;
   const AuthEventForgotPassword({required this.email});
-}
-
-class AuthEventSignOut extends AuthEvent {
-  const AuthEventSignOut();
 }

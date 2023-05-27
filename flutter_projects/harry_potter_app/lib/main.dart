@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => AuthBloc(authProvider: FirebaseAuthProvider())
-            ..add(const AuthEventInitialize()),
+            ..add(const AuthEventInitializeFirebase()),
         ),
       ],
       child: MaterialApp(

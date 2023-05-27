@@ -11,24 +11,27 @@ class AuthUser {
   String idDocument = '';
   final String idFirestore;
   final String email;
-  final bool isEmailVerified;
+  bool isEmailVerified;
   final String username;
   List<Book> favoriteBooks = [];
   List<Character> favoriteCharacters = [];
   List<Spell> favoriteSpells = [];
   List<Species> favoriteSpecies = [];
-  AuthUser({
-    required this.idFirestore,
-    required this.email,
-    required this.isEmailVerified,
-    required this.username,
-  });
 
-  AuthUser.fromFirebase(User user)
-      : idFirestore = user.uid,
+  // 1. ( ) --> Parámetros obligatorios, sin nombres
+  // 2. {( )} --> Permite añadir parámetros opcionales, con nombres
+  //    a) {(this.)} --> Opcional
+  //    b) {(required this.)} --> Obligatorio
+
+  // final: valor inmutable
+  // * Si definimos la variable a nivel de atributo, no podremos hacerlo a nivel de constructor
+
+  AuthUser.fromFirebase(
+    User user,
+    this.username,
+  )   : idFirestore = user.uid,
         email = user.email!,
-        isEmailVerified = user.emailVerified,
-        username = '';
+        isEmailVerified = user.emailVerified;
 
   AuthUser.fromDocument(QueryDocumentSnapshot<Map<String, dynamic>> document)
       : idDocument = document.id,
@@ -46,8 +49,8 @@ class AuthUser {
 }
 
 // factory UserCollection.fromFirebase(User user) => UserCollection(
-  //       idDocument: '',
-  //       idFirebase: user.uid,
-  //       email: user.email!,
-  //       isEmailVerified: user.emailVerified,
-  //     );
+//       idDocument: '',
+//       idFirebase: user.uid,
+//       email: user.email!,
+//       isEmailVerified: user.emailVerified,
+//     );

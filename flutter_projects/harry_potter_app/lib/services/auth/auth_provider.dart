@@ -4,6 +4,7 @@ abstract class AuthProvider {
   Future<AuthUser?> get currentUserFromCloudFirestore;
   Future<void> initialize();
   Future<AuthUser> createUser({
+    required String username,
     required String email,
     required String password,
   });

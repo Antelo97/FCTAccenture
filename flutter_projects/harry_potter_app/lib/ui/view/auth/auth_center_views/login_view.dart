@@ -35,7 +35,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
-        if (state is AuthStateLoggedOut) {
+        if (state is AuthStateSignedOut) {
           if (state.exception is UserNotFoundAuthException) {
             await showErrorDialog(
               context,
@@ -80,8 +80,8 @@ class _LoginViewState extends State<LoginView> {
                   final password = _password.text;
                   context.read<AuthBloc>().add(
                         AuthEventSignIn(
-                          email,
-                          password,
+                          email: email,
+                          password: password,
                         ),
                       );
                 },
@@ -99,7 +99,7 @@ class _LoginViewState extends State<LoginView> {
               TextButton(
                 onPressed: () {
                   context.read<AuthBloc>().add(
-                        const AuthEventShouldRegister(),
+                        const AuthEventGoToSignUp(),
                       );
                 },
                 child: const Text('Not registered yet? Register here!'),

@@ -14,11 +14,13 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+  late final TextEditingController _username;
   late final TextEditingController _email;
   late final TextEditingController _password;
 
   @override
   void initState() {
+    _username = TextEditingController();
     _email = TextEditingController();
     _password = TextEditingController();
     super.initState();
@@ -35,7 +37,7 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
-        if (state is AuthStateRegistering) {
+        if (state is AuthStateSigningUp) {
           if (state.exception is WeakPasswordAuthException) {
             await showErrorDialog(context, 'Weak password');
           } else if (state.exception is EmailAlreadyInUseAuthException) {
@@ -79,12 +81,14 @@ class _RegisterViewState extends State<RegisterView> {
                   children: [
                     TextButton(
                       onPressed: () async {
+                        final username = _username.text;
                         final email = _email.text;
                         final password = _password.text;
                         context.read<AuthBloc>().add(
-                              AuthEventRegister(
-                                email,
-                                password,
+                              AuthEventSignUp(
+                                username: username,
+                                email: email,
+                                password: password,
                               ),
                             );
                       },
