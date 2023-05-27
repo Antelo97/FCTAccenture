@@ -1,178 +1,203 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/user_collection.dart';
-import 'package:harry_potter_app/services/auth/auth_exceptions.dart';
+import 'package:harry_potter_app/domain/repository/species_repository.dart';
+import 'package:harry_potter_app/domain/repository/spell_repository.dart';
+import 'package:harry_potter_app/domain/repository/book_repository.dart';
+import 'package:harry_potter_app/domain/repository/character_repository.dart';
+import 'package:harry_potter_app/domain/repository/auth_user_repository.dart';
 import 'package:harry_potter_app/services/auth/auth_provider.dart';
 
 import 'auth_event.dart';
 import 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc(AuthProvider provider)
+  AuthProvider authProvider;
+  late AuthUserRepository userRepository;
+  late BookRepository bookRepository;
+  late CharacterRepository characterRepository;
+  late SpellRepository spellRepository;
+  late SpeciesRepository speciesRepository;
+
+  AuthBloc({required this.authProvider})
       : super(const AuthStateUninitialized(isLoading: true)) {
-    on<AuthEventShouldRegister>(
-      (event, emit) {
-        emit(const AuthStateRegistering(
+    on<AuthEventInitialize>(onAuthEventInitializeFirebase);
+    on<AuthEventShouldRegister>(onAuthEventGoToSignUp);
+    on<AuthEventRegister>(onAuthEventSignUp);
+    on<AuthEventSendEmailVerification>(onAuthEventSendVerificationEmail);
+    on<AuthEventSignIn>(onAuthEventSignIn);
+    on<AuthEventSignOut>(onAuthEventSignOut);
+    on<AuthEventForgotPassword>(onAuthEventForgotPassword);
+  }
+
+  void onAuthEventInitializeFirebase(
+    AuthEventInitialize event,
+    Emitter<AuthState> emit,
+  ) async {
+    await authProvider.initialize();
+
+    // Una vez inicializado Firebase, ya podemos instanciar nuestros repositorios
+    userRepository = AuthUserRepository();
+    bookRepository = BookRepository();
+    characterRepository = CharacterRepository();
+    spellRepository = SpellRepository();
+    speciesRepository = SpeciesRepository();
+
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      emit(
+        const AuthStateLoggedOut(
           exception: null,
           isLoading: false,
-        ));
-      },
-    );
-    on<AuthEventForgotPassword>((event, emit) async {
-      emit(const AuthStateForgotPassword(
-        exception: null,
-        hasSentEmail: false,
+        ),
+      );
+    } else if (!user.emailVerified) {
+      emit(const AuthStateNeedsVerification(isLoading: false));
+    } else {
+      final userLogged = await authProvider.currentUserFromCloudFirestore;
+      emit(AuthStateLoggedIn(
+        user: userLogged!,
         isLoading: false,
       ));
-      final email = event.email;
-      if (email == null) {
-        return; // User just wants to go to forgot password screen
-      }
+    }
+  }
 
-      // User wants to actually send a forgot password email
-      emit(const AuthStateForgotPassword(
+  void onAuthEventGoToSignUp(
+      AuthEventShouldRegister event, Emitter<AuthState> emit) {
+    (event, emit) {
+      emit(const AuthStateRegistering(
         exception: null,
-        hasSentEmail: false,
+        isLoading: false,
+      ));
+    };
+  }
+
+  void onAuthEventSignUp(
+      AuthEventRegister event, Emitter<AuthState> emit) async {
+    final email = event.email;
+    final password = event.password;
+
+    try {
+      await authProvider.createUser(
+        email: email,
+        password: password,
+      );
+      await authProvider.sendEmailVerification();
+      emit(const AuthStateNeedsVerification(isLoading: false));
+    } on Exception catch (e) {
+      emit(AuthStateRegistering(
+        exception: e,
+        isLoading: false,
+      ));
+    }
+  }
+
+  void onAuthEventSendVerificationEmail(
+      AuthEventSendEmailVerification event, Emitter<AuthState> emit) async {
+    await authProvider.sendEmailVerification();
+    emit(state);
+  }
+
+  void onAuthEventSignIn(AuthEventSignIn event, Emitter<AuthState> emit) async {
+    emit(
+      const AuthStateLoggedOut(
+        exception: null,
         isLoading: true,
-      ));
-
-      Exception? exception;
-      bool didSendEmail;
-      try {
-        await provider.sendPasswordReset(toEmail: email);
-        exception = null;
-        didSendEmail = true;
-      } on Exception catch (e) {
-        exception = e;
-        didSendEmail = false;
-      }
-
-      emit(AuthStateForgotPassword(
-        exception: exception,
-        hasSentEmail: didSendEmail,
-        isLoading: false,
-      ));
-    });
-    // Send email verification
-    on<AuthEventSendEmailVerification>(
-      (event, emit) async {
-        await provider.sendEmailVerification();
-        emit(state);
-      },
+        loadingText: 'Please wait while I log you in',
+      ),
     );
-    on<AuthEventRegister>(
-      (event, emit) async {
-        final email = event.email;
-        final password = event.password;
-        print('step0');
+    // await Future.delayed(const Duration(seconds: 3));
+    final email = event.email;
+    final password = event.password;
+    try {
+      final user = await authProvider.signIn(
+        email: email,
+        password: password,
+      );
 
-        try {
-          print('step1');
-          await provider.createUser(
-            email: email,
-            password: password,
-          );
-          print('step2');
-          await provider.sendEmailVerification();
-          emit(const AuthStateNeedsVerification(isLoading: false));
-        } on Exception catch (e) {
-          print('excp1');
-          emit(AuthStateRegistering(
-            exception: e,
-            isLoading: false,
-          ));
-        }
-      },
-    );
-    on<AuthEventInitialize>(
-      (event, emit) async {
-        await provider.initialize();
-        final user = FirebaseAuth.instance.currentUser;
-        if (user == null) {
-          emit(
-            const AuthStateLoggedOut(
-              exception: null,
-              isLoading: false,
-            ),
-          );
-        } else if (!user.emailVerified) {
-          emit(const AuthStateNeedsVerification(isLoading: false));
-        } else {
-          final userLogged = await provider.currentUserFromCloudFirestore;
-          emit(AuthStateLoggedIn(
-            user: userLogged!,
-            isLoading: false,
-          ));
-        }
-      },
-    );
-    on<AuthEventSignIn>(
-      (event, emit) async {
+      if (!user.isEmailVerified) {
         emit(
           const AuthStateLoggedOut(
             exception: null,
-            isLoading: true,
-            loadingText: 'Please wait while I log you in',
+            isLoading: false,
           ),
         );
-        // await Future.delayed(const Duration(seconds: 3));
-        final email = event.email;
-        final password = event.password;
-        try {
-          final user = await provider.signIn(
-            email: email,
-            password: password,
-          );
+        emit(const AuthStateNeedsVerification(isLoading: false));
+      } else {
+        emit(
+          const AuthStateLoggedOut(
+            exception: null,
+            isLoading: false,
+          ),
+        );
+        emit(AuthStateLoggedIn(
+          user: user,
+          isLoading: false,
+        ));
+      }
+    } on Exception catch (e) {
+      emit(
+        AuthStateLoggedOut(
+          exception: e,
+          isLoading: false,
+        ),
+      );
+    }
+  }
 
-          if (!user.isEmailVerified) {
-            emit(
-              const AuthStateLoggedOut(
-                exception: null,
-                isLoading: false,
-              ),
-            );
-            emit(const AuthStateNeedsVerification(isLoading: false));
-          } else {
-            emit(
-              const AuthStateLoggedOut(
-                exception: null,
-                isLoading: false,
-              ),
-            );
-            emit(AuthStateLoggedIn(
-              user: user,
-              isLoading: false,
-            ));
-          }
-        } on Exception catch (e) {
-          emit(
-            AuthStateLoggedOut(
-              exception: e,
-              isLoading: false,
-            ),
-          );
-        }
-      },
-    );
-    on<AuthEventSignOut>(
-      (event, emit) async {
-        try {
-          await provider.signOut();
-          emit(
-            const AuthStateLoggedOut(
-              exception: null,
-              isLoading: false,
-            ),
-          );
-        } on Exception catch (e) {
-          emit(
-            AuthStateLoggedOut(
-              exception: e,
-              isLoading: false,
-            ),
-          );
-        }
-      },
-    );
+  void onAuthEventSignOut(
+      AuthEventSignOut event, Emitter<AuthState> emit) async {
+    try {
+      await authProvider.signOut();
+      emit(
+        const AuthStateLoggedOut(
+          exception: null,
+          isLoading: false,
+        ),
+      );
+    } on Exception catch (e) {
+      emit(
+        AuthStateLoggedOut(
+          exception: e,
+          isLoading: false,
+        ),
+      );
+    }
+  }
+
+  void onAuthEventForgotPassword(
+      AuthEventForgotPassword event, Emitter<AuthState> emit) async {
+    emit(const AuthStateForgotPassword(
+      exception: null,
+      hasSentEmail: false,
+      isLoading: false,
+    ));
+    final email = event.email;
+    if (email == null) {
+      return; // User just wants to go to forgot password screen
+    }
+
+    // User wants to actually send a forgot password email
+    emit(const AuthStateForgotPassword(
+      exception: null,
+      hasSentEmail: false,
+      isLoading: true,
+    ));
+
+    Exception? exception;
+    bool didSendEmail;
+    try {
+      await authProvider.sendPasswordReset(toEmail: email);
+      exception = null;
+      didSendEmail = true;
+    } on Exception catch (e) {
+      exception = e;
+      didSendEmail = false;
+    }
+
+    emit(AuthStateForgotPassword(
+      exception: exception,
+      hasSentEmail: didSendEmail,
+      isLoading: false,
+    ));
   }
 }

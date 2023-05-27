@@ -4,7 +4,7 @@ import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/network/model_response/book_response.dart';
 
 @immutable
-class BookCollection {
+class Book {
   final String idDocument;
   final int idApiBook;
   final String title;
@@ -12,7 +12,7 @@ class BookCollection {
   final String author;
   final String releaseDate;
 
-  const BookCollection({
+  const Book({
     required this.idDocument,
     required this.idApiBook,
     required this.title,
@@ -21,8 +21,7 @@ class BookCollection {
     required this.releaseDate,
   });
 
-  BookCollection.fromDocument(
-      QueryDocumentSnapshot<Map<String, dynamic>> document)
+  Book.fromDocument(QueryDocumentSnapshot<Map<String, dynamic>> document)
       : idDocument = document.id,
         idApiBook = document.data()[idApiBookFieldName] as int,
         title = document.data()[titleFieldName] as String,
@@ -30,7 +29,7 @@ class BookCollection {
         author = document.data()[authorFieldName] as String,
         releaseDate = document.data()[releaseDateFieldName] as String;
 
-  BookCollection.fromResponse(BookResponse book)
+  Book.fromResponse(BookResponse book)
       : idDocument = '',
         idApiBook = book.idApi,
         title = book.title,

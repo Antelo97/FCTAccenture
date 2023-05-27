@@ -1,21 +1,21 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuth, FirebaseAuthException;
-import 'package:harry_potter_app/data/repository/user_repository.dart';
-import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/user_collection.dart';
+import 'package:harry_potter_app/domain/model/auth_user.dart';
+import 'package:harry_potter_app/domain/repository/auth_user_repository.dart';
 import 'package:harry_potter_app/firebase_options.dart';
 
 import 'auth_exceptions.dart';
 import 'auth_provider.dart';
 
 class FirebaseAuthProvider implements AuthProvider {
-  late UserRepository dao;
+  late AuthUserRepository authUserRepository;
 
   @override
-  Future<UserCollection?> get currentUserFromCloudFirestore async {
+  Future<AuthUser?> get currentUserFromCloudFirestore async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      return await dao.getUserFromCloudFirebase(user.uid);
+      return await authUserRepository.getUserFromCloudFirebase(user.uid);
     } else {
       return null;
     }
@@ -26,11 +26,11 @@ class FirebaseAuthProvider implements AuthProvider {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    dao = UserRepository();
+    authUserRepository = AuthUserRepository();
   }
 
   @override
-  Future<UserCollection> createUser({
+  Future<AuthUser> createUser({
     required String email,
     required String password,
   }) async {
@@ -44,9 +44,7 @@ class FirebaseAuthProvider implements AuthProvider {
       final user = userCredential.user;
 
       if (user != null) {
-        print('OKE');
-        final userCollection = await dao.insertUser(user);
-        print('OKE1');
+        final userCollection = await authUserRepository.insertUser(user);
         return userCollection;
       } else {
         throw UserNotLoggedInAuthException();
@@ -67,7 +65,7 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<UserCollection> signIn({
+  Future<AuthUser> signIn({
     required String email,
     required String password,
   }) async {
@@ -80,11 +78,12 @@ class FirebaseAuthProvider implements AuthProvider {
       );
       final user = userCredentials.user;
       if (user != null) {
-        final userCollection = await dao.getUserFromCloudFirebase(user.uid);
+        final userCollection =
+            await authUserRepository.getUserFromCloudFirebase(user.uid);
         if (user.emailVerified && userCollection == null) {
-          return await dao.insertUser(user);
+          return await authUserRepository.insertUser(user);
         } else {
-          return UserCollection.fromFirebase(user);
+          return AuthUser.fromFirebase(user);
         }
       } else {
         throw UserNotLoggedInAuthException();
@@ -115,12 +114,9 @@ class FirebaseAuthProvider implements AuthProvider {
   @override
   Future<void> sendEmailVerification() async {
     final user = FirebaseAuth.instance.currentUser;
-    print('-email1');
     if (user != null) {
-      print('-email2');
       await user.sendEmailVerification();
     } else {
-      print('-email3');
       throw UserNotLoggedInAuthException();
     }
   }

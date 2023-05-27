@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
-import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/spell_collection.dart';
 import 'package:harry_potter_app/data/network/api/spell_service.dart';
+import 'package:harry_potter_app/domain/model/spell.dart';
 
 class SpellRepository {
   final api = SpellService();
@@ -11,21 +11,21 @@ class SpellRepository {
   SpellRepository._sharedInstance(); // Private constructor
   factory SpellRepository() => _shared;
 
-  Future<List<SpellCollection>> getSpellsFromApi() async {
+  Future<List<Spell>> getSpellsFromApi() async {
     final spells = await api.getSpells();
 
     if (spells!.isNotEmpty) {
       deleteSpells();
       insertSpells();
-      return spells.map((e) => SpellCollection.fromResponse(e)).toList();
+      return spells.map((e) => Spell.fromResponse(e)).toList();
     } else {
       return getSpellsFromCloudFirebase();
     }
   }
 
-  Future<List<SpellCollection>> getSpellsFromCloudFirebase() async {
+  Future<List<Spell>> getSpellsFromCloudFirebase() async {
     return await spellsCollection.get().then((snapshot) =>
-        snapshot.docs.map((doc) => SpellCollection.fromDocument(doc)).toList());
+        snapshot.docs.map((doc) => Spell.fromDocument(doc)).toList());
   }
 
   Future<void> insertSpells() async {
@@ -51,18 +51,17 @@ class SpellRepository {
     await batch.commit();
   }
 
-  Future<List<SpellCollection>> searchSpellsByName(String searchQuery) async {
+  Future<List<Spell>> searchSpellsByName(String searchQuery) async {
     return await spellsCollection
         .where(nameFieldName, isGreaterThanOrEqualTo: searchQuery.toLowerCase())
         .where(nameFieldName,
             isLessThanOrEqualTo: '${searchQuery.toLowerCase()}\uf8ff')
         .get()
-        .then((snapshot) => snapshot.docs
-            .map((doc) => SpellCollection.fromDocument(doc))
-            .toList());
+        .then((snapshot) =>
+            snapshot.docs.map((doc) => Spell.fromDocument(doc)).toList());
   }
 
-  Future<void> updateSpells(SpellCollection spell) async {
+  Future<void> updateSpells(Spell spell) async {
     try {
       await spellsCollection.doc(spell.idDocument).update({
         idApiSpellFieldName: spell.idApiSpell,
@@ -75,13 +74,13 @@ class SpellRepository {
     }
   }
 
-  List<SpellCollection> sortSpellsByNameAsc(List<SpellCollection> spells) {
+  List<Spell> sortSpellsByNameAsc(List<Spell> spells) {
     spells.sort(
         (oneSpell, anotherSpell) => oneSpell.name.compareTo(anotherSpell.name));
     return spells;
   }
 
-  List<SpellCollection> sortSpellsByNameDesc(List<SpellCollection> spells) {
+  List<Spell> sortSpellsByNameDesc(List<Spell> spells) {
     spells.sort(
         (oneSpell, anotherSpell) => anotherSpell.name.compareTo(oneSpell.name));
     return spells;

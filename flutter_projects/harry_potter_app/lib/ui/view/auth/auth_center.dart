@@ -12,26 +12,11 @@ import 'auth_center_views/login_view.dart';
 import 'auth_center_views/register_view.dart';
 import 'auth_center_views/verify_email_view.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(MaterialApp(
-    title: 'Flutter Demo',
-    theme: ThemeData(
-      primarySwatch: Colors.blue,
-    ),
-    home: BlocProvider<AuthBloc>(
-      create: (context) => AuthBloc(FirebaseAuthProvider()),
-      child: const HomePage(),
-    ),
-  ));
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class AuthCenter extends StatelessWidget {
+  const AuthCenter({super.key});
 
   @override
   Widget build(BuildContext context) {
-    context.read<AuthBloc>().add(const AuthEventInitialize());
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.isLoading) {

@@ -4,7 +4,7 @@ import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/network/model_response/character_response.dart';
 
 @immutable
-class CharacterCollection {
+class Character {
   final String idDocument;
   final String idApiCharacter;
   final String name;
@@ -22,7 +22,7 @@ class CharacterCollection {
   final bool isAlive;
   final String imageUrl;
 
-  const CharacterCollection({
+  const Character({
     required this.idDocument,
     required this.idApiCharacter,
     required this.name,
@@ -41,8 +41,7 @@ class CharacterCollection {
     required this.imageUrl,
   });
 
-  CharacterCollection.fromDocument(
-      QueryDocumentSnapshot<Map<String, dynamic>> document)
+  Character.fromDocument(QueryDocumentSnapshot<Map<String, dynamic>> document)
       : idDocument = document.id,
         idApiCharacter = document.data()[idApiCharacterFieldName] as String,
         name = document.data()[nameFieldName] as String,
@@ -60,7 +59,7 @@ class CharacterCollection {
         isAlive = document.data()[isAliveFieldName] as bool,
         imageUrl = document.data()[imageUrlFieldName] as String;
 
-  CharacterCollection.fromResponse(CharacterResponse character)
+  Character.fromResponse(CharacterResponse character)
       : idDocument = '',
         idApiCharacter = character.idApi,
         name = character.name,

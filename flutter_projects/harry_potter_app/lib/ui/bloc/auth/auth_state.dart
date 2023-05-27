@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart' show immutable;
-import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/user_collection.dart';
+import 'package:harry_potter_app/domain/model/auth_user.dart';
 
 @immutable
 abstract class AuthState {
@@ -34,7 +34,7 @@ class AuthStateForgotPassword extends AuthState {
 }
 
 class AuthStateLoggedIn extends AuthState {
-  final UserCollection user;
+  final AuthUser user;
   const AuthStateLoggedIn({required this.user, required bool isLoading})
       : super(isLoading: isLoading);
 }

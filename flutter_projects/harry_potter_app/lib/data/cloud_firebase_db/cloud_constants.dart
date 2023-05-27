@@ -2,6 +2,7 @@
 const idFirestoreFieldName = 'id_firestore';
 const emailFieldName = 'email';
 const isEmailVeriFiedFieldName = 'is_email_verified';
+const usernameFieldName = 'username';
 const favoriteBooksFieldName = 'favorite_books';
 const favoriteCharactersFieldName = 'favorite_characters';
 const favoriteSpellsFieldName = 'favorite_spells';

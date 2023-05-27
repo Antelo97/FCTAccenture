@@ -4,14 +4,14 @@ import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/network/model_response/spell_response.dart';
 
 @immutable
-class SpellCollection {
+class Spell {
   final String idDocument;
   final String idApiSpell;
   final String name;
   final String description;
   final String imageUrl;
 
-  const SpellCollection({
+  const Spell({
     required this.idDocument,
     required this.idApiSpell,
     required this.name,
@@ -19,7 +19,7 @@ class SpellCollection {
     required this.imageUrl,
   });
 
-  SpellCollection.fromDocument(
+  Spell.fromDocument(
       QueryDocumentSnapshot<Map<String, dynamic>> document)
       : idDocument = document.id,
         idApiSpell = document.data()[idApiSpellFieldName] as String,
@@ -27,7 +27,7 @@ class SpellCollection {
         description = document.data()[descriptionFieldName] as String,
         imageUrl = document.data()[imageUrlFieldName] as String;
 
-  SpellCollection.fromResponse(SpellResponse spell)
+  Spell.fromResponse(SpellResponse spell)
       : idDocument = '',
         idApiSpell = spell.idApi,
         name = spell.name,

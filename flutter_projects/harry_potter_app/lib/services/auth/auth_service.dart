@@ -1,4 +1,4 @@
-import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/user_collection.dart';
+import 'package:harry_potter_app/domain/model/auth_user.dart';
 
 import 'auth_provider.dart';
 import 'firebase_auth_provider.dart';
@@ -11,14 +11,14 @@ class AuthService implements AuthProvider {
   factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
 
   @override
-  Future<UserCollection?> get currentUserFromCloudFirestore =>
+  Future<AuthUser?> get currentUserFromCloudFirestore =>
       provider.currentUserFromCloudFirestore;
 
   @override
   Future<void> initialize() => provider.initialize();
 
   @override
-  Future<UserCollection> createUser({
+  Future<AuthUser> createUser({
     required String email,
     required String password,
   }) =>
@@ -28,7 +28,7 @@ class AuthService implements AuthProvider {
       );
 
   @override
-  Future<UserCollection> signIn({
+  Future<AuthUser> signIn({
     required String email,
     required String password,
   }) =>

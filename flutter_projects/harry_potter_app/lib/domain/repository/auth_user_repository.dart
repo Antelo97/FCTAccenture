@@ -1,24 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
-import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/user_collection.dart';
+import 'package:harry_potter_app/domain/model/auth_user.dart';
 
-class UserRepository {
+class AuthUserRepository {
   final usersCollection = FirebaseFirestore.instance.collection('users');
 
-  static final UserRepository _shared = UserRepository._sharedInstance();
-  UserRepository._sharedInstance(); // Private constructor
-  factory UserRepository() => _shared;
+  static final AuthUserRepository _shared =
+      AuthUserRepository._sharedInstance();
+  AuthUserRepository._sharedInstance(); // Private constructor
+  factory AuthUserRepository() => _shared;
 
-  Future<UserCollection?> getUserFromCloudFirebase(String idFirebase) async {
+  Future<AuthUser?> getUserFromCloudFirebase(String idFirebase) async {
     return await usersCollection
         .where(idFirestoreFieldName, isEqualTo: idFirebase)
         .get()
         .then((snapshot) =>
-            snapshot.docs.map((doc) => UserCollection.fromSnapshot(doc)).first);
+            snapshot.docs.map((doc) => AuthUser.fromDocument(doc)).first);
   }
 
-  Future<UserCollection> insertUser(User user) async {
+  Future<AuthUser> insertUser(User user) async {
     final userRef = await usersCollection.add({
       idFirestoreFieldName: user.uid,
       emailFieldName: user.email,

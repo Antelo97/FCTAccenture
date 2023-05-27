@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
-import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/character_collection.dart';
 import 'package:harry_potter_app/data/network/api/character_service.dart';
+import 'package:harry_potter_app/domain/model/character.dart';
 
 class CharacterRepository {
   final api = CharacterService();
@@ -13,24 +13,21 @@ class CharacterRepository {
   CharacterRepository._sharedInstance(); // Private constructor
   factory CharacterRepository() => _shared;
 
-  Future<List<CharacterCollection>> getCharactersFromApi() async {
+  Future<List<Character>> getCharactersFromApi() async {
     final characters = await api.getCharacters();
 
     if (characters!.isNotEmpty) {
       deleteCharacters();
       insertCharacters();
-      return characters
-          .map((e) => CharacterCollection.fromResponse(e))
-          .toList();
+      return characters.map((e) => Character.fromResponse(e)).toList();
     } else {
       return getCharactersFromCloudFirebase();
     }
   }
 
-  Future<List<CharacterCollection>> getCharactersFromCloudFirebase() async {
-    return await charactersCollection.get().then((snapshot) => snapshot.docs
-        .map((doc) => CharacterCollection.fromDocument(doc))
-        .toList());
+  Future<List<Character>> getCharactersFromCloudFirebase() async {
+    return await charactersCollection.get().then((snapshot) =>
+        snapshot.docs.map((doc) => Character.fromDocument(doc)).toList());
   }
 
   Future<void> insertCharacters() async {
@@ -57,19 +54,17 @@ class CharacterRepository {
     await batch.commit();
   }
 
-  Future<List<CharacterCollection>> searchCharactersByName(
-      String searchQuery) async {
+  Future<List<Character>> searchCharactersByName(String searchQuery) async {
     return await charactersCollection
         .where(nameFieldName, isGreaterThanOrEqualTo: searchQuery.toLowerCase())
         .where(nameFieldName,
             isLessThanOrEqualTo: '${searchQuery.toLowerCase()}\uf8ff')
         .get()
-        .then((snapshot) => snapshot.docs
-            .map((doc) => CharacterCollection.fromDocument(doc))
-            .toList());
+        .then((snapshot) =>
+            snapshot.docs.map((doc) => Character.fromDocument(doc)).toList());
   }
 
-  Future<void> updateCharacter(CharacterCollection character) async {
+  Future<void> updateCharacter(Character character) async {
     try {
       await charactersCollection.doc(character.idDocument).update({
         idApiCharacterFieldName: character.idApiCharacter,
@@ -93,15 +88,13 @@ class CharacterRepository {
     }
   }
 
-  List<CharacterCollection> sortCharactersByNameAsc(
-      List<CharacterCollection> characters) {
+  List<Character> sortCharactersByNameAsc(List<Character> characters) {
     characters.sort((oneCharacter, anotherCharacter) =>
         oneCharacter.name.compareTo(anotherCharacter.name));
     return characters;
   }
 
-  List<CharacterCollection> sortCharactersByNameDesc(
-      List<CharacterCollection> characters) {
+  List<Character> sortCharactersByNameDesc(List<Character> characters) {
     characters.sort((oneCharacter, anotherCharacter) =>
         anotherCharacter.name.compareTo(oneCharacter.name));
     return characters;

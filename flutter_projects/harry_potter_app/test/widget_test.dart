@@ -13,7 +13,7 @@ import 'package:harry_potter_app/ui/view/auth/auth_center.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const HomePage());
+    await tester.pumpWidget(const AuthCenter());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

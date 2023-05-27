@@ -5,21 +5,21 @@ import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/network/model_response/species_response.dart';
 
 @immutable
-class SpeciesCollection {
+class Species {
   final String idDocument;
   final int idApiSpecies;
   final String name;
   final String? native;
   final String imageUrl;
 
-  const SpeciesCollection(
+  const Species(
       {required this.idDocument,
       required this.idApiSpecies,
       required this.name,
       required this.native,
       required this.imageUrl});
 
-  SpeciesCollection.fromDocument(
+  Species.fromDocument(
       QueryDocumentSnapshot<Map<String, dynamic>> document)
       : idDocument = document.id,
         idApiSpecies = document.data()[idApiSpeciesFieldName] as int,
@@ -27,7 +27,7 @@ class SpeciesCollection {
         native = document.data()[nativeFieldName] as String?,
         imageUrl = document.data()[imageUrlFieldName] as String;
 
-  SpeciesCollection.fromResponse(SpeciesResponse species)
+  Species.fromResponse(SpeciesResponse species)
       : idDocument = '',
         idApiSpecies = species.idApi,
         name = species.name,

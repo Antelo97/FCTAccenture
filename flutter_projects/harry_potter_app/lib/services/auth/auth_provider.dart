@@ -1,13 +1,13 @@
-import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/user_collection.dart';
+import 'package:harry_potter_app/domain/model/auth_user.dart';
 
 abstract class AuthProvider {
-  Future<UserCollection?> get currentUserFromCloudFirestore;
+  Future<AuthUser?> get currentUserFromCloudFirestore;
   Future<void> initialize();
-  Future<UserCollection> createUser({
+  Future<AuthUser> createUser({
     required String email,
     required String password,
   });
-  Future<UserCollection> signIn({
+  Future<AuthUser> signIn({
     required String email,
     required String password,
   });

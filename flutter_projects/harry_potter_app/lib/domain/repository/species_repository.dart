@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
-import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/species_collection.dart';
 import 'package:harry_potter_app/data/network/api/species_service.dart';
+import 'package:harry_potter_app/domain/model/species.dart';
 
 class SpeciesRepository {
   final api = SpeciesService();
@@ -11,22 +11,21 @@ class SpeciesRepository {
   SpeciesRepository._sharedInstance(); // Private constructor
   factory SpeciesRepository() => _shared;
 
-  Future<List<SpeciesCollection>> getSpeciesFromApi() async {
+  Future<List<Species>> getSpeciesFromApi() async {
     final species = await api.getSpecies();
 
     if (species!.isNotEmpty) {
       deleteSpecies();
       insertSpecies();
-      return species.map((e) => SpeciesCollection.fromResponse(e)).toList();
+      return species.map((e) => Species.fromResponse(e)).toList();
     } else {
       return getSpeciesFromCloudFirebase();
     }
   }
 
-  Future<List<SpeciesCollection>> getSpeciesFromCloudFirebase() async {
-    return await speciesCollection.get().then((snapshot) => snapshot.docs
-        .map((doc) => SpeciesCollection.fromDocument(doc))
-        .toList());
+  Future<List<Species>> getSpeciesFromCloudFirebase() async {
+    return await speciesCollection.get().then((snapshot) =>
+        snapshot.docs.map((doc) => Species.fromDocument(doc)).toList());
   }
 
   Future<void> insertSpecies() async {
@@ -52,19 +51,17 @@ class SpeciesRepository {
     await batch.commit();
   }
 
-  Future<List<SpeciesCollection>> searchSpeciesByName(
-      String searchQuery) async {
+  Future<List<Species>> searchSpeciesByName(String searchQuery) async {
     return await speciesCollection
         .where(nameFieldName, isGreaterThanOrEqualTo: searchQuery.toLowerCase())
         .where(nameFieldName,
             isLessThanOrEqualTo: '${searchQuery.toLowerCase()}\uf8ff')
         .get()
-        .then((snapshot) => snapshot.docs
-            .map((doc) => SpeciesCollection.fromDocument(doc))
-            .toList());
+        .then((snapshot) =>
+            snapshot.docs.map((doc) => Species.fromDocument(doc)).toList());
   }
 
-  Future<void> updateSpecies(SpeciesCollection species) async {
+  Future<void> updateSpecies(Species species) async {
     try {
       await speciesCollection.doc(species.idDocument).update({
         idApiSpeciesFieldName: species.idApiSpecies,
@@ -77,15 +74,13 @@ class SpeciesRepository {
     }
   }
 
-  List<SpeciesCollection> sortSpeciesByNameAsc(
-      List<SpeciesCollection> species) {
+  List<Species> sortSpeciesByNameAsc(List<Species> species) {
     species.sort((oneSpecies, anotherSpecies) =>
         oneSpecies.name.compareTo(anotherSpecies.name));
     return species;
   }
 
-  List<SpeciesCollection> sortSpeciesByNameDesc(
-      List<SpeciesCollection> species) {
+  List<Species> sortSpeciesByNameDesc(List<Species> species) {
     species.sort((oneSpecies, anotherSpecies) =>
         anotherSpecies.name.compareTo(oneSpecies.name));
     return species;

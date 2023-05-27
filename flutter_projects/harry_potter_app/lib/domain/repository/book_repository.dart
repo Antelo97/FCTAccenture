@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
-import 'package:harry_potter_app/data/cloud_firebase_db/model_collection/book_collection.dart';
 import 'package:harry_potter_app/data/network/api/book_service.dart';
+import 'package:harry_potter_app/domain/model/book.dart';
 
 class BookRepository {
   final api = BookService();
@@ -11,21 +11,21 @@ class BookRepository {
   BookRepository._sharedInstance(); // Private constructor
   factory BookRepository() => _shared;
 
-  Future<List<BookCollection>> getBooksFromApi() async {
+  Future<List<Book>> getBooksFromApi() async {
     final books = await api.getBooks();
 
     if (books!.isNotEmpty) {
       deleteBooks();
       insertBooks();
-      return books.map((e) => BookCollection.fromResponse(e)).toList();
+      return books.map((e) => Book.fromResponse(e)).toList();
     } else {
       return getBooksFromCloudFirebase();
     }
   }
 
-  Future<List<BookCollection>> getBooksFromCloudFirebase() async {
+  Future<List<Book>> getBooksFromCloudFirebase() async {
     return await booksCollection.get().then((snapshot) =>
-        snapshot.docs.map((doc) => BookCollection.fromDocument(doc)).toList());
+        snapshot.docs.map((doc) => Book.fromDocument(doc)).toList());
 
     // return booksCollection.snapshots().map((event) =>
     //     event.docs.map((doc) => BookCollection.fromSnapshot(doc)).toList());
@@ -54,19 +54,18 @@ class BookRepository {
     await batch.commit();
   }
 
-  Future<List<BookCollection>> searchBooksByTitle(String searchQuery) async {
+  Future<List<Book>> searchBooksByTitle(String searchQuery) async {
     return await booksCollection
         .where(titleFieldName,
             isGreaterThanOrEqualTo: searchQuery.toLowerCase())
         .where(titleFieldName,
             isLessThanOrEqualTo: '${searchQuery.toLowerCase()}\uf8ff')
         .get()
-        .then((snapshot) => snapshot.docs
-            .map((doc) => BookCollection.fromDocument(doc))
-            .toList());
+        .then((snapshot) =>
+            snapshot.docs.map((doc) => Book.fromDocument(doc)).toList());
   }
 
-  Future<void> updateBook(BookCollection book) async {
+  Future<void> updateBook(Book book) async {
     try {
       await booksCollection.doc(book.idDocument).update({
         idApiBookFieldName: book.idApiBook,
@@ -80,13 +79,13 @@ class BookRepository {
     }
   }
 
-  List<BookCollection> sortBooksByTitleAsc(List<BookCollection> books) {
+  List<Book> sortBooksByTitleAsc(List<Book> books) {
     books.sort(
         (oneBook, anotherBook) => oneBook.title.compareTo(anotherBook.title));
     return books;
   }
 
-  List<BookCollection> sortBooksByTitleDesc(List<BookCollection> books) {
+  List<Book> sortBooksByTitleDesc(List<Book> books) {
     books.sort(
         (oneBook, anotherBook) => anotherBook.title.compareTo(oneBook.title));
     return books;
