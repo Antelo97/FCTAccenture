@@ -1,10 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:harry_potter_app/ui/view/app/app_center.dart';
 import 'package:harry_potter_app/utilities/loading/loading_screen.dart';
-import 'package:harry_potter_app/services/auth/firebase_auth_provider.dart';
 import 'package:harry_potter_app/ui/bloc/auth/auth_bloc.dart';
-import 'package:harry_potter_app/ui/bloc/auth/auth_event.dart';
 import 'package:harry_potter_app/ui/bloc/auth/auth_state.dart';
 
 import 'auth_center_views/forgot_password_view.dart';
@@ -30,8 +28,7 @@ class AuthCenter extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is AuthStateSignedIn) {
-          // return const NotesView();
-          return Container();
+          return const AppCenter();
         } else if (state is AuthStateNeedsVerification) {
           return const VerifyEmailView();
         } else if (state is AuthStateSignedOut) {

@@ -31,7 +31,8 @@ class AuthUserRepository {
     });
 
     // user.uid --> Atributo del usuario interno de Firestore, lo almaceno en la colección en el campo id_firestore
-    // userRef.id --> Es la referencia que tiene l documento dentro de la colección en Firebase (también es una String)
+    // userRef.id --> Es la referencia que tiene un documento dentro de la colección en Firebase (también es una String)
+
     final insertedUser = await getUserFromCloudFirebase(user.idFirestore);
 
     return insertedUser!;
