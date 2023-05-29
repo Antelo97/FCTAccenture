@@ -13,11 +13,9 @@ class SpellsView extends StatefulWidget {
 class _SpellsViewState extends State<SpellsView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.blue,
-        child: const Text(AppConstants.spells),
-      ),
+    return Container(
+      color: Colors.blue,
+      child: const Text(AppConstants.spells),
     );
   }
 }

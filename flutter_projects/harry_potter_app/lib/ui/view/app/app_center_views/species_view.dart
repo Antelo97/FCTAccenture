@@ -13,11 +13,9 @@ class SpeciesView extends StatefulWidget {
 class _SpeciesViewState extends State<SpeciesView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.blue,
-        child: const Text(AppConstants.species),
-      ),
+    return Container(
+      color: Colors.blue,
+      child: const Text(AppConstants.species),
     );
   }
 }

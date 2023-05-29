@@ -7,6 +7,7 @@ import 'package:harry_potter_app/ui/view/app/app_center_views/books_view.dart';
 import 'package:harry_potter_app/ui/view/app/app_center_views/characters_view.dart';
 import 'package:harry_potter_app/ui/view/app/app_center_views/species_view.dart';
 import 'package:harry_potter_app/ui/view/app/app_center_views/spells_view.dart';
+import 'package:harry_potter_app/ui/view/app/app_center_views/welcome_view.dart';
 
 import 'constants_app_view.dart';
 
@@ -18,7 +19,7 @@ class AppCenter extends StatefulWidget {
 }
 
 class _AppCenterState extends State<AppCenter> {
-  var _currentIndex = 0;
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +28,10 @@ class _AppCenterState extends State<AppCenter> {
         backgroundColor: Colors.black,
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
+            icon: const Icon(
+              Icons.logout,
+              size: 30,
+            ),
             onPressed: () {
               // ToDo
             },
@@ -48,9 +52,7 @@ class _AppCenterState extends State<AppCenter> {
           } else if (state is AppStateOnSpeciesView) {
             return const SpeciesView();
           } else {
-            return const Scaffold(
-              body: CircularProgressIndicator(),
-            );
+            return const WelcomeView();
           }
         },
       ),
@@ -58,22 +60,27 @@ class _AppCenterState extends State<AppCenter> {
         onTap: (index) async {
           setState(() {
             _currentIndex = index;
-            if (index == 0) {
-              context.read<AppBloc>().add(
-                    AppEventGoToBooks(),
-                  );
-            } else if (index == 1) {
-              context.read<AppBloc>().add(
-                    AppEventGoToCharacters(),
-                  );
-            } else if (index == 2) {
-              context.read<AppBloc>().add(
-                    AppEventGoToSpells(),
-                  );
-            } else if (index == 3) {
-              context.read<AppBloc>().add(
-                    AppEventGoToSpecies(),
-                  );
+            switch (_currentIndex) {
+              case 0:
+                context.read<AppBloc>().add(
+                      AppEventGoToBooks(),
+                    );
+                break;
+              case 1:
+                context.read<AppBloc>().add(
+                      AppEventGoToCharacters(),
+                    );
+                break;
+              case 2:
+                context.read<AppBloc>().add(
+                      AppEventGoToSpells(),
+                    );
+                break;
+              case 3:
+                context.read<AppBloc>().add(
+                      AppEventGoToSpecies(),
+                    );
+                break;
             }
           });
         },

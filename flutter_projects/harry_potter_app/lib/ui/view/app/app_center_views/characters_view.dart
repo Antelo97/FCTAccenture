@@ -13,11 +13,9 @@ class CharactersView extends StatefulWidget {
 class _CharactersViewState extends State<CharactersView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.blue,
-        child: const Text(AppConstants.characters),
-      ),
+    return Container(
+      color: Colors.blue,
+      child: const Text(AppConstants.characters),
     );
   }
 }
