@@ -32,7 +32,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
-        if (state is AuthStateForgotPassword) {
+        if (state is AuthStateOnForgotPassword) {
           if (state.hasSentEmail) {
             _controller.clear();
             await showPasswordResentSentDialog(context);

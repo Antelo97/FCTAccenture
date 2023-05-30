@@ -17,10 +17,10 @@ class AuthStateZero extends AuthState {
   const AuthStateZero({required bool isLoading}) : super(isLoading: isLoading);
 }
 
-class AuthStateSignedOut extends AuthState with EquatableMixin {
+class AuthStateOnSignIn extends AuthState with EquatableMixin {
   final Exception? exception;
 
-  const AuthStateSignedOut({
+  const AuthStateOnSignIn({
     required this.exception,
     required bool isLoading,
     String? loadingText,
@@ -42,25 +42,25 @@ class AuthStateSignedIn extends AuthState {
   }) : super(isLoading: isLoading);
 }
 
-class AuthStateNeedsVerification extends AuthState {
-  const AuthStateNeedsVerification({required bool isLoading})
+class AuthStateOnVerifyEmail extends AuthState {
+  const AuthStateOnVerifyEmail({required bool isLoading})
       : super(isLoading: isLoading);
 }
 
-class AuthStateSigningUp extends AuthState {
+class AuthStateOnSignUp extends AuthState {
   final Exception? exception;
 
-  const AuthStateSigningUp({
+  const AuthStateOnSignUp({
     required this.exception,
     required bool isLoading,
   }) : super(isLoading: isLoading);
 }
 
-class AuthStateForgotPassword extends AuthState {
+class AuthStateOnForgotPassword extends AuthState {
   final Exception? exception;
   final bool hasSentEmail;
 
-  const AuthStateForgotPassword({
+  const AuthStateOnForgotPassword({
     required this.exception,
     required this.hasSentEmail,
     required bool isLoading,

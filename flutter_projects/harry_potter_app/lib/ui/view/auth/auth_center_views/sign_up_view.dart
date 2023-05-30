@@ -6,14 +6,14 @@ import 'package:harry_potter_app/ui/bloc/auth/auth_event.dart';
 import 'package:harry_potter_app/ui/bloc/auth/auth_state.dart';
 import 'package:harry_potter_app/utilities/dialogs/error_dialog.dart';
 
-class RegisterView extends StatefulWidget {
-  const RegisterView({super.key});
+class SignUpView extends StatefulWidget {
+  const SignUpView({super.key});
 
   @override
-  State<RegisterView> createState() => _RegisterViewState();
+  State<SignUpView> createState() => _SignUpViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
+class _SignUpViewState extends State<SignUpView> {
   late final TextEditingController _username;
   late final TextEditingController _email;
   late final TextEditingController _password;
@@ -28,6 +28,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   void dispose() {
+    _username.dispose();
     _email.dispose();
     _password.dispose();
     super.dispose();
@@ -37,7 +38,7 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
-        if (state is AuthStateSigningUp) {
+        if (state is AuthStateOnSignUp) {
           if (state.exception is WeakPasswordAuthException) {
             await showErrorDialog(context, 'Weak password');
           } else if (state.exception is EmailAlreadyInUseAuthException) {
@@ -45,6 +46,7 @@ class _RegisterViewState extends State<RegisterView> {
           } else if (state.exception is InvalidEmailAuthException) {
             await showErrorDialog(context, 'Invalid email');
           } else if (state.exception is GenericAuthException) {
+            print('Step 6: Confirm exception');
             await showErrorDialog(context, 'Failed to register');
           }
         }
@@ -60,10 +62,17 @@ class _RegisterViewState extends State<RegisterView> {
             children: [
               const Text('Enter your email and password to see your notes!'),
               TextField(
-                controller: _email,
+                controller: _username,
                 enableSuggestions: false,
                 autocorrect: false,
                 autofocus: true,
+                decoration:
+                    const InputDecoration(hintText: 'Enter your username here'),
+              ),
+              TextField(
+                controller: _email,
+                enableSuggestions: false,
+                autocorrect: false,
                 keyboardType: TextInputType.emailAddress,
                 decoration:
                     const InputDecoration(hintText: 'Enter your email here'),

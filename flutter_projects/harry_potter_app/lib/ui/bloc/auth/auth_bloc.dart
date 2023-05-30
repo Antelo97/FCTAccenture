@@ -34,6 +34,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthEventInitializeFirebase event,
     Emitter<AuthState> emit,
   ) async {
+    print('doneeeeeeeee111');
+
     await authProvider.initialize();
 
     // Una vez inicializado Firebase, ya podemos instanciar nuestros repositorios
@@ -44,21 +46,34 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     speciesRepository = SpeciesRepository();
 
     final user = FirebaseAuth.instance.currentUser;
+    print('doneeeeeeeee');
 
     if (user == null) {
+      print('doneenll');
+
       emit(
-        const AuthStateSignedOut(
+        const AuthStateOnSignIn(
           exception: null,
           isLoading: false,
         ),
       );
     } else if (!user.emailVerified) {
       emit(
-        const AuthStateNeedsVerification(isLoading: false),
+        const AuthStateOnVerifyEmail(isLoading: false),
       );
     } else {
       // Sabemos que el usuario nunca va a ser nulo porque al registranos ya lo hemos insertado en Cloud Firestore
       final authUser = await authProvider.currentUserFromCloudFirestore;
+      print('doneemailllllll');
+
+      // Cargamos toda la información de la API en Cloud Firestore
+      await bookRepository.loadBooksFromApi();
+      print('donebooks');
+      await characterRepository.loadCharactersFromApi();
+      print('donecharacters');
+      await spellRepository.loadSpellsFromApi();
+      await speciesRepository.loadSpeciesFromApi();
+
       emit(
         AuthStateSignedIn(
           user: authUser!,
@@ -71,7 +86,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void onAuthEventGoToSignUp(
       AuthEventGoToSignUp event, Emitter<AuthState> emit) {
     emit(
-      const AuthStateSigningUp(
+      const AuthStateOnSignUp(
         exception: null,
         isLoading: false,
       ),
@@ -91,14 +106,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       await authProvider.sendEmailVerification();
+
       emit(
-        const AuthStateNeedsVerification(isLoading: false),
+        const AuthStateOnVerifyEmail(isLoading: false),
       );
     } on Exception catch (e) {
-      emit(AuthStateSigningUp(
-        exception: e,
-        isLoading: false,
-      ));
+      print('Step 5: Exception');
+      emit(
+        AuthStateOnSignUp(
+          exception: e,
+          isLoading: false,
+        ),
+      );
     }
   }
 
@@ -110,7 +129,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void onAuthEventSignIn(AuthEventSignIn event, Emitter<AuthState> emit) async {
     emit(
-      const AuthStateSignedOut(
+      const AuthStateOnSignIn(
         exception: null,
         isLoading: true,
         loadingText: 'Please wait while I log you in',
@@ -129,19 +148,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       if (!authUser.isEmailVerified) {
         emit(
-          const AuthStateSignedOut(
+          const AuthStateOnSignIn(
             exception: null,
             isLoading: false,
           ),
         );
         emit(
-          const AuthStateNeedsVerification(isLoading: false),
+          const AuthStateOnVerifyEmail(isLoading: false),
         );
       } else {
         authUser.isEmailVerified = true;
         authUserRepository.updateIsEmailVerified(authUser);
         emit(
-          const AuthStateSignedOut(
+          const AuthStateOnSignIn(
             exception: null,
             isLoading: false,
           ),
@@ -153,7 +172,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     } on Exception catch (e) {
       emit(
-        AuthStateSignedOut(
+        AuthStateOnSignIn(
           exception: e,
           isLoading: false,
         ),
@@ -166,14 +185,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       await authProvider.signOut();
       emit(
-        const AuthStateSignedOut(
+        const AuthStateOnSignIn(
           exception: null,
           isLoading: false,
         ),
       );
     } on Exception catch (e) {
       emit(
-        AuthStateSignedOut(
+        AuthStateOnSignIn(
           exception: e,
           isLoading: false,
         ),
@@ -184,7 +203,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void onAuthEventForgotPassword(
       AuthEventForgotPassword event, Emitter<AuthState> emit) async {
     emit(
-      const AuthStateForgotPassword(
+      const AuthStateOnForgotPassword(
         exception: null,
         hasSentEmail: false,
         isLoading: false,
@@ -198,7 +217,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
 
     // User wants to actually send a forgot password email
-    emit(const AuthStateForgotPassword(
+    emit(const AuthStateOnForgotPassword(
       exception: null,
       hasSentEmail: false,
       isLoading: true,
@@ -215,7 +234,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       didSendEmail = false;
     }
 
-    emit(AuthStateForgotPassword(
+    emit(AuthStateOnForgotPassword(
       exception: exception,
       hasSentEmail: didSendEmail,
       isLoading: false,

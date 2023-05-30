@@ -13,32 +13,42 @@ class CharacterRepository {
   CharacterRepository._sharedInstance(); // Private constructor
   factory CharacterRepository() => _shared;
 
-  Future<List<Character>> getCharactersFromApi() async {
-    final characters = await api.getCharacters();
+  Future<List<Character>> loadCharactersFromApi() async {
+    final characters = await getCharactersFromCloudFirebase();
 
-    if (characters!.isNotEmpty) {
-      deleteCharacters();
+    if (characters.isEmpty) {
       insertCharacters();
-      return characters.map((e) => Character.fromResponse(e)).toList();
-    } else {
       return getCharactersFromCloudFirebase();
+    } else {
+      // deleteCharacters();
+      // insertCharacters();
+      return characters;
     }
   }
 
   Future<List<Character>> getCharactersFromCloudFirebase() async {
-    return await charactersCollection.get().then((snapshot) =>
-        snapshot.docs.map((doc) => Character.fromDocument(doc)).toList());
+    final snapshot = await charactersCollection.get();
+    if (snapshot.docs.length > 2) {
+      snapshot.docs.map((doc) => Character.fromDocument(doc)).toList();
+    }
+    return [];
   }
 
   Future<void> insertCharacters() async {
-    final characters = await api.getCharacters();
+    final charactersResponse = await api.getCharacters();
+    final characters = charactersResponse!
+        .map((characterResponse) => Character.fromResponse(characterResponse))
+        .toList();
     final batch = FirebaseFirestore.instance.batch();
 
-    for (var character in characters!) {
-      final characterRef =
-          FirebaseFirestore.instance.collection('characters').doc();
-      batch.set(characterRef, character.toJson());
+    for (var character in characters) {
+      final characterRef = charactersCollection.doc();
+      batch.set(
+        characterRef,
+        character.toMap(),
+      );
     }
+    print('doneque');
 
     await batch.commit();
   }

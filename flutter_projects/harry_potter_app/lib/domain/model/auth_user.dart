@@ -35,17 +35,42 @@ class AuthUser {
 
   AuthUser.fromDocument(QueryDocumentSnapshot<Map<String, dynamic>> document)
       : idDocument = document.id,
-        idFirestore = document.data()[idFirestoreFieldName] as String,
+        idFirestore = document.data()[idFirebaseFieldName] as String,
         email = document.data()[emailFieldName] as String,
-        isEmailVerified = document.data()[isEmailVeriFiedFieldName] as bool,
+        isEmailVerified = document.data()[isEmailVerifiedFieldName] as bool,
         username = document.data()[usernameFieldName] as String,
-        favoriteBooks = document.data()[favoriteBooksFieldName] as List<Book>,
-        favoriteCharacters =
-            document.data()[favoriteCharactersFieldName] as List<Character>,
-        favoriteSpells =
-            document.data()[favoriteSpellsFieldName] as List<Spell>,
-        favoriteSpecies =
-            document.data()[favoriteSpeciesFieldName] as List<Species>;
+        favoriteBooks = _convertToBookList(
+            document.data()[favoriteBooksFieldName] as List<dynamic>),
+        favoriteCharacters = _convertToCharacterList(
+            document.data()[favoriteCharactersFieldName] as List<dynamic>),
+        favoriteSpells = _convertToSpellList(
+            document.data()[favoriteSpellsFieldName] as List<dynamic>),
+        favoriteSpecies = _convertToSpeciesList(
+            document.data()[favoriteSpeciesFieldName] as List<dynamic>);
+}
+
+List<Book> _convertToBookList(List<dynamic> list) {
+  return list
+      .map((item) => Book.fromMap(item as Map<String, dynamic>))
+      .toList();
+}
+
+List<Character> _convertToCharacterList(List<dynamic> list) {
+  return list
+      .map((item) => Character.fromMap(item as Map<String, dynamic>))
+      .toList();
+}
+
+List<Spell> _convertToSpellList(List<dynamic> list) {
+  return list
+      .map((item) => Spell.fromMap(item as Map<String, dynamic>))
+      .toList();
+}
+
+List<Species> _convertToSpeciesList(List<dynamic> list) {
+  return list
+      .map((item) => Species.fromMap(item as Map<String, dynamic>))
+      .toList();
 }
 
 // factory UserCollection.fromFirebase(User user) => UserCollection(

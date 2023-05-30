@@ -11,15 +11,16 @@ class SpeciesRepository {
   SpeciesRepository._sharedInstance(); // Private constructor
   factory SpeciesRepository() => _shared;
 
-  Future<List<Species>> getSpeciesFromApi() async {
-    final species = await api.getSpecies();
+  Future<List<Species>> loadSpeciesFromApi() async {
+    final species = await getSpeciesFromCloudFirebase();
 
-    if (species!.isNotEmpty) {
-      deleteSpecies();
+    if (species.isEmpty) {
       insertSpecies();
-      return species.map((e) => Species.fromResponse(e)).toList();
-    } else {
       return getSpeciesFromCloudFirebase();
+    } else {
+      // deleteSpecies();
+      // insertSpecies();
+      return species;
     }
   }
 

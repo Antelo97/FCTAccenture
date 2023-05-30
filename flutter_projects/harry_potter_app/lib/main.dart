@@ -6,7 +6,6 @@ import 'package:harry_potter_app/ui/bloc/auth/auth_event.dart';
 import 'package:harry_potter_app/ui/view/auth/auth_center.dart';
 
 import 'ui/bloc/app/app_bloc.dart';
-import 'ui/view/app/app_center.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +33,7 @@ class HarryPotterApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const AppCenter(),
+        home: const AuthCenter(),
       ),
     );
   }

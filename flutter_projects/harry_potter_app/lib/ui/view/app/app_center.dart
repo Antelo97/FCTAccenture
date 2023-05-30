@@ -20,14 +20,21 @@ class AppCenter extends StatefulWidget {
 
 class _AppCenterState extends State<AppCenter> {
   int _currentIndex = 0;
+  String _appBarTitle = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Antelo97',
-          style: TextStyle(
-            fontFamily: 'Apple Butter',
+        title: Align(
+          alignment: Alignment.center,
+          child: Text(
+            _appBarTitle,
+            style: const TextStyle(
+              fontFamily: 'Apple Days',
+              color: Colors.white,
+              fontSize: 24,
+              letterSpacing: 5,
+            ),
           ),
         ),
         backgroundColor: Colors.black,
@@ -108,156 +115,82 @@ class _AppCenterState extends State<AppCenter> {
             const SizedBox(
               height: 12,
             ),
-            ListTile(
-              title: const Text(
-                AppConstants.books,
-                style: TextStyle(
-                  fontFamily: 'Apple Butter',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
-                ),
-              ),
-              splashColor: Colors.amber,
-              subtitle: const Text(
-                'Go to the book list!',
-                style: TextStyle(
-                  fontFamily: 'Apple Butter',
-                  fontSize: 16,
-                  letterSpacing: 1,
-                ),
-              ),
-              leading: const Icon(
-                Icons.book_outlined,
-                size: 35,
-                color: Colors.black87,
-              ),
-              onTap: () {
-                context.read<AppBloc>().add(
-                      AppEventGoToBooks(),
-                    );
-                Navigator.pop(context);
-              },
+            getListTile(
+              context,
+              Icons.book_outlined,
+              AppConstants.books,
+              AppConstants.goToBooks,
             ),
             // Characters
             getSizedBoxWithDivider(),
-            ListTile(
-              splashColor: Colors.amber,
-              subtitle: const Text(
-                'Go to the character list!',
-                style: TextStyle(
-                  fontFamily: 'Apple Butter',
-                  fontSize: 16,
-                  letterSpacing: 1,
-                ),
-              ),
-              leading: const Icon(
-                Icons.people_alt_outlined,
-                size: 35,
-                color: Colors.black87,
-              ),
-              title: const Text(
-                AppConstants.characters,
-                style: TextStyle(
-                  fontFamily: 'Apple Butter',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
-                ),
-              ),
-              onTap: () {
-                context.read<AppBloc>().add(
-                      AppEventGoToCharacters(),
-                    );
-                Navigator.pop(context);
-              },
+            getListTile(
+              context,
+              Icons.people_alt_outlined,
+              AppConstants.characters,
+              AppConstants.goToCharacters,
             ),
             // Spell
             getSizedBoxWithDivider(),
-            ListTile(
-              splashColor: Colors.amber,
-              subtitle: const Text(
-                'Go to the spell list!',
-                style: TextStyle(
-                  fontFamily: 'Apple Butter',
-                  fontSize: 16,
-                  letterSpacing: 1,
-                ),
-              ),
-              leading: const Icon(
-                Icons.thunderstorm_outlined,
-                size: 35,
-                color: Colors.black87,
-              ),
-              title: const Text(
-                AppConstants.spells,
-                style: TextStyle(
-                  fontFamily: 'Apple Butter',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
-                ),
-              ),
-              onTap: () {
-                context.read<AppBloc>().add(
-                      AppEventGoToSpells(),
-                    );
-                Navigator.pop(context);
-              },
+            getListTile(
+              context,
+              Icons.thunderstorm_outlined,
+              AppConstants.spells,
+              AppConstants.goToSpells,
             ),
             // Species
             getSizedBoxWithDivider(),
-            ListTile(
-              splashColor: Colors.amber,
-              subtitle: const Text(
-                'Go to the species list!',
-                style: TextStyle(
-                  fontFamily: 'Apple Butter',
-                  fontSize: 16,
-                  letterSpacing: 1,
-                ),
-              ),
-              leading: const Icon(
-                Icons.forest_outlined,
-                size: 35,
-                color: Colors.black87,
-              ),
-              title: const Text(
-                AppConstants.species,
-                style: TextStyle(
-                  fontFamily: 'Apple Butter',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
-                ),
-              ),
-              onTap: () {
-                context.read<AppBloc>().add(
-                      AppEventGoToSpecies(),
-                    );
-                Navigator.pop(context);
-              },
+            getListTile(
+              context,
+              Icons.forest_outlined,
+              AppConstants.species,
+              AppConstants.goToSpecies,
             ),
           ],
         ),
       ),
-      body: BlocConsumer<AppBloc, AppState>(
-        listener: (context, state) {
-          // ToDO
-        },
-        builder: (context, state) {
-          if (state is AppStateOnBooksView) {
-            return const BooksView();
-          } else if (state is AppStateOnCharactersView) {
-            return const CharactersView();
-          } else if (state is AppStateOnSpellsView) {
-            return const SpellsView();
-          } else if (state is AppStateOnSpeciesView) {
-            return const SpeciesView();
-          } else {
-            return const WelcomeView();
-          }
-        },
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFF6A3A19),
+                  Color(0xFFB48A76),
+                ],
+              ),
+            ),
+          ),
+          BlocConsumer<AppBloc, AppState>(
+            listener: (context, state) {
+              setState(() {
+                if (state is AppStateOnBooksView) {
+                  _appBarTitle = AppConstants.books;
+                } else if (state is AppStateOnCharactersView) {
+                  _appBarTitle = AppConstants.characters;
+                } else if (state is AppStateOnSpellsView) {
+                  _appBarTitle = AppConstants.spells;
+                } else if (state is AppStateOnSpeciesView) {
+                  _appBarTitle = AppConstants.species;
+                }
+              });
+            },
+            builder: (context, state) {
+              if (state is AppStateOnBooksView) {
+                return const BooksView();
+              } else if (state is AppStateOnCharactersView) {
+                return const CharactersView();
+              } else if (state is AppStateOnSpellsView) {
+                return const SpellsView();
+              } else if (state is AppStateOnSpeciesView) {
+                return const SpeciesView();
+              } else {
+                return const WelcomeView();
+              }
+            },
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) async {
@@ -265,19 +198,22 @@ class _AppCenterState extends State<AppCenter> {
             _currentIndex = index;
             switch (_currentIndex) {
               case 0:
-                context.read<AppBloc>().add(
-                      AppEventGoToBooks(),
-                    );
+                // context.read<AppBloc>().add(
+                //       AppEventGoToFavorites(),
+                //     );
+                _appBarTitle = '';
                 break;
               case 1:
-                context.read<AppBloc>().add(
-                      AppEventGoToCharacters(),
-                    );
+                // context.read<AppBloc>().add(
+                //       AppEventGoToSearch(),
+                //     );
+                _appBarTitle = '';
                 break;
               case 2:
-                context.read<AppBloc>().add(
-                      AppEventGoToSpells(),
-                    );
+                // context.read<AppBloc>().add(
+                //       AppEventGoToFeature(),
+                //     );
+                _appBarTitle = '';
                 break;
             }
           });
@@ -308,6 +244,63 @@ class _AppCenterState extends State<AppCenter> {
   }
 }
 
+Widget getListTile(
+    BuildContext context, IconData icons, String title, String subtitle) {
+  return ListTile(
+    leading: Icon(
+      icons,
+      size: 35,
+      color: Colors.black87,
+    ),
+    title: Text(
+      title,
+      style: const TextStyle(
+        fontFamily: 'Apple Butter',
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        letterSpacing: 1,
+      ),
+    ),
+    subtitle: Text(
+      subtitle,
+      style: const TextStyle(
+        fontFamily: 'Apple Butter',
+        fontSize: 16,
+        letterSpacing: 1,
+      ),
+    ),
+    splashColor: Colors.amber,
+    onTap: () {
+      switch (title) {
+        case AppConstants.books:
+          context.read<AppBloc>().add(
+                AppEventGoToBooks(),
+              );
+          waitBeforeMoving(context);
+          break;
+        case AppConstants.characters:
+          context.read<AppBloc>().add(
+                AppEventGoToCharacters(),
+              );
+          waitBeforeMoving(context);
+          break;
+        case AppConstants.spells:
+          context.read<AppBloc>().add(
+                AppEventGoToSpells(),
+              );
+          waitBeforeMoving(context);
+          break;
+        case AppConstants.species:
+          context.read<AppBloc>().add(
+                AppEventGoToSpecies(),
+              );
+          waitBeforeMoving(context);
+          break;
+      }
+    },
+  );
+}
+
 Widget getSizedBoxWithDivider() {
   return const SizedBox(
     height: 12,
@@ -318,4 +311,9 @@ Widget getSizedBoxWithDivider() {
       endIndent: 50,
     ),
   );
+}
+
+void waitBeforeMoving(BuildContext context) {
+  Future.delayed(const Duration(milliseconds: 200))
+      .then((_) => Navigator.pop(context));
 }

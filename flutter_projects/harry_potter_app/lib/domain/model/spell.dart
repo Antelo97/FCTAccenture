@@ -1,17 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/network/model_response/spell_response.dart';
 
-@immutable
 class Spell {
-  final String idDocument;
+  String? idDocument;
   final String idApiSpell;
   final String name;
   final String description;
   final String imageUrl;
 
-  const Spell({
+  Spell({
     required this.idDocument,
     required this.idApiSpell,
     required this.name,
@@ -19,8 +17,7 @@ class Spell {
     required this.imageUrl,
   });
 
-  Spell.fromDocument(
-      QueryDocumentSnapshot<Map<String, dynamic>> document)
+  Spell.fromDocument(QueryDocumentSnapshot<Map<String, dynamic>> document)
       : idDocument = document.id,
         idApiSpell = document.data()[idApiSpellFieldName] as String,
         name = document.data()[nameFieldName] as String,
@@ -28,11 +25,25 @@ class Spell {
         imageUrl = document.data()[imageUrlFieldName] as String;
 
   Spell.fromResponse(SpellResponse spell)
-      : idDocument = '',
-        idApiSpell = spell.idApi,
+      : idApiSpell = spell.idApi,
         name = spell.name,
         description = spell.description,
         imageUrl = getImageUrl(spell.name);
+
+  Spell.fromMap(Map<String, dynamic> map)
+      : idApiSpell = map[idApiSpellFieldName] as String,
+        name = map[nameFieldName] as String,
+        description = map[descriptionFieldName] as String,
+        imageUrl = map[imageUrlFieldName] as String;
+
+  Map<String, dynamic> toMap() {
+    return {
+      idApiSpellFieldName: idApiSpell,
+      nameFieldName: name,
+      descriptionFieldName: description,
+      imageUrlFieldName: imageUrl,
+    };
+  }
 }
 
 String getImageUrl(String spellName) {

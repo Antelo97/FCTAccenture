@@ -1,28 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/network/model_response/character_response.dart';
 
-@immutable
 class Character {
-  final String idDocument;
+  String? idDocument;
   final String idApiCharacter;
   final String name;
-  final Species species;
-  final Gender gender;
-  final House house;
+  final String species;
+  final String gender;
+  final String house;
   final int? yearOfBirth;
   final bool isWizard;
-  final Ancestry ancestry;
+  final String ancestry;
   final Wand wand;
-  final Patronus patronus;
+  final String patronus;
   final bool isHogwartsStudent;
   final bool isHogwartsStaff;
   final String actor;
   final bool isAlive;
   final String imageUrl;
 
-  const Character({
+  Character({
     required this.idDocument,
     required this.idApiCharacter,
     required this.name,
@@ -45,14 +43,14 @@ class Character {
       : idDocument = document.id,
         idApiCharacter = document.data()[idApiCharacterFieldName] as String,
         name = document.data()[nameFieldName] as String,
-        species = document.data()[speciesFieldName] as Species,
-        gender = document.data()[genderFieldName] as Gender,
-        house = document.data()[houseFieldName] as House,
+        species = document.data()[speciesFieldName] as String,
+        gender = document.data()[genderFieldName] as String,
+        house = document.data()[houseFieldName] as String,
         yearOfBirth = document.data()[yearOfBirthFieldName] as int?,
         isWizard = document.data()[isWizardFieldName] as bool,
-        ancestry = document.data()[ancestryFieldName] as Ancestry,
+        ancestry = document.data()[ancestryFieldName] as String,
         wand = document.data()[wandFieldName] as Wand,
-        patronus = document.data()[patronusFieldName] as Patronus,
+        patronus = document.data()[patronusFieldName] as String,
         isHogwartsStudent = document.data()[isHogwartsStudentFieldName] as bool,
         isHogwartsStaff = document.data()[isHogwartsStaffFieldName] as bool,
         actor = document.data()[actorFieldName] as String,
@@ -60,22 +58,58 @@ class Character {
         imageUrl = document.data()[imageUrlFieldName] as String;
 
   Character.fromResponse(CharacterResponse character)
-      : idDocument = '',
-        idApiCharacter = character.idApi,
+      : idApiCharacter = character.idApi,
         name = character.name,
-        species = character.species,
-        gender = character.gender,
-        house = character.house,
+        species = character.species as String,
+        gender = character.gender as String,
+        house = character.house as String,
         yearOfBirth = character.yearOfBirth,
         isWizard = character.isWizard,
-        ancestry = character.ancestry,
+        ancestry = character.ancestry as String,
         wand = character.wand,
-        patronus = character.patronus,
+        patronus = character.patronus as String,
         isHogwartsStudent = character.isHogwartsStudent,
         isHogwartsStaff = character.isHogwartsStaff,
         actor = character.actor,
         isAlive = character.isAlive,
         imageUrl = getImageUrl(character.imageUrl);
+
+  Character.fromMap(Map<String, dynamic> map)
+      : idApiCharacter = map[idApiCharacterFieldName] as String,
+        name = map[nameFieldName] as String,
+        species = map[speciesFieldName] as String,
+        gender = map[genderFieldName] as String,
+        house = map[houseFieldName] as String,
+        yearOfBirth = map[yearOfBirthFieldName] as int,
+        isWizard = map[isWizardFieldName] as bool,
+        ancestry = map[ancestryFieldName] as String,
+        wand = map[wandFieldName] as Wand,
+        patronus = map[patronusFieldName] as String,
+        isHogwartsStudent = map[isHogwartsStudentFieldName] as bool,
+        isHogwartsStaff = map[isHogwartsStaffFieldName] as bool,
+        actor = map[actorFieldName] as String,
+        isAlive = map[isAliveFieldName] as bool,
+        imageUrl = map[imageUrlFieldName] as String;
+
+  Map<String, dynamic> toMap() {
+    return {
+      idApiCharacterFieldName: idApiCharacter,
+      nameFieldName: name,
+      speciesFieldName: species.toString(), // Convertir a formato String
+      genderFieldName: gender.toString(), // Convertir a formato String
+      houseFieldName: house.toString(), // Convertir a formato String
+      yearOfBirthFieldName: yearOfBirth,
+      isWizardFieldName: isWizard,
+      ancestryFieldName: ancestry.toString(), // Convertir a formato String
+      wandFieldName: wand.toString(), // Convertir a formato String
+      patronusFieldName: patronus.toString(), // Convertir a formato String
+      isHogwartsStudentFieldName: isHogwartsStudent,
+      isHogwartsStaffFieldName: isHogwartsStaff,
+      actorFieldName: actor,
+      isAliveFieldName: isAlive,
+      imageUrlFieldName: imageUrl,
+    };
+  }
 }
 
 String getImageUrl(String imageUrl) {

@@ -1,7 +1,7 @@
 // User Collection
-const idFirestoreFieldName = 'id_firestore';
+const idFirebaseFieldName = 'id_firebase';
 const emailFieldName = 'email';
-const isEmailVeriFiedFieldName = 'is_email_verified';
+const isEmailVerifiedFieldName = 'is_email_verified';
 const usernameFieldName = 'username';
 const favoriteBooksFieldName = 'favorite_books';
 const favoriteCharactersFieldName = 'favorite_characters';

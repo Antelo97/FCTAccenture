@@ -11,15 +11,16 @@ class SpellRepository {
   SpellRepository._sharedInstance(); // Private constructor
   factory SpellRepository() => _shared;
 
-  Future<List<Spell>> getSpellsFromApi() async {
-    final spells = await api.getSpells();
+  Future<List<Spell>> loadSpellsFromApi() async {
+    final spells = await getSpellsFromCloudFirebase();
 
-    if (spells!.isNotEmpty) {
-      deleteSpells();
+    if (spells.isEmpty) {
       insertSpells();
-      return spells.map((e) => Spell.fromResponse(e)).toList();
-    } else {
       return getSpellsFromCloudFirebase();
+    } else {
+      // deleteSpells();
+      // insertSpells();
+      return spells;
     }
   }
 

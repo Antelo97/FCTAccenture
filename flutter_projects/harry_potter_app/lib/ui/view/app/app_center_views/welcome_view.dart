@@ -12,18 +12,6 @@ class _WelcomeViewState extends State<WelcomeView> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color(0xFF6A3A19),
-                Color(0xFFB48A76),
-              ],
-            ),
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
           child: Container(

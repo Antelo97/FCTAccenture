@@ -1,26 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/network/model_response/species_response.dart';
 
-@immutable
 class Species {
-  final String idDocument;
+  String? idDocument;
   final int idApiSpecies;
   final String name;
   final String? native;
   final String imageUrl;
 
-  const Species(
-      {required this.idDocument,
-      required this.idApiSpecies,
-      required this.name,
-      required this.native,
-      required this.imageUrl});
+  Species({
+    required this.idDocument,
+    required this.idApiSpecies,
+    required this.name,
+    required this.native,
+    required this.imageUrl,
+  });
 
-  Species.fromDocument(
-      QueryDocumentSnapshot<Map<String, dynamic>> document)
+  Species.fromDocument(QueryDocumentSnapshot<Map<String, dynamic>> document)
       : idDocument = document.id,
         idApiSpecies = document.data()[idApiSpeciesFieldName] as int,
         name = document.data()[nameFieldName] as String,
@@ -28,11 +25,25 @@ class Species {
         imageUrl = document.data()[imageUrlFieldName] as String;
 
   Species.fromResponse(SpeciesResponse species)
-      : idDocument = '',
-        idApiSpecies = species.idApi,
+      : idApiSpecies = species.idApi,
         name = species.name,
         native = getNative(species.native),
         imageUrl = getImageUrl(species.name);
+
+  Species.fromMap(Map<String, dynamic> map)
+      : idApiSpecies = map[idApiSpeciesFieldName] as int,
+        name = map[nameFieldName] as String,
+        native = map[nativeFieldName] as String,
+        imageUrl = map[imageUrlFieldName] as String;
+
+  Map<String, dynamic> toMap() {
+    return {
+      idApiSpeciesFieldName: idApiSpecies,
+      nameFieldName: name,
+      nativeFieldName: native,
+      imageUrlFieldName: imageUrl,
+    };
+  }
 }
 
 String getNative(String? native) {

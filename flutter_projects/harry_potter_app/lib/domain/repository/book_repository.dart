@@ -11,33 +11,52 @@ class BookRepository {
   BookRepository._sharedInstance(); // Private constructor
   factory BookRepository() => _shared;
 
-  Future<List<Book>> getBooksFromApi() async {
-    final books = await api.getBooks();
+  Future<List<Book>> loadBooksFromApi() async {
+    print('doneuwu00');
 
-    if (books!.isNotEmpty) {
-      deleteBooks();
+    final books = await getBooksFromCloudFirebase();
+    print('doneuwu01');
+
+    if (books.isEmpty) {
       insertBooks();
-      return books.map((e) => Book.fromResponse(e)).toList();
-    } else {
       return getBooksFromCloudFirebase();
+    } else {
+      // deleteBooks();
+      // insertBooks(); (podría ser interesante en caso de actualizarse la API)
+      return books;
     }
   }
 
   Future<List<Book>> getBooksFromCloudFirebase() async {
-    return await booksCollection.get().then((snapshot) =>
-        snapshot.docs.map((doc) => Book.fromDocument(doc)).toList());
+    // Importante tener en cuenta que al crear una colección ya existe por defecto un documento
+    final snapshot = await booksCollection.get();
+    try {
+      if (snapshot.docs.length > 2) {
+        print('donehereeee');
+        return snapshot.docs.map((doc) => Book.fromDocument(doc)).toList();
+      }
+      return [];
+    } catch (e) {
+      throw e;
+    }
 
     // return booksCollection.snapshots().map((event) =>
     //     event.docs.map((doc) => BookCollection.fromSnapshot(doc)).toList());
   }
 
   Future<void> insertBooks() async {
-    final books = await api.getBooks();
+    final booksResponse = await api.getBooks();
+    final books = booksResponse!
+        .map((bookResponse) => Book.fromResponse(bookResponse))
+        .toList();
     final batch = FirebaseFirestore.instance.batch();
 
-    for (var book in books!) {
-      final bookRef = FirebaseFirestore.instance.collection('books').doc();
-      batch.set(bookRef, book.toJson());
+    for (var book in books) {
+      final bookRef = booksCollection.doc();
+      batch.set(
+        bookRef,
+        book.toMap(),
+      );
     }
 
     await batch.commit();

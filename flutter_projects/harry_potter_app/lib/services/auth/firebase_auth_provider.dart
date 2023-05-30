@@ -9,7 +9,7 @@ import 'auth_exceptions.dart';
 import 'auth_provider.dart';
 
 // Decido trabajar con el AuthUserRepository en esta clase para integrar en el AuthProvider el acceso a
-// Cloud Firestore, de forma cuando se cree un usuario en Firestore, este se agregue automáticamente
+// Cloud Firestore, de forma que cuando se cree un usuario en Firestore, este se agregue automáticamente
 // en Cloud Firestore sin tener que hacer una doble llamada a nivel de Bloc (una para crear el usuario
 // en Firestore con el Provider y otra para insetarlo en Cloud Firestore con el AuthUserRepository)
 
@@ -52,7 +52,9 @@ class FirebaseAuthProvider implements AuthProvider {
       final user = userCredential.user;
 
       if (user != null) {
+        print('Step 1.1: Pre-insert');
         final authUser = AuthUser.fromFirebase(user, username);
+        print('Step 1.1.1: Pre-insert');
         return await authUserRepository.insertUser(authUser);
       } else {
         throw UserNotLoggedInAuthException();
@@ -65,9 +67,12 @@ class FirebaseAuthProvider implements AuthProvider {
       } else if (e.code == 'invalid-email') {
         throw InvalidEmailAuthException();
       } else {
+        print('Step 1.2: GExc');
         throw GenericAuthException();
       }
-    } catch (_) {
+    } catch (e) {
+      print(e.toString());
+      print('Step 1.3: GExc');
       throw GenericAuthException();
     }
   }

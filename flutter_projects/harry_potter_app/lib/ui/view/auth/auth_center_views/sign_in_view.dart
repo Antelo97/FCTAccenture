@@ -6,14 +6,14 @@ import 'package:harry_potter_app/ui/bloc/auth/auth_event.dart';
 import 'package:harry_potter_app/ui/bloc/auth/auth_state.dart';
 import 'package:harry_potter_app/utilities/dialogs/error_dialog.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class SignInView extends StatefulWidget {
+  const SignInView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<SignInView> createState() => _SignInViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _SignInViewState extends State<SignInView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -35,7 +35,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
-        if (state is AuthStateSignedOut) {
+        if (state is AuthStateOnSignIn) {
           if (state.exception is UserNotFoundAuthException) {
             await showErrorDialog(
               context,
