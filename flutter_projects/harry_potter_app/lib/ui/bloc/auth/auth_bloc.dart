@@ -34,8 +34,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthEventInitializeFirebase event,
     Emitter<AuthState> emit,
   ) async {
-    print('doneeeeeeeee111');
-
     await authProvider.initialize();
 
     // Una vez inicializado Firebase, ya podemos instanciar nuestros repositorios
@@ -46,11 +44,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     speciesRepository = SpeciesRepository();
 
     final user = FirebaseAuth.instance.currentUser;
-    print('doneeeeeeeee');
 
     if (user == null) {
-      print('doneenll');
-
+      print('Step: null');
       emit(
         const AuthStateOnSignIn(
           exception: null,
@@ -58,6 +54,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ),
       );
     } else if (!user.emailVerified) {
+      print('Email: ${user.emailVerified}');
+
       emit(
         const AuthStateOnVerifyEmail(isLoading: false),
       );

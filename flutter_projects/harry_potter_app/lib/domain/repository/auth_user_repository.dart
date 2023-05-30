@@ -20,21 +20,7 @@ class AuthUserRepository {
   }
 
   Future<AuthUser> insertUser(AuthUser authUser) async {
-    await usersCollection.add({
-      idFirebaseFieldName: authUser.idFirestore,
-      emailFieldName: authUser.email,
-      isEmailVerifiedFieldName: authUser.isEmailVerified,
-      usernameFieldName: authUser.username,
-      favoriteBooksFieldName:
-          authUser.favoriteBooks.map((book) => book.toMap()).toList(),
-      favoriteCharactersFieldName: authUser.favoriteCharacters
-          .map((character) => character.toMap())
-          .toList(),
-      favoriteSpellsFieldName:
-          authUser.favoriteSpells.map((spell) => spell.toMap()).toList(),
-      favoriteSpeciesFieldName:
-          authUser.favoriteSpecies.map((species) => species.toMap()).toList(),
-    });
+    await usersCollection.add(authUser.toMap());
 
     // user.uid --> Atributo del usuario interno de Firestore, lo almaceno en la colección en el campo id_firestore
     // userRef.id --> Es la referencia que tiene un documento dentro de la colección en Firebase (también es una String)

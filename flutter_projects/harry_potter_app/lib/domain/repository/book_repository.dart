@@ -31,11 +31,11 @@ class BookRepository {
     // Importante tener en cuenta que al crear una colección ya existe por defecto un documento
     final snapshot = await booksCollection.get();
     try {
-      if (snapshot.docs.length > 2) {
-        print('donehereeee');
+      if (snapshot.docs.length >= 2) {
         return snapshot.docs.map((doc) => Book.fromDocument(doc)).toList();
+      } else {
+        return [];
       }
-      return [];
     } catch (e) {
       throw e;
     }
@@ -52,9 +52,9 @@ class BookRepository {
     final batch = FirebaseFirestore.instance.batch();
 
     for (var book in books) {
-      final bookRef = booksCollection.doc();
+      final idDoc = booksCollection.doc();
       batch.set(
-        bookRef,
+        idDoc,
         book.toMap(),
       );
     }

@@ -25,17 +25,27 @@ class SpeciesRepository {
   }
 
   Future<List<Species>> getSpeciesFromCloudFirebase() async {
-    return await speciesCollection.get().then((snapshot) =>
-        snapshot.docs.map((doc) => Species.fromDocument(doc)).toList());
+    final snapshot = await speciesCollection.get();
+    if (snapshot.docs.length >= 2) {
+      return snapshot.docs.map((doc) => Species.fromDocument(doc)).toList();
+    } else {
+      return [];
+    }
   }
 
   Future<void> insertSpecies() async {
-    final speciesList = await api.getSpecies();
+    final speciesResponse = await api.getSpecies();
+    final speciesList = speciesResponse!
+        .map((speciesResponse) => Species.fromResponse(speciesResponse))
+        .toList();
     final batch = FirebaseFirestore.instance.batch();
 
-    for (var species in speciesList!) {
-      final speciesRef = FirebaseFirestore.instance.collection('species').doc();
-      batch.set(speciesRef, species.toJson());
+    for (var species in speciesList) {
+      final idDoc = speciesCollection.doc();
+      batch.set(
+        idDoc,
+        species.toMap(),
+      );
     }
 
     await batch.commit();

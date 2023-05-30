@@ -60,14 +60,14 @@ class Character {
   Character.fromResponse(CharacterResponse character)
       : idApiCharacter = character.idApi,
         name = character.name,
-        species = character.species as String,
-        gender = character.gender as String,
-        house = character.house as String,
+        species = character.species,
+        gender = character.gender,
+        house = character.house,
         yearOfBirth = character.yearOfBirth,
         isWizard = character.isWizard,
-        ancestry = character.ancestry as String,
+        ancestry = character.ancestry,
         wand = character.wand,
-        patronus = character.patronus as String,
+        patronus = character.patronus,
         isHogwartsStudent = character.isHogwartsStudent,
         isHogwartsStaff = character.isHogwartsStaff,
         actor = character.actor,
@@ -95,14 +95,14 @@ class Character {
     return {
       idApiCharacterFieldName: idApiCharacter,
       nameFieldName: name,
-      speciesFieldName: species.toString(), // Convertir a formato String
-      genderFieldName: gender.toString(), // Convertir a formato String
-      houseFieldName: house.toString(), // Convertir a formato String
+      speciesFieldName: species,
+      genderFieldName: gender,
+      houseFieldName: house,
       yearOfBirthFieldName: yearOfBirth,
       isWizardFieldName: isWizard,
-      ancestryFieldName: ancestry.toString(), // Convertir a formato String
-      wandFieldName: wand.toString(), // Convertir a formato String
-      patronusFieldName: patronus.toString(), // Convertir a formato String
+      ancestryFieldName: ancestry,
+      wandFieldName: wand.toJson(),
+      patronusFieldName: patronus,
       isHogwartsStudentFieldName: isHogwartsStudent,
       isHogwartsStaffFieldName: isHogwartsStaff,
       actorFieldName: actor,

@@ -28,10 +28,11 @@ class CharacterRepository {
 
   Future<List<Character>> getCharactersFromCloudFirebase() async {
     final snapshot = await charactersCollection.get();
-    if (snapshot.docs.length > 2) {
-      snapshot.docs.map((doc) => Character.fromDocument(doc)).toList();
+    if (snapshot.docs.length >= 2) {
+      return snapshot.docs.map((doc) => Character.fromDocument(doc)).toList();
+    } else {
+      return [];
     }
-    return [];
   }
 
   Future<void> insertCharacters() async {
@@ -42,13 +43,12 @@ class CharacterRepository {
     final batch = FirebaseFirestore.instance.batch();
 
     for (var character in characters) {
-      final characterRef = charactersCollection.doc();
+      final idDoc = charactersCollection.doc();
       batch.set(
-        characterRef,
+        idDoc,
         character.toMap(),
       );
     }
-    print('doneque');
 
     await batch.commit();
   }

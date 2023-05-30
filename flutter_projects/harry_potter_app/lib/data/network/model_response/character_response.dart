@@ -12,14 +12,14 @@ String characterResponseToJson(List<CharacterResponse> data) =>
 class CharacterResponse {
   String idApi;
   String name;
-  Species species;
-  Gender gender;
-  House house;
+  String species;
+  String gender;
+  String house;
   int? yearOfBirth;
   bool isWizard;
-  Ancestry ancestry;
+  String ancestry;
   Wand wand;
-  Patronus patronus;
+  String patronus;
   bool isHogwartsStudent;
   bool isHogwartsStaff;
   String actor;
@@ -48,14 +48,14 @@ class CharacterResponse {
       CharacterResponse(
         idApi: json["id"],
         name: json["name"],
-        species: speciesValues.map[json["species"]]!,
-        gender: genderValues.map[json["gender"]]!,
-        house: houseValues.map[json["house"]]!,
+        species: json["species"],
+        gender: json["gender"],
+        house: json["house"],
         yearOfBirth: json["yearOfBirth"],
         isWizard: json["wizard"],
-        ancestry: ancestryValues.map[json["ancestry"]]!,
+        ancestry: json["ancestry"],
         wand: Wand.fromJson(json["wand"]),
-        patronus: patronusValues.map[json["patronus"]]!,
+        patronus: json["patronus"],
         isHogwartsStudent: json["hogwartsStudent"],
         isHogwartsStaff: json["hogwartsStaff"],
         actor: json["actor"],
@@ -66,14 +66,14 @@ class CharacterResponse {
   Map<String, dynamic> toJson() => {
         "id": idApi,
         "name": name,
-        "species": speciesValues.reverse[species],
-        "gender": genderValues.reverse[gender],
-        "house": houseValues.reverse[house],
+        "species": species,
+        "gender": gender,
+        "house": house,
         "yearOfBirth": yearOfBirth,
         "wizard": isWizard,
-        "ancestry": ancestryValues.reverse[ancestry],
+        "ancestry": ancestry,
         "wand": wand.toJson(),
-        "patronus": patronusValues.reverse[patronus],
+        "patronus": patronus,
         "hogwartsStudent": isHogwartsStudent,
         "hogwartsStaff": isHogwartsStaff,
         "actor": actor,
@@ -82,129 +82,9 @@ class CharacterResponse {
       };
 }
 
-enum Ancestry {
-  HALF_BLOOD,
-  MUGGLEBORN,
-  PURE_BLOOD,
-  EMPTY,
-  SQUIB,
-  MUGGLE,
-  HALF_VEELA,
-  QUARTER_VEELA
-}
-
-final ancestryValues = EnumValues({
-  "": Ancestry.EMPTY,
-  "half-blood": Ancestry.HALF_BLOOD,
-  "half-veela": Ancestry.HALF_VEELA,
-  "muggle": Ancestry.MUGGLE,
-  "muggleborn": Ancestry.MUGGLEBORN,
-  "pure-blood": Ancestry.PURE_BLOOD,
-  "quarter-veela": Ancestry.QUARTER_VEELA,
-  "squib": Ancestry.SQUIB
-});
-
-enum Gender {
-  MALE,
-  FEMALE,
-}
-
-final genderValues = EnumValues({
-  "female": Gender.FEMALE,
-  "male": Gender.MALE,
-});
-
-enum House { GRYFFINDOR, SLYTHERIN, HUFFLEPUFF, RAVENCLAW, EMPTY }
-
-final houseValues = EnumValues({
-  "": House.EMPTY,
-  "Gryffindor": House.GRYFFINDOR,
-  "Hufflepuff": House.HUFFLEPUFF,
-  "Ravenclaw": House.RAVENCLAW,
-  "Slytherin": House.SLYTHERIN
-});
-
-enum Patronus {
-  STAG,
-  OTTER,
-  JACK_RUSSELL_TERRIER,
-  EMPTY,
-  TABBY_CAT,
-  SWAN,
-  DOE,
-  NON_CORPOREAL,
-  HARE,
-  HORSE,
-  WOLF,
-  WEASEL,
-  LYNX,
-  PERSIAN_CAT,
-  BOAR,
-  GOAT
-}
-
-final patronusValues = EnumValues({
-  "boar": Patronus.BOAR,
-  "doe": Patronus.DOE,
-  "": Patronus.EMPTY,
-  "goat": Patronus.GOAT,
-  "hare": Patronus.HARE,
-  "horse": Patronus.HORSE,
-  "Jack Russell terrier": Patronus.JACK_RUSSELL_TERRIER,
-  "lynx": Patronus.LYNX,
-  "Non-Corporeal": Patronus.NON_CORPOREAL,
-  "otter": Patronus.OTTER,
-  "persian cat": Patronus.PERSIAN_CAT,
-  "stag": Patronus.STAG,
-  "swan": Patronus.SWAN,
-  "tabby cat": Patronus.TABBY_CAT,
-  "weasel": Patronus.WEASEL,
-  "wolf": Patronus.WOLF
-});
-
-enum Species {
-  HUMAN,
-  HALF_GIANT,
-  WEREWOLF,
-  CAT,
-  GOBLIN,
-  OWL,
-  GHOST,
-  POLTERGEIST,
-  THREE_HEADED_DOG,
-  DRAGON,
-  CENTAUR,
-  HOUSE_ELF,
-  ACROMANTULA,
-  HIPPOGRIFF,
-  GIANT,
-  VAMPIRE,
-  HALF_HUMAN
-}
-
-final speciesValues = EnumValues({
-  "acromantula": Species.ACROMANTULA,
-  "cat": Species.CAT,
-  "centaur": Species.CENTAUR,
-  "dragon": Species.DRAGON,
-  "ghost": Species.GHOST,
-  "giant": Species.GIANT,
-  "goblin": Species.GOBLIN,
-  "half-giant": Species.HALF_GIANT,
-  "half-human": Species.HALF_HUMAN,
-  "hippogriff": Species.HIPPOGRIFF,
-  "house-elf": Species.HOUSE_ELF,
-  "human": Species.HUMAN,
-  "owl": Species.OWL,
-  "poltergeist": Species.POLTERGEIST,
-  "three-headed dog": Species.THREE_HEADED_DOG,
-  "vampire": Species.VAMPIRE,
-  "werewolf": Species.WEREWOLF
-});
-
 class Wand {
-  Wood wood;
-  Core core;
+  String wood;
+  String core;
   double? length;
 
   Wand({
@@ -214,86 +94,206 @@ class Wand {
   });
 
   factory Wand.fromJson(Map<String, dynamic> json) => Wand(
-        wood: woodValues.map[json["wood"]]!,
-        core: coreValues.map[json["core"]]!,
+        wood: json["wood"],
+        core: json["core"],
         length: json["length"]?.toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
-        "wood": woodValues.reverse[wood],
-        "core": coreValues.reverse[core],
+        "wood": wood,
+        "core": core,
         "length": length,
       };
 }
 
-enum Core {
-  PHOENIX_FEATHER,
-  DRAGON_HEARTSTRING,
-  UNICORN_TAIL_HAIR,
-  UNICORN_HAIR,
-  EMPTY
-}
+// class EnumValues<T> {
+//   Map<String, T> map;
+//   late Map<T, String> reverseMap;
 
-final coreValues = EnumValues({
-  "dragon heartstring": Core.DRAGON_HEARTSTRING,
-  "": Core.EMPTY,
-  "phoenix feather": Core.PHOENIX_FEATHER,
-  "unicorn hair": Core.UNICORN_HAIR,
-  "unicorn tail-hair": Core.UNICORN_TAIL_HAIR
-});
+//   EnumValues(this.map);
 
-enum Wood {
-  HOLLY,
-  VINE,
-  WILLOW,
-  HAWTHORN,
-  FIR,
-  ASH,
-  EMPTY,
-  OAK,
-  CHERRY,
-  YEW,
-  CYPRESS,
-  WALNUT,
-  CEDAR,
-  BIRCH,
-  ELM,
-  MAHOGANY,
-  LARCH,
-  CHESTNUT,
-  HORNBEAM
-}
+//   Map<T, String> get reverse {
+//     reverseMap = map.map((k, v) => MapEntry(v, k));
+//     return reverseMap;
+//   }
+// }
 
-final woodValues = EnumValues({
-  "ash": Wood.ASH,
-  "birch": Wood.BIRCH,
-  "cedar": Wood.CEDAR,
-  "cherry": Wood.CHERRY,
-  "chestnut": Wood.CHESTNUT,
-  "cypress": Wood.CYPRESS,
-  "elm": Wood.ELM,
-  "": Wood.EMPTY,
-  "fir": Wood.FIR,
-  "hawthorn": Wood.HAWTHORN,
-  "holly": Wood.HOLLY,
-  "hornbeam": Wood.HORNBEAM,
-  "larch": Wood.LARCH,
-  "mahogany": Wood.MAHOGANY,
-  "oak": Wood.OAK,
-  "vine": Wood.VINE,
-  "walnut": Wood.WALNUT,
-  "willow": Wood.WILLOW,
-  "yew": Wood.YEW
-});
+// enum Ancestry {
+//   HALF_BLOOD,
+//   MUGGLEBORN,
+//   PURE_BLOOD,
+//   EMPTY,
+//   SQUIB,
+//   MUGGLE,
+//   HALF_VEELA,
+//   QUARTER_VEELA
+// }
 
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
+// final ancestryValues = EnumValues({
+//   "": Ancestry.EMPTY,
+//   "half-blood": Ancestry.HALF_BLOOD,
+//   "half-veela": Ancestry.HALF_VEELA,
+//   "muggle": Ancestry.MUGGLE,
+//   "muggleborn": Ancestry.MUGGLEBORN,
+//   "pure-blood": Ancestry.PURE_BLOOD,
+//   "quarter-veela": Ancestry.QUARTER_VEELA,
+//   "squib": Ancestry.SQUIB
+// });
 
-  EnumValues(this.map);
+// enum Gender {
+//   MALE,
+//   FEMALE,
+// }
 
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
-}
+// final genderValues = EnumValues({
+//   "female": Gender.FEMALE,
+//   "male": Gender.MALE,
+// });
+
+// enum House { GRYFFINDOR, SLYTHERIN, HUFFLEPUFF, RAVENCLAW, EMPTY }
+
+// final houseValues = EnumValues({
+//   "": House.EMPTY,
+//   "Gryffindor": House.GRYFFINDOR,
+//   "Hufflepuff": House.HUFFLEPUFF,
+//   "Ravenclaw": House.RAVENCLAW,
+//   "Slytherin": House.SLYTHERIN
+// });
+
+// enum Patronus {
+//   STAG,
+//   OTTER,
+//   JACK_RUSSELL_TERRIER,
+//   EMPTY,
+//   TABBY_CAT,
+//   SWAN,
+//   DOE,
+//   NON_CORPOREAL,
+//   HARE,
+//   HORSE,
+//   WOLF,
+//   WEASEL,
+//   LYNX,
+//   PERSIAN_CAT,
+//   BOAR,
+//   GOAT
+// }
+
+// final patronusValues = EnumValues({
+//   "boar": Patronus.BOAR,
+//   "doe": Patronus.DOE,
+//   "": Patronus.EMPTY,
+//   "goat": Patronus.GOAT,
+//   "hare": Patronus.HARE,
+//   "horse": Patronus.HORSE,
+//   "Jack Russell terrier": Patronus.JACK_RUSSELL_TERRIER,
+//   "lynx": Patronus.LYNX,
+//   "Non-Corporeal": Patronus.NON_CORPOREAL,
+//   "otter": Patronus.OTTER,
+//   "persian cat": Patronus.PERSIAN_CAT,
+//   "stag": Patronus.STAG,
+//   "swan": Patronus.SWAN,
+//   "tabby cat": Patronus.TABBY_CAT,
+//   "weasel": Patronus.WEASEL,
+//   "wolf": Patronus.WOLF
+// });
+
+// enum Species {
+//   HUMAN,
+//   HALF_GIANT,
+//   WEREWOLF,
+//   CAT,
+//   GOBLIN,
+//   OWL,
+//   GHOST,
+//   POLTERGEIST,
+//   THREE_HEADED_DOG,
+//   DRAGON,
+//   CENTAUR,
+//   HOUSE_ELF,
+//   ACROMANTULA,
+//   HIPPOGRIFF,
+//   GIANT,
+//   VAMPIRE,
+//   HALF_HUMAN
+// }
+
+// final speciesValues = EnumValues({
+//   "acromantula": Species.ACROMANTULA,
+//   "cat": Species.CAT,
+//   "centaur": Species.CENTAUR,
+//   "dragon": Species.DRAGON,
+//   "ghost": Species.GHOST,
+//   "giant": Species.GIANT,
+//   "goblin": Species.GOBLIN,
+//   "half-giant": Species.HALF_GIANT,
+//   "half-human": Species.HALF_HUMAN,
+//   "hippogriff": Species.HIPPOGRIFF,
+//   "house-elf": Species.HOUSE_ELF,
+//   "human": Species.HUMAN,
+//   "owl": Species.OWL,
+//   "poltergeist": Species.POLTERGEIST,
+//   "three-headed dog": Species.THREE_HEADED_DOG,
+//   "vampire": Species.VAMPIRE,
+//   "werewolf": Species.WEREWOLF
+// });
+
+// enum Core {
+//   PHOENIX_FEATHER,
+//   DRAGON_HEARTSTRING,
+//   UNICORN_TAIL_HAIR,
+//   UNICORN_HAIR,
+//   EMPTY
+// }
+
+// final coreValues = EnumValues({
+//   "dragon heartstring": Core.DRAGON_HEARTSTRING,
+//   "": Core.EMPTY,
+//   "phoenix feather": Core.PHOENIX_FEATHER,
+//   "unicorn hair": Core.UNICORN_HAIR,
+//   "unicorn tail-hair": Core.UNICORN_TAIL_HAIR
+// });
+
+// enum Wood {
+//   HOLLY,
+//   VINE,
+//   WILLOW,
+//   HAWTHORN,
+//   FIR,
+//   ASH,
+//   EMPTY,
+//   OAK,
+//   CHERRY,
+//   YEW,
+//   CYPRESS,
+//   WALNUT,
+//   CEDAR,
+//   BIRCH,
+//   ELM,
+//   MAHOGANY,
+//   LARCH,
+//   CHESTNUT,
+//   HORNBEAM
+// }
+
+// final woodValues = EnumValues({
+//   "ash": Wood.ASH,
+//   "birch": Wood.BIRCH,
+//   "cedar": Wood.CEDAR,
+//   "cherry": Wood.CHERRY,
+//   "chestnut": Wood.CHESTNUT,
+//   "cypress": Wood.CYPRESS,
+//   "elm": Wood.ELM,
+//   "": Wood.EMPTY,
+//   "fir": Wood.FIR,
+//   "hawthorn": Wood.HAWTHORN,
+//   "holly": Wood.HOLLY,
+//   "hornbeam": Wood.HORNBEAM,
+//   "larch": Wood.LARCH,
+//   "mahogany": Wood.MAHOGANY,
+//   "oak": Wood.OAK,
+//   "vine": Wood.VINE,
+//   "walnut": Wood.WALNUT,
+//   "willow": Wood.WILLOW,
+//   "yew": Wood.YEW
+// });

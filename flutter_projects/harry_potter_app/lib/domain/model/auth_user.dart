@@ -47,6 +47,23 @@ class AuthUser {
             document.data()[favoriteSpellsFieldName] as List<dynamic>),
         favoriteSpecies = _convertToSpeciesList(
             document.data()[favoriteSpeciesFieldName] as List<dynamic>);
+
+  Map<String, dynamic> toMap() {
+    return {
+      idFirebaseFieldName: idFirestore,
+      emailFieldName: email,
+      isEmailVerifiedFieldName: isEmailVerified,
+      usernameFieldName: username,
+      favoriteBooksFieldName:
+          favoriteBooks.map((book) => book.toMap()).toList(),
+      favoriteCharactersFieldName:
+          favoriteCharacters.map((character) => character.toMap()).toList(),
+      favoriteSpellsFieldName:
+          favoriteSpells.map((spell) => spell.toMap()).toList(),
+      favoriteSpeciesFieldName:
+          favoriteSpecies.map((species) => species.toMap()).toList(),
+    };
+  }
 }
 
 List<Book> _convertToBookList(List<dynamic> list) {

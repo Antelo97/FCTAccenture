@@ -25,17 +25,27 @@ class SpellRepository {
   }
 
   Future<List<Spell>> getSpellsFromCloudFirebase() async {
-    return await spellsCollection.get().then((snapshot) =>
-        snapshot.docs.map((doc) => Spell.fromDocument(doc)).toList());
+    final snapshot = await spellsCollection.get();
+    if (snapshot.docs.length >= 2) {
+      return snapshot.docs.map((doc) => Spell.fromDocument(doc)).toList();
+    } else {
+      return [];
+    }
   }
 
   Future<void> insertSpells() async {
-    final spells = await api.getSpells();
+    final spellsResponse = await api.getSpells();
+    final spells = spellsResponse!
+        .map((spellResponse) => Spell.fromResponse(spellResponse))
+        .toList();
     final batch = FirebaseFirestore.instance.batch();
 
-    for (var spell in spells!) {
-      final spellRef = FirebaseFirestore.instance.collection('spells').doc();
-      batch.set(spellRef, spell.toJson());
+    for (var spell in spells) {
+      final spellRef = spellsCollection.doc();
+      batch.set(
+        spellRef,
+        spell.toMap(),
+      );
     }
 
     await batch.commit();
