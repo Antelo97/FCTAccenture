@@ -18,12 +18,12 @@ class AuthCenter extends StatelessWidget {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.isLoading) {
-          LoadingScreen().show(
+          return LoadingScreen().show(
             context: context,
             text: state.loadingText ?? 'Plase wait a moment',
           );
         } else {
-          LoadingScreen().hide();
+          return LoadingScreen().hide();
         }
       },
       builder: (context, state) {

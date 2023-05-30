@@ -86,6 +86,9 @@ flutter:
     - family: Apple Days
       fonts:
         - asset: fonts/apple_days.ttf
+    - family: Apple Butter
+      fonts:
+        - asset: fonts/apple_butter.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

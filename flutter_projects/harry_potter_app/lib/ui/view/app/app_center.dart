@@ -24,7 +24,12 @@ class _AppCenterState extends State<AppCenter> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('username / correo'),
+        title: const Text(
+          'Antelo97',
+          style: TextStyle(
+            fontFamily: 'Apple Butter',
+          ),
+        ),
         backgroundColor: Colors.black,
         actions: [
           IconButton(
@@ -37,6 +42,204 @@ class _AppCenterState extends State<AppCenter> {
             },
           ),
         ],
+      ),
+      drawer: Drawer(
+        shape: const Border(right: BorderSide(width: 3)),
+        width: 300,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(width: 3),
+                ),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFF6A3A19),
+                    Color(0xFFB48A76),
+                  ],
+                ),
+              ),
+              child: Row(
+                children: [
+                  // Image.network(
+                  //   cacheHeight: 100,
+                  //   cacheWidth: 100,
+                  //   "https://cdn.icon-icons.com/icons2/2805/PNG/512/man_avatar_people_glasses_boy_icon_178891.png",
+                  // ),
+                  const Icon(
+                    Icons.account_circle,
+                    size: 60,
+                    color: Colors.black,
+                  ),
+                  const SizedBox(width: 12),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'Antelo97',
+                        style: TextStyle(
+                          fontFamily: 'Apple Butter',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                      SizedBox(height: 12),
+                      Text(
+                        'oscaran_97@hotmail.com',
+                        style: TextStyle(
+                          fontFamily: 'Apple Butter',
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            // Books
+            const SizedBox(
+              height: 12,
+            ),
+            ListTile(
+              title: const Text(
+                AppConstants.books,
+                style: TextStyle(
+                  fontFamily: 'Apple Butter',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1,
+                ),
+              ),
+              splashColor: Colors.amber,
+              subtitle: const Text(
+                'Go to the book list!',
+                style: TextStyle(
+                  fontFamily: 'Apple Butter',
+                  fontSize: 16,
+                  letterSpacing: 1,
+                ),
+              ),
+              leading: const Icon(
+                Icons.book_outlined,
+                size: 35,
+                color: Colors.black87,
+              ),
+              onTap: () {
+                context.read<AppBloc>().add(
+                      AppEventGoToBooks(),
+                    );
+                Navigator.pop(context);
+              },
+            ),
+            // Characters
+            getSizedBoxWithDivider(),
+            ListTile(
+              splashColor: Colors.amber,
+              subtitle: const Text(
+                'Go to the character list!',
+                style: TextStyle(
+                  fontFamily: 'Apple Butter',
+                  fontSize: 16,
+                  letterSpacing: 1,
+                ),
+              ),
+              leading: const Icon(
+                Icons.people_alt_outlined,
+                size: 35,
+                color: Colors.black87,
+              ),
+              title: const Text(
+                AppConstants.characters,
+                style: TextStyle(
+                  fontFamily: 'Apple Butter',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1,
+                ),
+              ),
+              onTap: () {
+                context.read<AppBloc>().add(
+                      AppEventGoToCharacters(),
+                    );
+                Navigator.pop(context);
+              },
+            ),
+            // Spell
+            getSizedBoxWithDivider(),
+            ListTile(
+              splashColor: Colors.amber,
+              subtitle: const Text(
+                'Go to the spell list!',
+                style: TextStyle(
+                  fontFamily: 'Apple Butter',
+                  fontSize: 16,
+                  letterSpacing: 1,
+                ),
+              ),
+              leading: const Icon(
+                Icons.thunderstorm_outlined,
+                size: 35,
+                color: Colors.black87,
+              ),
+              title: const Text(
+                AppConstants.spells,
+                style: TextStyle(
+                  fontFamily: 'Apple Butter',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1,
+                ),
+              ),
+              onTap: () {
+                context.read<AppBloc>().add(
+                      AppEventGoToSpells(),
+                    );
+                Navigator.pop(context);
+              },
+            ),
+            // Species
+            getSizedBoxWithDivider(),
+            ListTile(
+              splashColor: Colors.amber,
+              subtitle: const Text(
+                'Go to the species list!',
+                style: TextStyle(
+                  fontFamily: 'Apple Butter',
+                  fontSize: 16,
+                  letterSpacing: 1,
+                ),
+              ),
+              leading: const Icon(
+                Icons.forest_outlined,
+                size: 35,
+                color: Colors.black87,
+              ),
+              title: const Text(
+                AppConstants.species,
+                style: TextStyle(
+                  fontFamily: 'Apple Butter',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1,
+                ),
+              ),
+              onTap: () {
+                context.read<AppBloc>().add(
+                      AppEventGoToSpecies(),
+                    );
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
       body: BlocConsumer<AppBloc, AppState>(
         listener: (context, state) {
@@ -76,31 +279,22 @@ class _AppCenterState extends State<AppCenter> {
                       AppEventGoToSpells(),
                     );
                 break;
-              case 3:
-                context.read<AppBloc>().add(
-                      AppEventGoToSpecies(),
-                    );
-                break;
             }
           });
         },
         currentIndex: _currentIndex,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.book_outlined, size: 30),
-            label: AppConstants.books,
+            icon: Icon(Icons.star, size: 30),
+            label: AppConstants.favorites,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.people_alt_outlined, size: 30),
-            label: AppConstants.characters,
+            icon: Icon(Icons.search, size: 30),
+            label: AppConstants.search,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.thunderstorm_outlined, size: 30),
-            label: AppConstants.spells,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.forest_outlined, size: 30),
-            label: AppConstants.spells,
+            icon: Icon(Icons.note, size: 30),
+            label: AppConstants.featured,
           ),
         ],
         type: BottomNavigationBarType.fixed,
@@ -112,4 +306,16 @@ class _AppCenterState extends State<AppCenter> {
       ),
     );
   }
+}
+
+Widget getSizedBoxWithDivider() {
+  return const SizedBox(
+    height: 12,
+    child: Divider(
+      color: Colors.black38,
+      thickness: 1.5,
+      indent: 50,
+      endIndent: 50,
+    ),
+  );
 }

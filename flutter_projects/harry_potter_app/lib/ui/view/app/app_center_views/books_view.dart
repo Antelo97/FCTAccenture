@@ -13,9 +13,13 @@ class BooksView extends StatefulWidget {
 class _BooksViewState extends State<BooksView> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: const Text(AppConstants.books),
+    return Stack(
+      children: [
+        Container(
+          color: Colors.blue,
+          child: const Text(AppConstants.books),
+        ),
+      ],
     );
   }
 }
