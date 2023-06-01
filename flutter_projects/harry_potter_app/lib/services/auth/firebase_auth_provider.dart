@@ -52,9 +52,7 @@ class FirebaseAuthProvider implements AuthProvider {
       final user = userCredential.user;
 
       if (user != null) {
-        print('Step 1.1: Pre-insert');
         final authUser = AuthUser.fromFirebase(user, username);
-        print('Step 1.1.1: Pre-insert');
         return await authUserRepository.insertUser(authUser);
       } else {
         throw UserNotLoggedInAuthException();
@@ -67,12 +65,9 @@ class FirebaseAuthProvider implements AuthProvider {
       } else if (e.code == 'invalid-email') {
         throw InvalidEmailAuthException();
       } else {
-        print('Step 1.2: GExc');
         throw GenericAuthException();
       }
     } catch (e) {
-      print(e.toString());
-      print('Step 1.3: GExc');
       throw GenericAuthException();
     }
   }

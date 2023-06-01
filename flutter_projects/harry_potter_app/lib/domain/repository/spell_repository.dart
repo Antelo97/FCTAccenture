@@ -49,6 +49,7 @@ class SpellRepository {
     }
 
     await batch.commit();
+    deleteDefaultEmptyDocument();
   }
 
   Future<void> deleteSpells() async {
@@ -95,5 +96,17 @@ class SpellRepository {
     spells.sort(
         (oneSpell, anotherSpell) => anotherSpell.name.compareTo(oneSpell.name));
     return spells;
+  }
+
+  void deleteDefaultEmptyDocument() async {
+    final snapshot = await spellsCollection.get();
+
+    for (var doc in snapshot.docs) {
+      final data = doc.data();
+
+      if (data.isEmpty) {
+        await doc.reference.delete();
+      }
+    }
   }
 }

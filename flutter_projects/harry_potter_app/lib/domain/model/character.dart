@@ -49,7 +49,8 @@ class Character {
         yearOfBirth = document.data()[yearOfBirthFieldName] as int?,
         isWizard = document.data()[isWizardFieldName] as bool,
         ancestry = document.data()[ancestryFieldName] as String,
-        wand = document.data()[wandFieldName] as Wand,
+        wand = _convertToWand(
+            document.data()[wandFieldName] as Map<String, dynamic>),
         patronus = document.data()[patronusFieldName] as String,
         isHogwartsStudent = document.data()[isHogwartsStudentFieldName] as bool,
         isHogwartsStaff = document.data()[isHogwartsStaffFieldName] as bool,
@@ -110,6 +111,10 @@ class Character {
       imageUrlFieldName: imageUrl,
     };
   }
+}
+
+Wand _convertToWand(Map<String, dynamic> wand) {
+  return Wand.fromJson(wand);
 }
 
 String getImageUrl(String imageUrl) {

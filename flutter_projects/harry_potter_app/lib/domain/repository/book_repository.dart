@@ -12,10 +12,7 @@ class BookRepository {
   factory BookRepository() => _shared;
 
   Future<List<Book>> loadBooksFromApi() async {
-    print('doneuwu00');
-
     final books = await getBooksFromCloudFirebase();
-    print('doneuwu01');
 
     if (books.isEmpty) {
       insertBooks();
@@ -60,6 +57,7 @@ class BookRepository {
     }
 
     await batch.commit();
+    deleteDefaultEmptyDocument();
   }
 
   Future<void> deleteBooks() async {
@@ -108,5 +106,17 @@ class BookRepository {
     books.sort(
         (oneBook, anotherBook) => anotherBook.title.compareTo(oneBook.title));
     return books;
+  }
+
+  void deleteDefaultEmptyDocument() async {
+    final snapshot = await booksCollection.get();
+
+    for (var doc in snapshot.docs) {
+      final data = doc.data();
+
+      if (data.isEmpty) {
+        await doc.reference.delete();
+      }
+    }
   }
 }

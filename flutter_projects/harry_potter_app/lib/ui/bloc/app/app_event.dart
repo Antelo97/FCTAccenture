@@ -1,20 +1,24 @@
-import 'package:flutter/foundation.dart' show immutable;
-
-@immutable
 abstract class AppEvent {
   const AppEvent();
 }
 
-class AppEventGoToBooks extends AppEvent {}
+// items_view.dart
+class AppEventGoToItems extends AppEvent {
+  final String categoryName;
+  AppEventGoToItems({required this.categoryName});
+}
 
-class AppEventGoToCharacters extends AppEvent {}
+// ---
+class AppEventGoToFavorites extends AppEvent {
+  const AppEventGoToFavorites();
+}
 
-class AppEventGoToSpells extends AppEvent {}
+// ---
+class AppEventGoToSearch extends AppEvent {
+  const AppEventGoToSearch();
+}
 
-class AppEventGoToSpecies extends AppEvent {}
-
-class AppEventGoToFavorites extends AppEvent {}
-
-class AppEventGoToSearch extends AppEvent {}
-
-class AppEventGoToFeature extends AppEvent {}
+// ---
+class AppEventGoToFeature extends AppEvent {
+  const AppEventGoToFeature();
+}

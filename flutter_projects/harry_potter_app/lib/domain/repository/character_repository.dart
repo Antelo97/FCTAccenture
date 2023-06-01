@@ -51,6 +51,7 @@ class CharacterRepository {
     }
 
     await batch.commit();
+    deleteDefaultEmptyDocument();
   }
 
   Future<void> deleteCharacters() async {
@@ -108,5 +109,17 @@ class CharacterRepository {
     characters.sort((oneCharacter, anotherCharacter) =>
         anotherCharacter.name.compareTo(oneCharacter.name));
     return characters;
+  }
+
+  void deleteDefaultEmptyDocument() async {
+    final snapshot = await charactersCollection.get();
+
+    for (var doc in snapshot.docs) {
+      final data = doc.data();
+
+      if (data.isEmpty) {
+        await doc.reference.delete();
+      }
+    }
   }
 }

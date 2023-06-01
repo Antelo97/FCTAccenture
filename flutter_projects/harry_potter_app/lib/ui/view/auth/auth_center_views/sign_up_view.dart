@@ -46,7 +46,6 @@ class _SignUpViewState extends State<SignUpView> {
           } else if (state.exception is InvalidEmailAuthException) {
             await showErrorDialog(context, 'Invalid email');
           } else if (state.exception is GenericAuthException) {
-            print('Step 6: Confirm exception');
             await showErrorDialog(context, 'Failed to register');
           }
         }

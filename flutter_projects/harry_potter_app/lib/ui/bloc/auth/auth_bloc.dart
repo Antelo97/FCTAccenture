@@ -46,7 +46,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
-      print('Step: null');
       emit(
         const AuthStateOnSignIn(
           exception: null,
@@ -54,21 +53,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ),
       );
     } else if (!user.emailVerified) {
-      print('Email: ${user.emailVerified}');
-
       emit(
         const AuthStateOnVerifyEmail(isLoading: false),
       );
     } else {
       // Sabemos que el usuario nunca va a ser nulo porque al registranos ya lo hemos insertado en Cloud Firestore
       final authUser = await authProvider.currentUserFromCloudFirestore;
-      print('doneemailllllll');
 
       // Cargamos toda la información de la API en Cloud Firestore
       await bookRepository.loadBooksFromApi();
-      print('donebooks');
       await characterRepository.loadCharactersFromApi();
-      print('donecharacters');
       await spellRepository.loadSpellsFromApi();
       await speciesRepository.loadSpeciesFromApi();
 
@@ -109,7 +103,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         const AuthStateOnVerifyEmail(isLoading: false),
       );
     } on Exception catch (e) {
-      print('Step 5: Exception');
       emit(
         AuthStateOnSignUp(
           exception: e,

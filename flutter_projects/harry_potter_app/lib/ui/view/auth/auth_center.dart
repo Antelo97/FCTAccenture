@@ -38,7 +38,6 @@ class AuthCenter extends StatelessWidget {
         } else if (state is AuthStateOnSignUp) {
           return const SignUpView();
         } else {
-          print('doneeeeeeeee');
           return const Scaffold(
             body: CircularProgressIndicator(),
           );

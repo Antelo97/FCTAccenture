@@ -49,6 +49,7 @@ class SpeciesRepository {
     }
 
     await batch.commit();
+    deleteDefaultEmptyDocument();
   }
 
   Future<void> deleteSpecies() async {
@@ -95,5 +96,17 @@ class SpeciesRepository {
     species.sort((oneSpecies, anotherSpecies) =>
         anotherSpecies.name.compareTo(oneSpecies.name));
     return species;
+  }
+
+  void deleteDefaultEmptyDocument() async {
+    final snapshot = await speciesCollection.get();
+
+    for (var doc in snapshot.docs) {
+      final data = doc.data();
+
+      if (data.isEmpty) {
+        await doc.reference.delete();
+      }
+    }
   }
 }

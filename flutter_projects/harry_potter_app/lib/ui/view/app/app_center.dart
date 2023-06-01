@@ -3,13 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harry_potter_app/ui/bloc/app/app_bloc.dart';
 import 'package:harry_potter_app/ui/bloc/app/app_event.dart';
 import 'package:harry_potter_app/ui/bloc/app/app_state.dart';
-import 'package:harry_potter_app/ui/view/app/app_center_views/books_view.dart';
-import 'package:harry_potter_app/ui/view/app/app_center_views/characters_view.dart';
-import 'package:harry_potter_app/ui/view/app/app_center_views/species_view.dart';
-import 'package:harry_potter_app/ui/view/app/app_center_views/spells_view.dart';
+import 'package:harry_potter_app/ui/view/app/app_center_views/items_view.dart';
 import 'package:harry_potter_app/ui/view/app/app_center_views/welcome_view.dart';
 
-import 'constants_app_view.dart';
+import 'app_constants.dart';
 
 class AppCenter extends StatefulWidget {
   const AppCenter({super.key});
@@ -165,26 +162,14 @@ class _AppCenterState extends State<AppCenter> {
           BlocConsumer<AppBloc, AppState>(
             listener: (context, state) {
               setState(() {
-                if (state is AppStateOnBooksView) {
-                  _appBarTitle = AppConstants.books;
-                } else if (state is AppStateOnCharactersView) {
-                  _appBarTitle = AppConstants.characters;
-                } else if (state is AppStateOnSpellsView) {
-                  _appBarTitle = AppConstants.spells;
-                } else if (state is AppStateOnSpeciesView) {
-                  _appBarTitle = AppConstants.species;
+                if (state is AppStateNavigate) {
+                  _appBarTitle = state.appBarTitle;
                 }
               });
             },
             builder: (context, state) {
-              if (state is AppStateOnBooksView) {
-                return const BooksView();
-              } else if (state is AppStateOnCharactersView) {
-                return const CharactersView();
-              } else if (state is AppStateOnSpellsView) {
-                return const SpellsView();
-              } else if (state is AppStateOnSpeciesView) {
-                return const SpeciesView();
+              if (state is AppStateOnItemsView) {
+                return ItemsView(state: state);
               } else {
                 return const WelcomeView();
               }
@@ -198,22 +183,13 @@ class _AppCenterState extends State<AppCenter> {
             _currentIndex = index;
             switch (_currentIndex) {
               case 0:
-                // context.read<AppBloc>().add(
-                //       AppEventGoToFavorites(),
-                //     );
-                _appBarTitle = '';
+                context.read<AppBloc>().add(const AppEventGoToFavorites());
                 break;
               case 1:
-                // context.read<AppBloc>().add(
-                //       AppEventGoToSearch(),
-                //     );
-                _appBarTitle = '';
+                context.read<AppBloc>().add(const AppEventGoToSearch());
                 break;
               case 2:
-                // context.read<AppBloc>().add(
-                //       AppEventGoToFeature(),
-                //     );
-                _appBarTitle = '';
+                context.read<AppBloc>().add(const AppEventGoToFeature());
                 break;
             }
           });
@@ -274,25 +250,25 @@ Widget getListTile(
       switch (title) {
         case AppConstants.books:
           context.read<AppBloc>().add(
-                AppEventGoToBooks(),
+                AppEventGoToItems(categoryName: title),
               );
           waitBeforeMoving(context);
           break;
         case AppConstants.characters:
           context.read<AppBloc>().add(
-                AppEventGoToCharacters(),
+                AppEventGoToItems(categoryName: title),
               );
           waitBeforeMoving(context);
           break;
         case AppConstants.spells:
           context.read<AppBloc>().add(
-                AppEventGoToSpells(),
+                AppEventGoToItems(categoryName: title),
               );
           waitBeforeMoving(context);
           break;
         case AppConstants.species:
           context.read<AppBloc>().add(
-                AppEventGoToSpecies(),
+                AppEventGoToItems(categoryName: title),
               );
           waitBeforeMoving(context);
           break;

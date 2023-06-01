@@ -21,6 +21,7 @@ class AuthUserRepository {
 
   Future<AuthUser> insertUser(AuthUser authUser) async {
     await usersCollection.add(authUser.toMap());
+    deleteDefaultEmptyDocument();
 
     // user.uid --> Atributo del usuario interno de Firestore, lo almaceno en la colección en el campo id_firestore
     // userRef.id --> Es la referencia que tiene un documento dentro de la colección en Firebase (también es una String)
@@ -58,5 +59,17 @@ class AuthUserRepository {
 
   Future<void> deleteUser(String idDocument) async {
     await usersCollection.doc(idDocument).delete();
+  }
+
+  void deleteDefaultEmptyDocument() async {
+    final snapshot = await usersCollection.get();
+
+    for (var doc in snapshot.docs) {
+      final data = doc.data();
+
+      if (data.isEmpty) {
+        await doc.reference.delete();
+      }
+    }
   }
 }

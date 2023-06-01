@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harry_potter_app/ui/view/app/app_constants.dart';
 
 class WelcomeView extends StatefulWidget {
   const WelcomeView({super.key});
@@ -13,7 +14,7 @@ class _WelcomeViewState extends State<WelcomeView> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
+          padding: const EdgeInsets.fromLTRB(35, 75, 35, 0),
           child: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -26,9 +27,9 @@ class _WelcomeViewState extends State<WelcomeView> {
         const Align(
           alignment: Alignment.topCenter,
           child: Padding(
-            padding: EdgeInsets.only(top: 100),
+            padding: EdgeInsets.only(top: 90),
             child: Text(
-              'Welcome!',
+              AppConstants.welcome,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Apple Days',
