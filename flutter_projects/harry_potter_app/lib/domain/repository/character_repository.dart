@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/network/api/character_service.dart';
@@ -66,13 +68,11 @@ class CharacterRepository {
   }
 
   Future<List<Character>> searchCharactersByName(String searchQuery) async {
-    return await charactersCollection
-        .where(nameFieldName, isGreaterThanOrEqualTo: searchQuery.toLowerCase())
-        .where(nameFieldName,
-            isLessThanOrEqualTo: '${searchQuery.toLowerCase()}\uf8ff')
-        .get()
-        .then((snapshot) =>
-            snapshot.docs.map((doc) => Character.fromDocument(doc)).toList());
+    return await charactersCollection.get().then((snapshot) => snapshot.docs
+        .map((doc) => Character.fromDocument(doc))
+        .where((character) =>
+            character.name.toLowerCase().contains(searchQuery.toLowerCase()))
+        .toList());
   }
 
   Future<void> updateCharacter(Character character) async {
@@ -97,6 +97,15 @@ class CharacterRepository {
     } catch (e) {
       // CouldNotUpdateNoteException();
     }
+  }
+
+  Future<List<Character>> getRandomCharacter() async {
+    final characters = await getCharactersFromCloudFirebase();
+    final rndm = Random();
+    Character rndmCharacter = characters[rndm.nextInt(characters.length)];
+    characters.clear();
+    characters.add(rndmCharacter);
+    return characters;
   }
 
   List<Character> sortCharactersByNameAsc(List<Character> characters) {

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class AppConstants {
   // Books
   static const String books = "Books";
@@ -27,6 +25,12 @@ class AppConstants {
   static const String favorites = 'Favorites';
   static const String search = 'Search';
   static const String featured = 'Featured';
+  static const String fav = 'FAV';
+  static const String all = 'ALL';
+  static const String rndm = 'RNDM';
+  static const String az = 'A-Z';
+  static const String za = 'Z-A';
+  static const String noResultsFound = 'No results found...';
 
   // Iconos
 }

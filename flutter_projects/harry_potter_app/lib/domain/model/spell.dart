@@ -17,6 +17,11 @@ class Spell {
     required this.imageUrl,
   });
 
+  @override
+  bool operator ==(covariant Spell other) => idApiSpell == other.idApiSpell;
+  @override
+  int get hashCode => idApiSpell.hashCode;
+
   Spell.fromDocument(QueryDocumentSnapshot<Map<String, dynamic>> document)
       : idDocument = document.id,
         idApiSpell = document.data()[idApiSpellFieldName] as String,

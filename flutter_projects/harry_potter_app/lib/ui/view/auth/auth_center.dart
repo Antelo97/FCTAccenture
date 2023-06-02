@@ -28,7 +28,7 @@ class AuthCenter extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is AuthStateSignedIn) {
-          return const AppCenter();
+          return AppCenter(authUser: state.user);
         } else if (state is AuthStateOnVerifyEmail) {
           return const VerifyEmailView();
         } else if (state is AuthStateOnSignIn) {

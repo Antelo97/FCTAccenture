@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/network/api/book_service.dart';
@@ -72,14 +74,11 @@ class BookRepository {
   }
 
   Future<List<Book>> searchBooksByTitle(String searchQuery) async {
-    return await booksCollection
-        .where(titleFieldName,
-            isGreaterThanOrEqualTo: searchQuery.toLowerCase())
-        .where(titleFieldName,
-            isLessThanOrEqualTo: '${searchQuery.toLowerCase()}\uf8ff')
-        .get()
-        .then((snapshot) =>
-            snapshot.docs.map((doc) => Book.fromDocument(doc)).toList());
+    return await booksCollection.get().then((snapshot) => snapshot.docs
+        .map((doc) => Book.fromDocument(doc))
+        .where((book) =>
+            book.title.toLowerCase().contains(searchQuery.toLowerCase()))
+        .toList());
   }
 
   Future<void> updateBook(Book book) async {
@@ -94,6 +93,15 @@ class BookRepository {
     } catch (e) {
       // CouldNotUpdateNoteException();
     }
+  }
+
+  Future<List<Book>> getRandomBook() async {
+    final books = await getBooksFromCloudFirebase();
+    final rndm = Random();
+    Book rndmBook = books[rndm.nextInt(books.length)];
+    books.clear();
+    books.add(rndmBook);
+    return books;
   }
 
   List<Book> sortBooksByTitleAsc(List<Book> books) {

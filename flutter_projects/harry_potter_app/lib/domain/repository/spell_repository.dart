@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/network/api/spell_service.dart';
@@ -64,13 +66,11 @@ class SpellRepository {
   }
 
   Future<List<Spell>> searchSpellsByName(String searchQuery) async {
-    return await spellsCollection
-        .where(nameFieldName, isGreaterThanOrEqualTo: searchQuery.toLowerCase())
-        .where(nameFieldName,
-            isLessThanOrEqualTo: '${searchQuery.toLowerCase()}\uf8ff')
-        .get()
-        .then((snapshot) =>
-            snapshot.docs.map((doc) => Spell.fromDocument(doc)).toList());
+    return await spellsCollection.get().then((snapshot) => snapshot.docs
+        .map((doc) => Spell.fromDocument(doc))
+        .where((spell) =>
+            spell.name.toLowerCase().contains(searchQuery.toLowerCase()))
+        .toList());
   }
 
   Future<void> updateSpells(Spell spell) async {
@@ -84,6 +84,15 @@ class SpellRepository {
     } catch (e) {
       // CouldNotUpdateNoteException();
     }
+  }
+
+  Future<List<Spell>> getRandomSpell() async {
+    final characters = await getSpellsFromCloudFirebase();
+    final rndm = Random();
+    Spell rndmSpell = characters[rndm.nextInt(characters.length)];
+    characters.clear();
+    characters.add(rndmSpell);
+    return characters;
   }
 
   List<Spell> sortSpellsByNameAsc(List<Spell> spells) {

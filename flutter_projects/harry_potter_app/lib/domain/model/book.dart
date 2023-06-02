@@ -19,6 +19,14 @@ class Book {
     required this.releaseDate,
   });
 
+  // Definimos la correcta implementación del operador '==' para que funcione el
+  // método contains que utilizaremos en el Repository para comprobar si
+  // en el listado de favoritos se encuentra un item concreto
+  @override
+  bool operator ==(covariant Book other) => idApiBook == other.idApiBook;
+  @override
+  int get hashCode => idApiBook.hashCode;
+
   Book.fromDocument(QueryDocumentSnapshot<Map<String, dynamic>> document)
       : idDocument = document.id,
         idApiBook = document.data()[idApiBookFieldName] as int,

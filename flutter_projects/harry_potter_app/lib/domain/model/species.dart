@@ -17,6 +17,12 @@ class Species {
     required this.imageUrl,
   });
 
+  @override
+  bool operator ==(covariant Species other) =>
+      idApiSpecies == other.idApiSpecies;
+  @override
+  int get hashCode => idApiSpecies.hashCode;
+
   Species.fromDocument(QueryDocumentSnapshot<Map<String, dynamic>> document)
       : idDocument = document.id,
         idApiSpecies = document.data()[idApiSpeciesFieldName] as int,

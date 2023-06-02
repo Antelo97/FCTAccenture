@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:harry_potter_app/domain/model/auth_user.dart';
 import 'package:harry_potter_app/ui/bloc/app/app_bloc.dart';
 import 'package:harry_potter_app/ui/bloc/app/app_event.dart';
 import 'package:harry_potter_app/ui/bloc/app/app_state.dart';
@@ -9,7 +10,11 @@ import 'package:harry_potter_app/ui/view/app/app_center_views/welcome_view.dart'
 import 'app_constants.dart';
 
 class AppCenter extends StatefulWidget {
-  const AppCenter({super.key});
+  final AuthUser authUser;
+  const AppCenter({
+    required this.authUser,
+    super.key,
+  });
 
   @override
   State<AppCenter> createState() => _AppCenterState();
@@ -83,20 +88,20 @@ class _AppCenterState extends State<AppCenter> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
-                        'Antelo97',
-                        style: TextStyle(
+                        AuthUser.instance.username,
+                        style: const TextStyle(
                           fontFamily: 'Apple Butter',
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 1,
                         ),
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       Text(
-                        'oscaran_97@hotmail.com',
-                        style: TextStyle(
+                        AuthUser.instance.email,
+                        style: const TextStyle(
                           fontFamily: 'Apple Butter',
                           fontSize: 16,
                           fontStyle: FontStyle.italic,
@@ -162,9 +167,7 @@ class _AppCenterState extends State<AppCenter> {
           BlocConsumer<AppBloc, AppState>(
             listener: (context, state) {
               setState(() {
-                if (state is AppStateNavigate) {
-                  _appBarTitle = state.appBarTitle;
-                }
+                _appBarTitle = state.appBarTitle;
               });
             },
             builder: (context, state) {

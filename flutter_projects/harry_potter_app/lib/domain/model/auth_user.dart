@@ -8,15 +8,23 @@ import 'species.dart';
 import 'spell.dart';
 
 class AuthUser {
-  String idDocument = '';
-  final String idFirestore;
-  final String email;
-  bool isEmailVerified;
-  final String username;
-  List<Book> favoriteBooks = [];
-  List<Character> favoriteCharacters = [];
-  List<Spell> favoriteSpells = [];
-  List<Species> favoriteSpecies = [];
+  late String idDocument;
+  late String idFirestore;
+  late String email;
+  late bool isEmailVerified;
+  late String username;
+  late List<Book> favoriteBooks = [];
+  late List<Character> favoriteCharacters = [];
+  late List<Spell> favoriteSpells = [];
+  late List<Species> favoriteSpecies = [];
+
+  AuthUser._sharedInstance();
+  static AuthUser _authUser = AuthUser._sharedInstance();
+  static AuthUser get instance => _authUser;
+
+  static void initializeSingleton(AuthUser authUser) {
+    _authUser = authUser;
+  }
 
   // 1. ( ) --> Parámetros obligatorios, sin nombres
   // 2. {( )} --> Permite añadir parámetros opcionales, con nombres
@@ -96,3 +104,18 @@ List<Species> _convertToSpeciesList(List<dynamic> list) {
 //       email: user.email!,
 //       isEmailVerified: user.emailVerified,
 //     );
+
+class AuthUserSingleton {
+  late AuthUser _authUser;
+  AuthUserSingleton();
+
+  AuthUserSingleton._sharedInstance();
+  static final AuthUserSingleton _appUser = AuthUserSingleton._sharedInstance();
+  static AuthUserSingleton get instance => _appUser;
+
+  void initialize(AuthUser authUser) {
+    _authUser = authUser;
+  }
+
+  AuthUser get authUser => _authUser;
+}

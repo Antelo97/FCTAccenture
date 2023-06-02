@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:harry_potter_app/domain/model/auth_user.dart';
 import 'package:harry_potter_app/domain/repository/species_repository.dart';
 import 'package:harry_potter_app/domain/repository/spell_repository.dart';
 import 'package:harry_potter_app/domain/repository/book_repository.dart';
@@ -66,9 +67,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await spellRepository.loadSpellsFromApi();
       await speciesRepository.loadSpeciesFromApi();
 
+      // Creamos el Singleton del AuthUser para poder tener acceso global a esa única instancia
+      AuthUser.initializeSingleton(authUser!);
+
       emit(
         AuthStateSignedIn(
-          user: authUser!,
+          user: authUser,
           isLoading: false,
         ),
       );

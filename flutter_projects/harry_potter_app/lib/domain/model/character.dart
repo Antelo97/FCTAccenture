@@ -39,6 +39,12 @@ class Character {
     required this.imageUrl,
   });
 
+  @override
+  bool operator ==(covariant Character other) =>
+      idApiCharacter == other.idApiCharacter;
+  @override
+  int get hashCode => idApiCharacter.hashCode;
+
   Character.fromDocument(QueryDocumentSnapshot<Map<String, dynamic>> document)
       : idDocument = document.id,
         idApiCharacter = document.data()[idApiCharacterFieldName] as String,

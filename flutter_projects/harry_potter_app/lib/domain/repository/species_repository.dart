@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:harry_potter_app/data/cloud_firebase_db/cloud_constants.dart';
 import 'package:harry_potter_app/data/network/api/species_service.dart';
@@ -64,13 +66,11 @@ class SpeciesRepository {
   }
 
   Future<List<Species>> searchSpeciesByName(String searchQuery) async {
-    return await speciesCollection
-        .where(nameFieldName, isGreaterThanOrEqualTo: searchQuery.toLowerCase())
-        .where(nameFieldName,
-            isLessThanOrEqualTo: '${searchQuery.toLowerCase()}\uf8ff')
-        .get()
-        .then((snapshot) =>
-            snapshot.docs.map((doc) => Species.fromDocument(doc)).toList());
+    return await speciesCollection.get().then((snapshot) => snapshot.docs
+        .map((doc) => Species.fromDocument(doc))
+        .where((species) =>
+            species.name.toLowerCase().contains(searchQuery.toLowerCase()))
+        .toList());
   }
 
   Future<void> updateSpecies(Species species) async {
@@ -84,6 +84,15 @@ class SpeciesRepository {
     } catch (e) {
       // CouldNotUpdateNoteException();
     }
+  }
+
+  Future<List<Species>> getRandomSpecies() async {
+    final species = await getSpeciesFromCloudFirebase();
+    final rndm = Random();
+    Species rndmSpecies = species[rndm.nextInt(species.length)];
+    species.clear();
+    species.add(rndmSpecies);
+    return species;
   }
 
   List<Species> sortSpeciesByNameAsc(List<Species> species) {
