@@ -8,7 +8,6 @@ import 'package:harry_potter_app/domain/model/book.dart';
 import 'package:harry_potter_app/domain/model/character.dart';
 import 'package:harry_potter_app/domain/model/species.dart';
 import 'package:harry_potter_app/domain/model/spell.dart';
-import 'package:harry_potter_app/domain/repository/auth_user_repository.dart';
 import 'package:harry_potter_app/ui/bloc/app/app_bloc.dart';
 import 'package:harry_potter_app/ui/bloc/app/app_event.dart';
 import 'package:harry_potter_app/ui/bloc/app/app_state.dart';
@@ -37,6 +36,7 @@ class _ItemsViewState extends State<ItemsView> {
   List<dynamic> _listOfItems = [];
   String _hintTextSearch = '';
   Icon _iconSearch = const Icon(Icons.abc);
+  late List<bool> _isExpandedList;
   //late int _totalResults = _listOfItems.length;
 
   final StreamController _streamController = StreamController<List<dynamic>>();
@@ -51,6 +51,7 @@ class _ItemsViewState extends State<ItemsView> {
     _listOfItems = widget.state.listOfItems;
     _searchController = TextEditingController();
     _streamAuthUserForFavs = widget.state.streamAuthUser;
+    _isExpandedList = List.generate(_listOfItems.length, (index) => false);
     super.initState();
   }
 
@@ -69,6 +70,8 @@ class _ItemsViewState extends State<ItemsView> {
           _hintTextSearch = state.hintTextSearch;
           _iconSearch = state.iconSearch;
           _listOfItems = state.listOfItems;
+          _isExpandedList =
+              List.generate(_listOfItems.length, (index) => false);
           //_totalResults = state.listOfItems.length;
         }
       },
@@ -238,7 +241,7 @@ class _ItemsViewState extends State<ItemsView> {
             controller: _scrollController,
             itemCount: listOfItems.length,
             itemBuilder: (context, index) {
-              bool v = false;
+              late bool isShow;
               final item = listOfItems.elementAt(index);
               String title = '';
               String details = '';
@@ -315,7 +318,7 @@ class _ItemsViewState extends State<ItemsView> {
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: ExpansionTile(
-                          initiallyExpanded: false,
+                          initiallyExpanded: _isExpandedList[index],
                           tilePadding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
                           childrenPadding:
                               const EdgeInsets.fromLTRB(12, 0, 12, 16),
@@ -324,66 +327,103 @@ class _ItemsViewState extends State<ItemsView> {
                           backgroundColor: Colors.brown,
                           collapsedBackgroundColor:
                               Colors.brown.withOpacity(0.85),
-                          leading: IconButton(
-                            icon: StreamBuilder<AuthUser>(
-                                stream: _streamAuthUserForFavs,
-                                builder: (context, snapshot) {
-                                  final bool isFav;
-                                  switch (widget.state.appBarTitle) {
-                                    case AppConstants.books:
-                                      if (snapshot.hasData) {
-                                        final books =
-                                            snapshot.data!.favoriteBooks;
-                                        if (books.contains(item)) {
-                                          isFav = true;
+                          leading: Padding(
+                            padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                            child: IconButton(
+                              icon: StreamBuilder<AuthUser>(
+                                  stream: _streamAuthUserForFavs,
+                                  builder: (context, snapshot) {
+                                    final bool isFav;
+                                    switch (widget.state.appBarTitle) {
+                                      case AppConstants.books:
+                                        if (snapshot.hasData) {
+                                          final books =
+                                              snapshot.data!.favoriteBooks;
+                                          if (books.contains(item)) {
+                                            isFav = true;
+                                          } else {
+                                            isFav = false;
+                                          }
                                         } else {
                                           isFav = false;
                                         }
-                                      } else {
+                                        break;
+                                      case AppConstants.characters:
+                                        if (snapshot.hasData) {
+                                          final characters =
+                                              snapshot.data!.favoriteCharacters;
+                                          if (characters.contains(item)) {
+                                            isFav = true;
+                                          } else {
+                                            isFav = false;
+                                          }
+                                        } else {
+                                          isFav = false;
+                                        }
+                                        break;
+                                      case AppConstants.spells:
+                                        if (snapshot.hasData) {
+                                          final spells =
+                                              snapshot.data!.favoriteSpells;
+                                          if (spells.contains(item)) {
+                                            isFav = true;
+                                          } else {
+                                            isFav = false;
+                                          }
+                                        } else {
+                                          isFav = false;
+                                        }
+                                        break;
+                                      case AppConstants.species:
+                                        if (snapshot.hasData) {
+                                          final species =
+                                              snapshot.data!.favoriteSpecies;
+                                          if (species.contains(item)) {
+                                            isFav = true;
+                                          } else {
+                                            isFav = false;
+                                          }
+                                        } else {
+                                          isFav = false;
+                                        }
+                                        break;
+                                      default:
                                         isFav = false;
-                                      }
-                                      break;
-                                    case AppConstants.characters:
-                                      final characters =
-                                          snapshot.data!.favoriteCharacters;
-                                      if (characters.contains(item)) {
-                                        isFav = true;
-                                      } else {
-                                        isFav = false;
-                                      }
-                                      break;
-                                    case AppConstants.spells:
-                                      final spells =
-                                          snapshot.data!.favoriteSpells;
-                                      if (spells.contains(item)) {
-                                        isFav = true;
-                                      } else {
-                                        isFav = false;
-                                      }
-                                      break;
-                                    case AppConstants.species:
-                                      final species =
-                                          snapshot.data!.favoriteSpecies;
-                                      if (species.contains(item)) {
-                                        isFav = true;
-                                      } else {
-                                        isFav = false;
-                                      }
-                                      break;
-                                    default:
-                                      isFav = false;
-                                  }
-                                  return Icon(
-                                    isFav ? Icons.star : Icons.star_border,
-                                    color: Colors.amber,
-                                    size: 30,
-                                  );
-                                }),
-                            onPressed: () async {
-                              context
-                                  .read<AppBloc>()
-                                  .add(AppEventAddOrRemoveFavItem(item: item));
-                            },
+                                    }
+                                    return ShaderMask(
+                                      blendMode: BlendMode.srcATop,
+                                      shaderCallback: (bounds) {
+                                        return const LinearGradient(
+                                          colors: [
+                                            Colors.amber,
+                                            Colors.amber,
+                                            Colors.yellow,
+                                            Colors.amber,
+                                            Colors.amber,
+                                          ],
+                                          tileMode: TileMode.mirror,
+                                        ).createShader(bounds);
+                                      },
+                                      child: Icon(
+                                        isFav ? Icons.star : Icons.star_border,
+                                        size: 34,
+                                        shadows: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.75),
+                                            spreadRadius: 2,
+                                            blurRadius: 8,
+                                            offset: const Offset(0, 0),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                              onPressed: () async {
+                                context.read<AppBloc>().add(
+                                    AppEventAddOrRemoveFavItem(item: item));
+                              },
+                            ),
                           ),
                           title: Text(
                             title,
@@ -395,7 +435,7 @@ class _ItemsViewState extends State<ItemsView> {
                               color: Colors.black,
                             ),
                           ),
-                          subtitle: !v
+                          subtitle: _isExpandedList[index]
                               ? const Padding(
                                   padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
                                   child: Text('(tap to details)',
@@ -411,8 +451,7 @@ class _ItemsViewState extends State<ItemsView> {
                               : null,
                           onExpansionChanged: (value) {
                             setState(() {
-                              isExpanded = !isExpanded;
-                              v = isExpanded;
+                              _isExpandedList[index] = value;
                             });
                           },
                           children: [
