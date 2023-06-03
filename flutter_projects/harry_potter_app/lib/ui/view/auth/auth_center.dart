@@ -15,34 +15,39 @@ class AuthCenter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthBloc, AuthState>(
-      listener: (context, state) {
-        if (state.isLoading) {
-          return LoadingScreen().show(
-            context: context,
-            text: state.loadingText ?? 'Plase wait a moment',
-          );
-        } else {
-          return LoadingScreen().hide();
-        }
-      },
-      builder: (context, state) {
-        if (state is AuthStateSignedIn) {
-          return AppCenter(authUser: state.user);
-        } else if (state is AuthStateOnVerifyEmail) {
-          return const VerifyEmailView();
-        } else if (state is AuthStateOnSignIn) {
-          return const SignInView();
-        } else if (state is AuthStateOnForgotPassword) {
-          return const ForgotPasswordView();
-        } else if (state is AuthStateOnSignUp) {
-          return const SignUpView();
-        } else {
-          return const Scaffold(
-            body: CircularProgressIndicator(),
-          );
-        }
-      },
+    return Scaffold(
+      // Permite que al desplegarse el teclado se mantengan fijos los Widgets
+      resizeToAvoidBottomInset: false,
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state.isLoading) {
+            return LoadingScreen().show(
+              context: context,
+              text: state.loadingText ?? 'Plase wait a moment',
+            );
+          } else {
+            return LoadingScreen().hide();
+          }
+        },
+        builder: (context, state) {
+          if (state is AuthStateSignedIn) {
+            //return const SignInView();
+            return AppCenter(authUser: state.user);
+          } else if (state is AuthStateOnVerifyEmail) {
+            return const VerifyEmailView();
+          } else if (state is AuthStateOnSignIn) {
+            return const SignInView();
+          } else if (state is AuthStateOnForgotPassword) {
+            return const ForgotPasswordView();
+          } else if (state is AuthStateOnSignUp) {
+            return const SignUpView();
+          } else {
+            return const Scaffold(
+              body: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
     );
   }
 }

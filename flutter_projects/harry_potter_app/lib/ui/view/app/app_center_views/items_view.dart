@@ -37,21 +37,25 @@ class _ItemsViewState extends State<ItemsView> {
   String _hintTextSearch = '';
   Icon _iconSearch = const Icon(Icons.abc);
   late List<bool> _isExpandedList;
+  int _count = 0;
   //late int _totalResults = _listOfItems.length;
 
   final StreamController _streamController = StreamController<List<dynamic>>();
   final ScrollController _scrollController = ScrollController();
   late final Stream<AuthUser> _streamAuthUserForFavs;
+  late Widget wid;
 
   @override
   void initState() {
-    _streamController.add(_listOfItems);
+    // _streamController.add(_listOfItems);
     _hintTextSearch = widget.state.hintTextSearch;
     _iconSearch = widget.state.iconSearch;
     _listOfItems = widget.state.listOfItems;
     _searchController = TextEditingController();
     _streamAuthUserForFavs = widget.state.streamAuthUser;
     _isExpandedList = List.generate(_listOfItems.length, (index) => false);
+    _count = widget.state.listOfItems.length;
+    wid = getListView(_listOfItems);
     super.initState();
   }
 
@@ -67,11 +71,11 @@ class _ItemsViewState extends State<ItemsView> {
       listener: (context, state) {
         _searchController.clear();
         if (state is AppStateOnItemsView) {
+          _count = state.listOfItems.length;
           _hintTextSearch = state.hintTextSearch;
           _iconSearch = state.iconSearch;
           _listOfItems = state.listOfItems;
-          _isExpandedList =
-              List.generate(_listOfItems.length, (index) => false);
+          wid = getListView(_listOfItems);
           //_totalResults = state.listOfItems.length;
         }
       },
@@ -82,16 +86,7 @@ class _ItemsViewState extends State<ItemsView> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
                 child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(1),
-                        spreadRadius: 2,
-                        blurRadius: 8,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
+                  alignment: Alignment.bottomCenter,
                   child: TextField(
                     controller: _searchController,
                     autofocus: true,
@@ -173,7 +168,7 @@ class _ItemsViewState extends State<ItemsView> {
               ),
               const SizedBox(height: 16),
               Expanded(
-                child: getListView(_listOfItems),
+                child: wid,
               ),
               const SizedBox(height: 16),
             ],
@@ -236,12 +231,13 @@ class _ItemsViewState extends State<ItemsView> {
   }
 
   Widget getListView(List<dynamic> listOfItems) {
+    print('Tamaño $_count');
     return listOfItems.isNotEmpty
         ? ListView.builder(
             controller: _scrollController,
-            itemCount: listOfItems.length,
+            itemCount: _count,
             itemBuilder: (context, index) {
-              late bool isShow;
+              print(_count);
               final item = listOfItems.elementAt(index);
               String title = '';
               String details = '';
@@ -318,7 +314,7 @@ class _ItemsViewState extends State<ItemsView> {
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: ExpansionTile(
-                          initiallyExpanded: _isExpandedList[index],
+                          initiallyExpanded: false,
                           tilePadding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
                           childrenPadding:
                               const EdgeInsets.fromLTRB(12, 0, 12, 16),
@@ -435,7 +431,7 @@ class _ItemsViewState extends State<ItemsView> {
                               color: Colors.black,
                             ),
                           ),
-                          subtitle: _isExpandedList[index]
+                          subtitle: !_isExpandedList[index]
                               ? const Padding(
                                   padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
                                   child: Text('(tap to details)',
@@ -455,17 +451,19 @@ class _ItemsViewState extends State<ItemsView> {
                             });
                           },
                           children: [
-                            Text(
-                              details,
-                              textAlign: txtAlignDetails,
-                              style: const TextStyle(
-                                fontStyle: FontStyle.italic,
-                                letterSpacing: 2,
-                                fontSize: 10,
-                                fontFamily: 'Apple Days',
-                                color: Colors.white,
-                              ),
-                            ),
+                            _isExpandedList[index]
+                                ? Text(
+                                    details,
+                                    textAlign: txtAlignDetails,
+                                    style: const TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      letterSpacing: 2,
+                                      fontSize: 10,
+                                      fontFamily: 'Apple Days',
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Container(),
                           ],
                         ),
                       ),

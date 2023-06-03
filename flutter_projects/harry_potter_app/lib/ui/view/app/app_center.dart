@@ -26,6 +26,7 @@ class _AppCenterState extends State<AppCenter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Align(
           alignment: Alignment.center,
