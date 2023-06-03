@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:harry_potter_app/domain/model/auth_user.dart';
+import 'package:harry_potter_app/domain/repository/auth_user_repository.dart';
 import 'package:harry_potter_app/domain/repository/species_repository.dart';
 import 'package:harry_potter_app/domain/repository/spell_repository.dart';
 import 'package:harry_potter_app/domain/repository/book_repository.dart';
 import 'package:harry_potter_app/domain/repository/character_repository.dart';
-import 'package:harry_potter_app/domain/repository/auth_user_repository.dart';
 import 'package:harry_potter_app/services/auth/auth_provider.dart';
 
 import 'auth_event.dart';
@@ -13,11 +13,6 @@ import 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthProvider authProvider;
-  late AuthUserRepository authUserRepository;
-  late BookRepository bookRepository;
-  late CharacterRepository characterRepository;
-  late SpellRepository spellRepository;
-  late SpeciesRepository speciesRepository;
 
   AuthBloc({required this.authProvider})
       : super(const AuthStateZero(isLoading: true)) {
@@ -37,13 +32,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     await authProvider.initialize();
 
-    // Una vez inicializado Firebase, ya podemos instanciar nuestros repositorios
-    authUserRepository = AuthUserRepository();
-    bookRepository = BookRepository();
-    characterRepository = CharacterRepository();
-    spellRepository = SpellRepository();
-    speciesRepository = SpeciesRepository();
-
     final user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
@@ -62,10 +50,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final authUser = await authProvider.currentUserFromCloudFirestore;
 
       // Cargamos toda la información de la API en Cloud Firestore
-      await bookRepository.loadBooksFromApi();
-      await characterRepository.loadCharactersFromApi();
-      await spellRepository.loadSpellsFromApi();
-      await speciesRepository.loadSpeciesFromApi();
+      await BookRepository().loadBooksFromApi();
+      await CharacterRepository().loadCharactersFromApi();
+      await SpellRepository().loadSpellsFromApi();
+      await SpeciesRepository().loadSpeciesFromApi();
 
       // Creamos el Singleton del AuthUser para poder tener acceso global a esa única instancia
       AuthUser.initializeSingleton(authUser!);
@@ -153,7 +141,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         );
       } else {
         authUser.isEmailVerified = true;
-        authUserRepository.updateIsEmailVerified(authUser);
+        AuthUserRepository().updateIsEmailVerified(authUser);
         emit(
           const AuthStateOnSignIn(
             exception: null,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harry_potter_app/services/auth/auth_exceptions.dart';
 import 'package:harry_potter_app/ui/bloc/auth/auth_bloc.dart';
+import 'package:harry_potter_app/ui/bloc/auth/auth_event.dart';
 import 'package:harry_potter_app/ui/bloc/auth/auth_state.dart';
 import 'package:harry_potter_app/ui/view/auth/auth_constants.dart';
 import 'package:harry_potter_app/utilities/dialogs/error_dialog.dart';
@@ -16,9 +17,10 @@ class SignInView extends StatefulWidget {
 class _SignInViewState extends State<SignInView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
-  bool _isObscurePwd = true;
+
   bool _isFocusEmail = true;
   bool _isFocusPwd = false;
+  bool _isObscurePwd = true;
 
   @override
   void initState() {
@@ -66,7 +68,7 @@ class _SignInViewState extends State<SignInView> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(40, 350, 40, 240),
+                padding: const EdgeInsets.fromLTRB(40, 380, 40, 150),
                 child: Container(
                   decoration: BoxDecoration(
                     color: const Color(0xD9FFFFFF).withOpacity(0.9),
@@ -94,6 +96,7 @@ class _SignInViewState extends State<SignInView> {
                           autofocus: true,
                           cursorColor: Colors.black,
                           cursorHeight: 18,
+                          keyboardType: TextInputType.emailAddress,
                           style: const TextStyle(
                             letterSpacing: 1,
                             fontSize: 12,
@@ -167,7 +170,9 @@ class _SignInViewState extends State<SignInView> {
                           ),
                           decoration: InputDecoration(
                             filled: true,
-                            fillColor: Colors.white.withOpacity(0.75),
+                            fillColor: _isFocusPwd
+                                ? Colors.white.withOpacity(1)
+                                : Colors.white.withOpacity(0.5),
                             contentPadding:
                                 const EdgeInsets.fromLTRB(0, 14, 0, 0),
                             hintText: AuthConstants.password,
@@ -261,9 +266,14 @@ class _SignInViewState extends State<SignInView> {
                                 ),
                               ),
                               onPressed: () {
-                                setState(() {
-                                  //onPressed();
-                                });
+                                final email = _email.text;
+                                final password = _password.text;
+                                context.read<AuthBloc>().add(
+                                      AuthEventSignIn(
+                                        email: email,
+                                        password: password,
+                                      ),
+                                    );
                               },
                             ),
                           ),
@@ -297,30 +307,68 @@ class _SignInViewState extends State<SignInView> {
                                 ),
                               ),
                               onPressed: () {
-                                setState(() {
-                                  //onPressed();
-                                });
+                                Future.delayed(
+                                        const Duration(milliseconds: 200))
+                                    .then(
+                                  (_) => context
+                                      .read<AuthBloc>()
+                                      .add(const AuthEventGoToSignUp()),
+                                );
                               },
                             ),
                           ),
                         ],
-                      )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
+                        child: GestureDetector(
+                          child: const Text(
+                            AuthConstants.forgotPassword,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'Apple Butter',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 2,
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.black,
+                              decorationThickness: 4,
+                            ),
+                          ),
+                          onTap: () {
+                            final email = _email.text;
+                            context.read<AuthBloc>().add(
+                                  AuthEventForgotPassword(email: email),
+                                );
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 270,
-              child: Text(
-                AuthConstants.harryPotterApp,
-                style: TextStyle(
-                  color: Colors.black.withOpacity(0.75),
-                  fontFamily: 'Apple Days',
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 3,
-                ),
+              top: 80,
+              child: Column(
+                children: [
+                  Text(
+                    AuthConstants.harryPotterApp,
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.75),
+                      fontFamily: 'Apple Days',
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 3,
+                    ),
+                  ),
+                  const SizedBox(height: 50),
+                  Image.network(
+                    cacheHeight: 170,
+                    cacheWidth: 170,
+                    "https://cdn.pixabay.com/photo/2019/03/24/12/19/harry-potter-4077473_1280.png",
+                  ),
+                ],
               ),
             ),
           ],
