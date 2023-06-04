@@ -43,7 +43,6 @@ class _ItemsViewState extends State<ItemsView> {
   final StreamController _streamController = StreamController<List<dynamic>>();
   final ScrollController _scrollController = ScrollController();
   late final Stream<AuthUser> _streamAuthUserForFavs;
-  late Widget wid;
 
   @override
   void initState() {
@@ -55,7 +54,6 @@ class _ItemsViewState extends State<ItemsView> {
     _streamAuthUserForFavs = widget.state.streamAuthUser;
     _isExpandedList = List.generate(_listOfItems.length, (index) => false);
     _count = widget.state.listOfItems.length;
-    wid = getListView(_listOfItems);
     super.initState();
   }
 
@@ -75,7 +73,6 @@ class _ItemsViewState extends State<ItemsView> {
           _hintTextSearch = state.hintTextSearch;
           _iconSearch = state.iconSearch;
           _listOfItems = state.listOfItems;
-          wid = getListView(_listOfItems);
           //_totalResults = state.listOfItems.length;
         }
       },
@@ -168,7 +165,7 @@ class _ItemsViewState extends State<ItemsView> {
               ),
               const SizedBox(height: 16),
               Expanded(
-                child: wid,
+                child: getListView(_listOfItems),
               ),
               const SizedBox(height: 16),
             ],
