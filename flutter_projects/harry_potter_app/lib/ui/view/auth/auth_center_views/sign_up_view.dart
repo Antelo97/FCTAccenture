@@ -56,327 +56,306 @@ class _SignUpViewState extends State<SignUpView> {
           }
         }
       },
-      child: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFF6A3A19),
-                  Color(0xFFB48A76),
-                ],
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+          child: Container(
+            height: 365,
+            decoration: BoxDecoration(
+              color: const Color(0xD9FFFFFF).withOpacity(0.9),
+              border: Border.all(
+                color: Colors.black,
+                width: 4,
               ),
-            ),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-              child: Container(
-                height: 365,
-                decoration: BoxDecoration(
-                  color: const Color(0xD9FFFFFF).withOpacity(0.9),
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 4,
-                  ),
-                  borderRadius: BorderRadius.circular(22),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black,
-                      spreadRadius: 0,
-                      blurRadius: 14,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
+              borderRadius: BorderRadius.circular(22),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black,
+                  spreadRadius: 0,
+                  blurRadius: 14,
+                  offset: Offset(0, 0),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
-                      child: TextField(
-                        controller: _username,
-                        autofocus: true,
-                        cursorColor: Colors.black,
-                        cursorHeight: 18,
-                        style: const TextStyle(
-                          letterSpacing: 1,
-                          fontSize: 12,
-                          fontFamily: 'Apple Days',
+              ],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
+                  child: TextField(
+                    controller: _username,
+                    autofocus: true,
+                    cursorColor: Colors.black,
+                    cursorHeight: 18,
+                    style: const TextStyle(
+                      letterSpacing: 1,
+                      fontSize: 12,
+                      fontFamily: 'Apple Days',
+                      color: Colors.black,
+                    ),
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: _isFocusUsername
+                          ? Colors.white.withOpacity(1)
+                          : Colors.white.withOpacity(0.5),
+                      contentPadding: const EdgeInsets.fromLTRB(0, 14, 0, 0),
+                      hintText: AuthConstants.username,
+                      hintStyle: const TextStyle(
+                        letterSpacing: 2,
+                        color: Colors.black38,
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                        fontFamily: 'Apple Butter',
+                      ),
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(
                           color: Colors.black,
+                          width: 2,
                         ),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: _isFocusUsername
-                              ? Colors.white.withOpacity(1)
-                              : Colors.white.withOpacity(0.5),
-                          contentPadding:
-                              const EdgeInsets.fromLTRB(0, 14, 0, 0),
-                          hintText: AuthConstants.username,
-                          hintStyle: const TextStyle(
-                            letterSpacing: 2,
-                            color: Colors.black38,
-                            fontSize: 18,
-                            fontStyle: FontStyle.italic,
-                            fontFamily: 'Apple Butter',
-                          ),
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                              width: 2,
-                            ),
-                          ),
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.blue,
-                              width: 5,
-                            ),
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.account_circle_outlined,
-                            color: Colors.black,
-                            size: 26,
-                          ),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.blue,
+                          width: 5,
                         ),
-                        onTap: () {
-                          setState(() {
-                            _isFocusUsername = true;
-                            _isFocusEmail = false;
-                            _isFocusPwd = false;
-                          });
-                        },
-                        onTapOutside: (event) {
-                          setState(() {
-                            _isFocusUsername = false;
-                          });
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            //searchText = value;
-                          });
-                        },
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.account_circle_outlined,
+                        color: Colors.black,
+                        size: 26,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
-                      child: TextField(
-                        controller: _email,
-                        autofocus: true,
-                        cursorColor: Colors.black,
-                        cursorHeight: 18,
-                        keyboardType: TextInputType.emailAddress,
-                        style: const TextStyle(
-                          letterSpacing: 1,
-                          fontSize: 12,
-                          fontFamily: 'Apple Days',
+                    onTap: () {
+                      setState(() {
+                        _isFocusUsername = true;
+                        _isFocusEmail = false;
+                        _isFocusPwd = false;
+                      });
+                    },
+                    onTapOutside: (event) {
+                      setState(() {
+                        _isFocusUsername = false;
+                      });
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        //searchText = value;
+                      });
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
+                  child: TextField(
+                    controller: _email,
+                    autofocus: true,
+                    cursorColor: Colors.black,
+                    cursorHeight: 18,
+                    keyboardType: TextInputType.emailAddress,
+                    style: const TextStyle(
+                      letterSpacing: 1,
+                      fontSize: 12,
+                      fontFamily: 'Apple Days',
+                      color: Colors.black,
+                    ),
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: _isFocusEmail
+                          ? Colors.white.withOpacity(1)
+                          : Colors.white.withOpacity(0.5),
+                      contentPadding: const EdgeInsets.fromLTRB(0, 14, 0, 0),
+                      hintText: AuthConstants.email,
+                      hintStyle: const TextStyle(
+                        letterSpacing: 2,
+                        color: Colors.black38,
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                        fontFamily: 'Apple Butter',
+                      ),
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(
                           color: Colors.black,
+                          width: 2,
                         ),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: _isFocusEmail
-                              ? Colors.white.withOpacity(1)
-                              : Colors.white.withOpacity(0.5),
-                          contentPadding:
-                              const EdgeInsets.fromLTRB(0, 14, 0, 0),
-                          hintText: AuthConstants.email,
-                          hintStyle: const TextStyle(
-                            letterSpacing: 2,
-                            color: Colors.black38,
-                            fontSize: 18,
-                            fontStyle: FontStyle.italic,
-                            fontFamily: 'Apple Butter',
-                          ),
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                              width: 2,
-                            ),
-                          ),
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.blue,
-                              width: 5,
-                            ),
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.email_outlined,
-                            color: Colors.black,
-                            size: 26,
-                          ),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.blue,
+                          width: 5,
                         ),
-                        onTap: () {
-                          setState(() {
-                            _isFocusUsername = false;
-                            _isFocusEmail = true;
-                            _isFocusPwd = false;
-                          });
-                        },
-                        onTapOutside: (event) {
-                          setState(() {
-                            _isFocusEmail = false;
-                          });
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            //searchText = value;
-                          });
-                        },
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.email_outlined,
+                        color: Colors.black,
+                        size: 26,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
-                      child: TextField(
-                        controller: _password,
-                        autofocus: true,
-                        cursorColor: Colors.black,
-                        cursorHeight: 18,
-                        obscureText: _isObscurePwd,
-                        style: const TextStyle(
-                          letterSpacing: 1,
-                          fontSize: 12,
-                          fontFamily: 'Apple Days',
-                          color: Colors.black,
-                        ),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: _isFocusPwd
-                              ? Colors.white.withOpacity(1)
-                              : Colors.white.withOpacity(0.5),
-                          contentPadding:
-                              const EdgeInsets.fromLTRB(0, 14, 0, 0),
-                          hintText: AuthConstants.password,
-                          hintStyle: const TextStyle(
-                            letterSpacing: 2,
-                            color: Colors.black38,
-                            fontSize: 18,
-                            fontStyle: FontStyle.italic,
-                            fontFamily: 'Apple Butter',
-                          ),
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                              width: 2,
-                            ),
-                          ),
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.blue,
-                              width: 5,
-                            ),
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.lock_outlined,
-                            color: Colors.black,
-                            size: 26,
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _isObscurePwd
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: Colors.black,
-                              size: 26,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _isObscurePwd = !_isObscurePwd;
-                              });
-                            },
-                          ),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            _isFocusUsername = false;
-                            _isFocusEmail = false;
-                            _isFocusPwd = true;
-                          });
-                        },
-                        onTapOutside: (event) {
-                          setState(() {
-                            _isFocusPwd = false;
-                          });
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            //searchText = value;
-                          });
-                        },
-                      ),
+                    onTap: () {
+                      setState(() {
+                        _isFocusUsername = false;
+                        _isFocusEmail = true;
+                        _isFocusPwd = false;
+                      });
+                    },
+                    onTapOutside: (event) {
+                      setState(() {
+                        _isFocusEmail = false;
+                      });
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        //searchText = value;
+                      });
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
+                  child: TextField(
+                    controller: _password,
+                    autofocus: true,
+                    cursorColor: Colors.black,
+                    cursorHeight: 18,
+                    obscureText: _isObscurePwd,
+                    style: const TextStyle(
+                      letterSpacing: 1,
+                      fontSize: 12,
+                      fontFamily: 'Apple Days',
+                      color: Colors.black,
                     ),
-                    SizedBox(
-                      height: 40,
-                      width: 100,
-                      child: RawMaterialButton(
-                        fillColor: Colors.black.withOpacity(0.75),
-                        hoverColor: Colors.yellow,
-                        highlightColor: Colors.yellow,
-                        splashColor: Colors.yellow,
-                        padding: const EdgeInsets.fromLTRB(4, 4, 4, 10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          side: const BorderSide(
-                            color: Colors.blue,
-                            width: 1.5,
-                          ),
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: _isFocusPwd
+                          ? Colors.white.withOpacity(1)
+                          : Colors.white.withOpacity(0.5),
+                      contentPadding: const EdgeInsets.fromLTRB(0, 14, 0, 0),
+                      hintText: AuthConstants.password,
+                      hintStyle: const TextStyle(
+                        letterSpacing: 2,
+                        color: Colors.black38,
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                        fontFamily: 'Apple Butter',
+                      ),
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          width: 2,
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.fromLTRB(4, 4, 4, 0),
-                          child: Text(
-                            AuthConstants.signUp,
-                            style: TextStyle(
-                              fontSize: 14,
-                              letterSpacing: 3,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Apple Days",
-                            ),
-                          ),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.blue,
+                          width: 5,
+                        ),
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.lock_outlined,
+                        color: Colors.black,
+                        size: 26,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isObscurePwd
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Colors.black,
+                          size: 26,
                         ),
                         onPressed: () {
-                          final username = _username.text;
-                          final email = _email.text;
-                          final password = _password.text;
-                          context.read<AuthBloc>().add(
-                                AuthEventSignUp(
-                                  username: username,
-                                  email: email,
-                                  password: password,
-                                ),
-                              );
+                          setState(() {
+                            _isObscurePwd = !_isObscurePwd;
+                          });
                         },
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
-                      child: GestureDetector(
-                        child: const Text(
-                          AuthConstants.alreadyRegister,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Apple Butter',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 2,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.black,
-                            decorationThickness: 4,
-                          ),
-                        ),
-                        onTap: () {
-                          context
-                              .read<AuthBloc>()
-                              .add(const AuthEventSignOut());
-                        },
-                      ),
-                    ),
-                  ],
+                    onTap: () {
+                      setState(() {
+                        _isFocusUsername = false;
+                        _isFocusEmail = false;
+                        _isFocusPwd = true;
+                      });
+                    },
+                    onTapOutside: (event) {
+                      setState(() {
+                        _isFocusPwd = false;
+                      });
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        //searchText = value;
+                      });
+                    },
+                  ),
                 ),
-              ),
+                SizedBox(
+                  height: 40,
+                  width: 100,
+                  child: RawMaterialButton(
+                    fillColor: Colors.black.withOpacity(0.75),
+                    hoverColor: Colors.yellow,
+                    highlightColor: Colors.yellow,
+                    splashColor: Colors.yellow,
+                    padding: const EdgeInsets.fromLTRB(4, 4, 4, 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: const BorderSide(
+                        color: Colors.blue,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.fromLTRB(4, 4, 4, 0),
+                      child: Text(
+                        AuthConstants.signUp,
+                        style: TextStyle(
+                          fontSize: 14,
+                          letterSpacing: 3,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Apple Days",
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      final username = _username.text;
+                      final email = _email.text;
+                      final password = _password.text;
+                      context.read<AuthBloc>().add(
+                            AuthEventSignUp(
+                              username: username,
+                              email: email,
+                              password: password,
+                            ),
+                          );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
+                  child: GestureDetector(
+                    child: const Text(
+                      AuthConstants.alreadyRegister,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Apple Butter',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 2,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Colors.black,
+                        decorationThickness: 4,
+                      ),
+                    ),
+                    onTap: () {
+                      context.read<AuthBloc>().add(const AuthEventSignOut());
+                    },
+                  ),
+                ),
+              ],
             ),
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

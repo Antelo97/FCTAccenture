@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
-typedef DialogOptionBuilder<T> = Map<String, T?> Function();
+// typedef DialogOptionBuilder<T> = Map<String, T?> Function();
 
-Future<T?> showGenericDialog<T>({
+Future<dynamic> showGenericDialog<T>({
   required BuildContext context,
   required String title,
   required String content,
-  required DialogOptionBuilder optionsBuilder,
+  required Map<String, T?> optionsBuilder,
 }) {
-  final options = optionsBuilder();
+  // final options = optionsBuilder();
   return showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
         title: Text(title),
         content: Text(content),
-        actions: options.keys.map((optionTitle) {
-          final value = options[optionTitle];
+        actions: optionsBuilder.keys.map((optionTitle) {
+          final value = optionsBuilder[optionTitle];
           return TextButton(
             onPressed: () {
               if (value != null) {

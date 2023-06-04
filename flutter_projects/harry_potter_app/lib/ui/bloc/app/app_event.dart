@@ -69,3 +69,13 @@ class AppEventAddOrRemoveFavItem extends AppEvent {
     required this.item,
   });
 }
+
+// En los Event de los Bloc no hay tanta tendencia a las herencias, ya que la confluencia
+// se va a gestar en el Bloc a través de la emisión de estados relacionados por herencia
+// * Esto no implica que sea posible minimizar el número de estados a través de la generación
+// de estados que reciban varios parámetros. No obstante, puedes ser preferible varios
+// eventos distintos para hacerlo más visual. 
+// * Un evento sin parámetros solo va a permitir al Bloc emitir un único estado
+// * Un evento con un paramétro de tipo String va a permitir al Bloc emitir múltiples
+// estados en función de la String (if/switch), por lo tanto, un evento con múltiples parámetros
+// se puede concebir como un evento que engloba varios eventos dentro de si

@@ -451,19 +451,17 @@ class _ItemsViewState extends State<ItemsView> {
                             });
                           },
                           children: [
-                            _isExpandedList[index]
-                                ? Text(
-                                    details,
-                                    textAlign: txtAlignDetails,
-                                    style: const TextStyle(
-                                      fontStyle: FontStyle.italic,
-                                      letterSpacing: 2,
-                                      fontSize: 10,
-                                      fontFamily: 'Apple Days',
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                : Container(),
+                            Text(
+                              details,
+                              textAlign: txtAlignDetails,
+                              style: const TextStyle(
+                                fontStyle: FontStyle.italic,
+                                letterSpacing: 2,
+                                fontSize: 10,
+                                fontFamily: 'Apple Days',
+                                color: Colors.white,
+                              ),
+                            ),
                           ],
                         ),
                       ),

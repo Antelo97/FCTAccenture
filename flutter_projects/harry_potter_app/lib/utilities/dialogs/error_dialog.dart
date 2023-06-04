@@ -10,7 +10,7 @@ Future<void> showErrorDialog(
     context: context,
     title: 'An error ocurred',
     content: text,
-    optionsBuilder: () => {
+    optionsBuilder: /*() =>*/ {
       'OK': null,
     },
   );

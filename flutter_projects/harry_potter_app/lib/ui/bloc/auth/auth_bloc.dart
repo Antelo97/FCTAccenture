@@ -185,18 +185,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void onAuthEventForgotPassword(
       AuthEventForgotPassword event, Emitter<AuthState> emit) async {
-    emit(
-      const AuthStateOnForgotPassword(
-        exception: null,
-        hasSentEmail: false,
-        isLoading: false,
-      ),
-    );
-
+    emit(const AuthStateOnForgotPassword(
+      exception: null,
+      hasSentEmail: false,
+      isLoading: false,
+    ));
     final email = event.email;
     if (email == null) {
-      // El usuario simplemente ha clicado el botón para navegar a la pantalla de ForgotPassword
-      return;
+      return; // User just wants to go to forgot password screen
     }
 
     // User wants to actually send a forgot password email
@@ -222,5 +218,45 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       hasSentEmail: didSendEmail,
       isLoading: false,
     ));
+
+    // switch (event.email.runtimeType) {
+    //   case Null:
+    //     print('aqui: null');
+    //     // El usuario simplemente ha hecho clic para invocar el Dialog del Forgot Password
+    //     emit(
+    //       const AuthStateOnSignIn(
+    //         isForgotPassword: true,
+    //         // hasSentEmail: false,
+    //       ),
+    //     );
+    //     break;
+    //   case String:
+    //     print('aqui: notnull');
+    //     // EL usuario ya estaba en el Dialog y ha introducido su email para el envio del correo
+    //     emit(
+    //       const AuthStateOnSignIn(
+    //         // hasSentEmail: false,
+    //         isForgotPassword: true,
+    //         isLoading: true,
+    //       ),
+    //     );
+
+    //     Exception? exception;
+    //     // bool didSendEmail;
+    //     try {
+    //       await authProvider.sendPasswordReset(toEmail: event.email!);
+    //       exception = null;
+    //       // didSendEmail = true;
+    //     } on Exception catch (e) {
+    //       exception = e;
+    //       // didSendEmail = false;
+    //     }
+
+    //     emit(AuthStateOnSignIn(
+    //       exception: exception,
+    //       isForgotPassword: true,
+    //       // hasSentEmail: didSendEmail,
+    //     ));
+    // }
   }
 }
