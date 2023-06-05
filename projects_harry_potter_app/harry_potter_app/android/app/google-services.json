@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "362824616011",
+    "project_id": "harrypotterappflutter",
+    "storage_bucket": "harrypotterappflutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362824616011:android:ca718a76c065d80a9fe5ce",
+        "android_client_info": {
+          "package_name": "com.example.harry_potter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362824616011-u9uv2di36g8udtich7nse1avh9407q1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAkd7jDVp0z-8AgQbfrt65yau_Yxyfzew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362824616011-u9uv2di36g8udtich7nse1avh9407q1a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "362824616011-elelvqkbfctocd206q0euk3n391afnmo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.harryPotterApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

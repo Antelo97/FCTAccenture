@@ -2,16 +2,20 @@ https://legacy--api.herokuapp.com/api/v1 --> Books & Species
 https://hp-api.onrender.com/ --> Characters & Spells
 
 https://javiercbk.github.io/json_to_dart/ (JSON to Dart)
-https://app.quicktype.io/ (JSON to Dart)
-
+https://app.quicktype.io/ (JSON to Dart) (pegas la respuesta json)
 https://flutterawesome.com/ (recursos varios)
-
 https://api.flutter.dev/flutter/widgets/GestureDetector-class.html (GestureDetector)
-
 https://jsoneditoronline.org/#left=local.beqesu (Visor JSON)
-
 https://medium.com/google-developer-experts/working-with-rest-apis-flutter-f3c8c673f1dc (info API Calls)
+https://www.youtube.com/watch?v=LyxYFmcYYvE (SearchDelegate)
 
+https://www.youtube.com/watch?v=USXMJX52OpA (Generar UML)
+https://www.youtube.com/watch?v=JqJpbNxIK90
+(en VSCode, descargar la extensión de PlantUML)
+(descargar PlantUML y configurar ruta de entorno/vsistema)
+https://www.youtube.com/watch?v=Qe47b8r5epc (Bloc)
+https://www.youtube.com/watch?v=hNnr-wdc6Xk (widgets imagenes)
+diegodeveloper / fernandoherrera
 
 COMANDOS:
 - flutter clean
@@ -24,6 +28,10 @@ COMANDOS:
 - flutter pub add firebase_analytics
 - flutter pub add bloc
 - flutter pub add flutter_bloc
+- flutter pub add equatable
+- dart pub global activate dcdg (UML)?
+- flutter pub add dcdg || flutter pub global run dcdg
+
 * Configuración Proyecto (caps 10 y 11):
 1. Instalar Firebase CLI
 2. Configuración de variables de entorno para que 'flutterfire' se reconozca en cualquier ubicación:
@@ -33,9 +41,33 @@ COMANDOS:
 - build.gradle (app): minSdKVersion 19 + multiDexEnabled true
 - build.gradle (app): implementation "com.android.support:multidex:1.0.3"
 
+* Crear la BD en Cloud Firestore desde Firebase Console
+- Modo prueba
+- Europe-west3 (Frankfurt)
+- Reglas: request.auth != null;
 
+===================================
 
+TCF
+https://online.visual-paradigm.com/w/rmtzpfvn/drive/#infoart:proj=0&dashboard (UML)
+Philipp Lackner (Android ROOM)
+https://developer.android.com/training/data-storage/room/relationships?hl=es-419
+GESTURE DETECTORE (dotar de click a cualquier widget)
 
+PENDIENTE:
+- Degradado fondo NavBar
+- Agregar efecto luminiscente al seleccionar una opción
+- Repositorys en AuthBloc (simplemente los inicializo, igual sobran)
+
+- Añadir toMap, fromMap (completos) a todas las clases
+- Al insertar borrar, el vacío
+- Hacer seguimiento paso a paso, con el registro y luego la carga de datos
+- Crear clase model Wand para parsear (aunque vaya a pillar la misma estructura)
+- Singleton de usuario innecesario al poder usar el método del AuthUserRepository de getUserFromCloudFirestore (pero ojo al registro login etc)
+- Eliminar parametro del event fav
+- No meter como parametro el idFirestore si ya hay un Singleton (unificiar idFirestore/idFirebase)
+- getListViewy count
+- Mirar borde textfield
 
 
 

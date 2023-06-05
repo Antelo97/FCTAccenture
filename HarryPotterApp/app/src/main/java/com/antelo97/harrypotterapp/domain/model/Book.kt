@@ -4,10 +4,10 @@ import com.antelo97.harrypotterapp.data.database.model_entity.BookEntity
 
 data class Book(
     val idApiBook: Int,
-    var title: String,
+    val title: String,
     val imageUrl: String,
     val author: String,
-    var releaseDate: String,
+    val releaseDate: String,
     var isFavorite: Boolean
 )
 

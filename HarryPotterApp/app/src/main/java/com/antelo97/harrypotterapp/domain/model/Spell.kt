@@ -4,7 +4,7 @@ import com.antelo97.harrypotterapp.data.database.model_entity.SpellEntity
 
 data class Spell(
     val idApiSpell: String,
-    var name: String,
+    val name: String,
     val description: String,
     val imageUrl: String,
     var isFavorite: Boolean
