@@ -1,0 +1,39 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/toBooks"
+        android:enabled="false"
+        android:fontFamily="@font/apple_butter"
+        android:icon="@drawable/ic_books"
+        android:title="@string/books"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/toCharacters"
+        android:enabled="false"
+        android:fontFamily="@font/apple_butter"
+        android:icon="@drawable/ic_characters"
+        android:title="@string/characters"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/toSpells"
+        android:enabled="false"
+        android:fontFamily="@font/apple_butter"
+        android:icon="@drawable/ic_spells"
+        android:title="@string/spells"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/toSpecies"
+        android:enabled="false"
+        android:fontFamily="@font/apple_butter"
+        android:icon="@drawable/ic_species"
+        android:title="@string/species"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/toNothing"
+        android:enabled="false"
+        android:visible="false" />
+</menu>
